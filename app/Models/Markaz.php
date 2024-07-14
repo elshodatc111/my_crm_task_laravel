@@ -18,6 +18,7 @@ class Markaz extends Model
         'image',
         'count_sms',
         'mavjud_sms',
+        'lessen_time',
     ];
     public function users(){return $this->hasMany(User::class);}
     public function kassas(){return $this->hasMany(Kassa::class);}

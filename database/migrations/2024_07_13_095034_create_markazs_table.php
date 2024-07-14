@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('markazs', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('drektor');
             $table->string('phone');
             $table->string('addres');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('count_sms')->default(0);
             $table->integer('mavjud_sms')->default(0);
+            $table->integer('lessen_time')->default(90);
             $table->timestamps();
         });
     }
