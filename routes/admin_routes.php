@@ -11,11 +11,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/show/setting/update/{id}', [AdminController::class, 'show_update'])->name('admin.show_update');
     Route::post('/admin/show/setting/lock', [AdminController::class, 'show_update_lock'])->name('admin.show_update_lock');
     Route::post('/admin/show/setting/block', [AdminController::class, 'show_update_lock_block'])->name('admin.show_update_lock_block');
+    Route::post('/admin/show/setting/generator', [AdminController::class, 'generator'])->name('admin.generator');
 
 
 
 
     Route::get('/admin/show/sms/set/{id}', [AdminController::class, 'show_sms'])->name('admin.show_sms');
+    Route::post('/admin/show/sms/set/add', [AdminController::class, 'addSmsPaket'])->name('admin.addSmsPaket');
+
+
     Route::get('/admin/show/statistik/set/sta{id}', [AdminController::class, 'show_statistik'])->name('admin.show_statistik');
 
 

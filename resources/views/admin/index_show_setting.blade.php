@@ -93,56 +93,31 @@
         </div>
         <div class="col-lg-6">
           <div class="card">
-            <div class="card-body pt-3">
-              
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12">
-          <div class="card">
             <div class="card-body">
-              <h5 class="card-title w-100 text-center">Yuborilgan ogoxlantirish xatlari</h5>
-              <div class="table-responsive">
-                <table class="table text-center table-bordered" style="font-size: 12px;">
+              <div class="card-title w-100 text-center">Xona Dars vaqtlari</div>
+              <form action="{{ route('admin.generator') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $id }}">
+                <button class="btn btn-primary w-100 my-2">Dars vaqtlarini generatsiya qilish</button>
+              </form>
+              <table class="table text-center table-bordered" style="font-size: 12px;">
                   <thead>
                     <tr class="align-items-center">
                       <th>#</th>
-                      <th>Data</th>
-                      <th>Xabar matni</th>
-                      <th>Meneger</th>
-                      <th>Xabar xolati</th>
-                      <th>Saqlandi</th>
-                      <th>Status</th>
+                      <th>Darslar</th>
+                      <th>Dars vaqti</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($response['generatsiya'] as $item)
                     <tr>
-                      <td>1</td>
-                      <td>2024.07.15</td>
-                      <td>Test xabar matni</td>
-                      <td>elshodatc1116</td>
-                      <td>true</td>
-                      <td>10.07.2024 15:24:45</td>
-                      <td>
-                        <form action="">
-                          <button type="submit" class="btn btn-danger p-0 px-1"><i class="bi bi-trash"></i></button>
-                        </form>
-                      </td>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{ $loop->index+1 }}-dars</td>
+                      <td>{{ $item['time'] }}</td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2024.07.15</td>
-                      <td>Test xabar matni</td>
-                      <td>elshodatc1116</td>
-                      <td>false</td>
-                      <td>10.07.2024 15:24:45</td>
-                      <td></td>
-                    </tr>
-                    
+                    @endforeach
                   </tbody>
                 </table>
-              </div>
             </div>
           </div>
         </div>

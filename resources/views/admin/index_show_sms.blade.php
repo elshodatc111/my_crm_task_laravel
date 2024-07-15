@@ -36,26 +36,34 @@
     </div>
   </div>
 
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Yangi talalaba qo'shildi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+  @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @elseif (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
 
 
       <div class="row">
         <div class="col-lg-6">
           <div class="card" style="min-height:180px">
             <div class="card-body">
-              <h2 class="card-title w-100 text-center">Markaz nomi</h2>
+              <h2 class="card-title w-100 text-center">{{ $response['markaz']['name'] }}</h2>
               <table class="table text-center table-bordered">
                 <tr>
                   <th>Yuborilgan SMS</th>
                   <th>Mavjud SMS</th>
                 </tr>
                 <tr>
-                  <td>12</td>
-                  <td>15</td>
+                  <td>{{ $response['markaz']['count_sms'] }}</td>
+                  <td>{{ $response['markaz']['mavjud_sms'] }}</td>
                 </tr>
               </table>
             </div>
@@ -64,33 +72,18 @@
         <div class="col-lg-6">
           <div class="card" style="min-height:180px">
             <div class="card-body">
-              <h5 class="card-title w-100 text-center">SMS xizmati sozlamasi</h5>
-              <div class="w-100 text-center mt-2">
-                <form action="" method="post" style="display: inline;">
-                  <button class="btn btn-success w-100">Xizmatni faollashtirish</button>
-                </form>
-                <form action="" method="post" style="display: inline;">
-                  <button class="btn btn-danger w-100">Xizmatni o'chirish</button>
-                </form>
-
-                <a href="admin_index_show_sms_all_send.html" class="btn btn-outline-info w-100 mt-2">Barcha yuborilgan smslar</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        
-        <div class="col-lg-6">
-          <div class="card" style="min-height:180px">
-            <div class="card-body">
               <h5 class="card-title w-100 text-center">Yangi sms paketi</h5>
               <div class="w-100 text-center mt-2">
-                <form action="" method="post">
+                <form action="{{ route('admin.addSmsPaket') }}" method="post">
+                  @csrf 
+                  <input type="hidden" name="markaz_id" value="{{ $id }}">
                   <label for="">SMS paketi soni</label>
-                  <input type="number" required class="form-control my-2">
+                  <input type="number" name="paket_soni" required class="form-control my-2">
                   <label for="">SMS paketi haqida</label>
-                  <input type="text" required class="form-control my-2">
-                  <button class="btn btn-danger my-2">Paketni saqlash</button>
+                  <input type="text" name="description" required class="form-control my-2">
+                  <label for="">To'lov summasi</label>
+                  <input type="text" name="tulov" required class="form-control my-2">
+                  <button type="submit" class="btn btn-primary w-50 my-2">Paketni saqlash</button>
                 </form>
               </div>
             </div>
@@ -108,26 +101,22 @@
                       <th>#</th>
                       <th>Paket soni</th>
                       <th>Paket haqidani</th>
+                      <th>Tulov summasi</th>
                       <th>Meneger</th>
                       <th>Data</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach($response['SmsPaket'] as $item)
                     <tr>
-                      <td>1</td>
-                      <td>15</td>
-                      <td>Test xabar matni</td>
-                      <td>elshodatc1116</td>
-                      <td>10.07.2024 15:24:45</td>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{ $item['paket_soni'] }}</td>
+                      <td>{{ $item['description'] }}</td>
+                      <td>{{ $item['meneger'] }}</td>
+                      <td>{{ $item['tulov'] }}</td>
+                      <td>{{ $item['created_at'] }}</td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>2021</td>
-                      <td>Test xabar matni</td>
-                      <td>elshodatc1116</td>
-                      <td>10.07.2024 15:24:45</td>
-                    </tr>
-                    
+                    @endforeach
                   </tbody>
                 </table>
               </div>
