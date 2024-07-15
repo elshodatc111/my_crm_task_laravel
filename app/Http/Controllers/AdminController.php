@@ -64,7 +64,42 @@ class AdminController extends Controller{
     }
 
     public function show_setting($id){
-        return view('admin.index_show_setting',compact('id'));
+        $response = array();
+        $response['markaz'] = Markaz::find($id);
+        return view('admin.index_show_setting',compact('id','response'));
+    }
+    public function show_update(Request $request, $id){
+        $validate = $request->validate([
+            'name' => 'required',
+            'drektor' => 'required',
+            'phone' => 'required',
+            'addres' => 'required',
+            'payme_id' => 'required',
+            'lessen_time' => 'required',
+            'paymart' => 'required',
+        ]);
+        $Markaz = Markaz::find($id);
+        $Markaz->name = $request->name;
+        $Markaz->drektor = $request->drektor;
+        $Markaz->phone = $request->phone;
+        $Markaz->addres = $request->addres;
+        $Markaz->payme_id = $request->payme_id;
+        $Markaz->lessen_time = $request->lessen_time;
+        $Markaz->paymart = $request->paymart;
+        $Markaz->save(); 
+        return redirect()->back()->with('success', 'Markaz malumotlari yangilandi.');
+    }
+    public function show_update_lock(Request $request){
+        $Markaz = Markaz::find($request->id);
+        $Markaz->status = 'false';
+        $Markaz->save(); 
+        return redirect()->back()->with('success', 'Markaz bloklandi.');
+    }
+    public function show_update_lock_block(Request $request){
+        $Markaz = Markaz::find($request->id);
+        $Markaz->status = 'true';
+        $Markaz->save(); 
+        return redirect()->back()->with('success', 'Markaz aktivlashtirildi.');
     }
 
     public function show_sms($id){
