@@ -73,13 +73,6 @@
                 <input type="text" name="paymart" value="{{ $response['markaz']['paymart'] }}" required class="form-control">
                 <button type="submit" class="btn btn-primary w-100 mt-2">O'zgarishlarni saqlash</button>
               </form>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title w-100 text-center">Markaz nomi</h5>
               <div class="w-100 text-center mt-2">
                 @if($response['markaz']['status']=='true')
                 <form action="{{ route('admin.show_update_lock') }}" method="post" style="display: inline;">
@@ -95,6 +88,13 @@
                 </form>
                 @endif
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body pt-3">
+              
             </div>
           </div>
         </div>
