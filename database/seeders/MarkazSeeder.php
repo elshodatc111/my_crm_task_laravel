@@ -16,7 +16,8 @@ class MarkazSeeder extends Seeder
             'phone' => '90 883 0450',
             'addres' => 'Qarshi shaxar',
             'payme_id' => '123456789456484',
-            'image' => 'atko.jpg',
+            'image' => 'atko.png',
+            'paymart' => '1',
         ]);
     }
 }

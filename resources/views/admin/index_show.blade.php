@@ -35,22 +35,32 @@
       <a href="{{ route('admin.show_statistik',$id) }}" class="btn btn-secondary w-100">Statistika</a>
     </div>
   </div>
+  @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @elseif (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
 
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Yangi talalaba qo'shildi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
   
   <div class="row">
     <div class="col-lg-6">
       <div class="card" style="min-height:300px">
         <div class="card-body text-center">
           <h5 class="card-title w-100 text-center">Markaz logatifi</h5>
-          <img src="https://atko.tech/mycrm/assets/img/logos/{{ $response['markaz']['image'] }}" style="width:80%">
-          <form action="" method="post">
+          <img src="../../storage/assets/img/logos/{{ $response['markaz']['image'] }}" style="width:80%">
+          <form action="{{ route('admin.updatelogo') }}" method="post" enctype="multipart/form-data">
+            @csrf 
+            <input type="hidden" name="markaz_id" value="{{ $id }}">
             <label for="">Logatifni yangilash</label>
-            <input type="file" required class="form-control">
+            <input type="file" required name="logotip" class="form-control">
             <button type="submit" class="btn btn-primary w-100 mt-2">Yangilash</button>
           </form>
         </div>
@@ -78,12 +88,28 @@
               <span class="badge bg-primary rounded-pill">{{ $response['markaz']['payme_id'] }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
+              Oqituvchiga to'lov
+              <span class="badge bg-primary rounded-pill">
+                @if($response['markaz']['paymart']==1)
+                  Foizlar
+                @elseif($response['markaz']['paymart']==2)
+                  Har bir talaba uchun ajratiladi
+                @else
+                  Har bir talaba uchun ajratiladi + bonys
+                @endif
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               Status
               @if($response['markaz']['status']=='true')
               <span class="badge bg-primary rounded-pill">Aktiv</span>
               @else
               <span class="badge bg-danger rounded-pill">Bloklandi</span>
               @endif
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Dars vaqti
+              <span class="badge bg-primary rounded-pill">{{ $response['markaz']['lessen_time'] }} minut</span>
             </li>
           </ul>
         </div>
@@ -94,18 +120,20 @@
       <div class="card">
         <div class="card-body">
           <h2 class="card-title w-100 text-center">Ogoxlantirish xatini yuborish</h2>
-          <form action="" method="post">
+          <form action="{{ route('admin.postogoh') }}" method="post">
+            @csrf 
+            <input type="hidden" name="markaz_id" value="{{ $id }}">
             <div class="row">
               <div class="col-lg-2 col-4 mt-1">
                 <label for="">Sanasi</label>
-                <input type="date" required class="form-control">
+                <input type="date" name="data" required class="form-control">
               </div>
               <div class="col-lg-8 col-4 mt-1">
                 <label for="">Xabar matni</label>
-                <input type="text" required class="form-control">
+                <input type="text" name="description" required class="form-control">
               </div>
               <div class="col-lg-2 col-4 mt-1">
-                <label for=""></label>
+                <label for="">.</label>
                 <button class="btn btn-primary w-100">Saqlash</button>
               </div>
             </div>
@@ -141,7 +169,9 @@
                   <td>{{ $item['created_at'] }}</td>
                   <td>
                     @if($item['status']=='true')
-                    <form action="">
+                    <form action="{{ route('admin.postogohdelete', $item['id'] ) }}" method="POST">
+                      @csrf 
+                      @method('delete')
                       <button type="submit" class="btn btn-danger p-0 px-1"><i class="bi bi-trash"></i></button>
                     </form>
                     @endif

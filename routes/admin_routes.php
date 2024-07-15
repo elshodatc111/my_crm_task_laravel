@@ -11,5 +11,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/show/sms/set/{id}', [AdminController::class, 'show_sms'])->name('admin.show_sms');
     Route::get('/admin/show/statistik/set/sta{id}', [AdminController::class, 'show_statistik'])->name('admin.show_statistik');
     Route::get('/admin/show/{id}', [AdminController::class, 'show'])->name('admin.show');
+    Route::post('/admin/show/update/image', [AdminController::class, 'updatelogo'])->name('admin.updatelogo');
+    Route::post('/admin/show/create', [AdminController::class, 'postogoh'])->name('admin.postogoh');
+    Route::delete('/admin/show/delete/{id}', [AdminController::class, 'postogohdelete'])->name('admin.postogohdelete');
     
 });

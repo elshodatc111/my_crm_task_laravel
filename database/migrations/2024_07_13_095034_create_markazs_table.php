@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('count_sms')->default(0);
             $table->integer('mavjud_sms')->default(0);
             $table->integer('lessen_time')->default(90);
+            $table->integer('paymart')->default(1);
             $table->timestamps();
         });
     }
