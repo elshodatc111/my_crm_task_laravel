@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Markaz;
+use App\Models\Kassa;
+use App\Models\MarkazOgohlik;
 
 class AdminController extends Controller{
 
@@ -19,7 +21,10 @@ class AdminController extends Controller{
     }
 
     public function show($id){
-        return view('admin.index_show',compact('id'));
+        $response = array();
+        $response['markaz'] = Markaz::find($id);
+        $response['markazOgoh'] = MarkazOgohlik::where('markaz_id',$id)->get();
+        return view('admin.index_show',compact('id','response'));
     }
 
     public function show_setting($id){

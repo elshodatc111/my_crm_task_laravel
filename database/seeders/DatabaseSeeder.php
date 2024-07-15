@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             MarkazSeeder::class,
             KassaSeeder::class,
             UserSeeder::class,
+            MarkazBalansSeeder::class,
         ]);
     }
 }

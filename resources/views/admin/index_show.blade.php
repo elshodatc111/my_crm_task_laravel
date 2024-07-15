@@ -41,13 +41,13 @@
     Yangi talalaba qo'shildi.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-
+  
   <div class="row">
     <div class="col-lg-6">
       <div class="card" style="min-height:300px">
         <div class="card-body text-center">
           <h5 class="card-title w-100 text-center">Markaz logatifi</h5>
-          <img src="https://atko.tech/mycrm/assets/img/logos/atko.jpg" style="width:80%">
+          <img src="https://atko.tech/mycrm/assets/img/logos/{{ $response['markaz']['image'] }}" style="width:80%">
           <form action="" method="post">
             <label for="">Logatifni yangilash</label>
             <input type="file" required class="form-control">
@@ -59,28 +59,31 @@
     <div class="col-lg-6">
       <div class="card" style="min-height:300px">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Markaz nomi</h5>
+          <h5 class="card-title w-100 text-center">{{ $response['markaz']['name'] }}</h5>
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Drektor
-              <span class="badge bg-primary rounded-pill">14</span>
+              <span class="badge bg-primary rounded-pill">{{ $response['markaz']['drektor'] }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Manzil
-              <span class="badge bg-primary rounded-pill">2</span>
+              <span class="badge bg-primary rounded-pill">{{ $response['markaz']['phone'] }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Telefon raqam
-              <span class="badge bg-primary rounded-pill">1</span>
+              <span class="badge bg-primary rounded-pill">{{ $response['markaz']['addres'] }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Payme id
-              <span class="badge bg-primary rounded-pill">1</span>
+              <span class="badge bg-primary rounded-pill">{{ $response['markaz']['payme_id'] }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Status
-              <span class="badge bg-danger rounded-pill">Bloklandi</span>
+              @if($response['markaz']['status']=='true')
               <span class="badge bg-primary rounded-pill">Aktiv</span>
+              @else
+              <span class="badge bg-danger rounded-pill">Bloklandi</span>
+              @endif
             </li>
           </ul>
         </div>
@@ -128,29 +131,23 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach($response['markazOgoh'] as $item)
                 <tr>
-                  <td>1</td>
-                  <td>2024.07.15</td>
-                  <td>Test xabar matni</td>
-                  <td>elshodatc1116</td>
-                  <td>true</td>
-                  <td>10.07.2024 15:24:45</td>
+                  <td>{{$loop->index+1}}</td>
+                  <td>{{ $item['data'] }}</td>
+                  <td>{{ $item['description'] }}</td>
+                  <td>{{ $item['meneger'] }}</td>
+                  <td>{{ $item['status'] }}</td>
+                  <td>{{ $item['created_at'] }}</td>
                   <td>
+                    @if($item['status']=='true')
                     <form action="">
                       <button type="submit" class="btn btn-danger p-0 px-1"><i class="bi bi-trash"></i></button>
                     </form>
+                    @endif
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2024.07.15</td>
-                  <td>Test xabar matni</td>
-                  <td>elshodatc1116</td>
-                  <td>false</td>
-                  <td>10.07.2024 15:24:45</td>
-                  <td></td>
-                </tr>
-                
+                @endforeach
               </tbody>
             </table>
           </div>

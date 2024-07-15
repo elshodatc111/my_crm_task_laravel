@@ -13,10 +13,10 @@ class MarkazSeeder extends Seeder
         Markaz::create([
             'name' => 'ATKO',
             'drektor' => 'Elshod Musurmonov',
-            'phone' => '',
-            'addres' => '',
-            'payme_id' => '',
-            'image' => '',
+            'phone' => '90 883 0450',
+            'addres' => 'Qarshi shaxar',
+            'payme_id' => '123456789456484',
+            'image' => 'atko.jpg',
         ]);
     }
 }
