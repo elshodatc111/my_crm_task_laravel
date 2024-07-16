@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [AuthController::class, 'dashboard'])->name('dashboard');
-
-    
-    
 });
 
 require __DIR__.'/auth.php';

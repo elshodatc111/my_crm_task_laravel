@@ -27,4 +27,5 @@ class Markaz extends Model
     public function ogohlik(){return $this->hasMany(MarkazOgohlik::class);}
     public function send_messege(){return $this->hasMany(MarkazSendMessege::class);}
     public function sms_paket(){return $this->hasMany(MarkazSmsPaket::class);}
+    public function rooms(){return $this->hasMany(MarkazRoom::class);}
 }

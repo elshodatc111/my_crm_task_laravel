@@ -49,7 +49,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="settings.html">
+        <a class="nav-link collapsed" href="{{ route('meneger.rooms') }}">
           <i class="bi bi-gear"></i>
           <span>Sozlamalar</span>
         </a>

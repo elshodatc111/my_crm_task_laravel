@@ -9,8 +9,6 @@ class MenegerController extends Controller
 {
 
     public function index(){
-
-        
         return view('meneger.index');
     }
 }
