@@ -33,18 +33,27 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title w-100 text-center">Yang o'quv markazlar</h5>
-      <form action="">
+      <form action="{{ route('admin.create_story') }}" method="POST">
+        @csrf 
         <div class="row">
           <div class="col-lg-6">
-            <label for="">O'quv markaz nomi</label>
-            <input type="text" required class="form-control">
-            <label for="">O'quv markaz drektori</label>
-            <input type="text" required class="form-control">
+            <label for="" class="my-2">O'quv markaz nomi</label>
+            <input type="text" name="name" required class="form-control">
+            <label for="" class="my-2">O'quv markaz drektori</label>
+            <input type="text" name="drektor" required class="form-control">
+            <label for="" class="my-2">Drektor telefon raqami</label>
+            <input type="text" name="phone" required class="form-control">
+            <label for="" class="my-2">O'quv markaz manzili</label>
+            <input type="text" name="addres" required class="form-control">
           </div>
           <div class="col-lg-6">
-            <label for="">Drektor telefon raqami</label>
-            <input type="text" required class="form-control">
-            <label for=""></label>
+            <label for="" class="my-2">Payme ID</label>
+            <input type="text" name="payme_id" required class="form-control">
+            <label for="" class="my-2">Dars vaqti(minut)</label>
+            <input type="number" name="lessen_time" required class="form-control">
+            <label for="" class="my-2">O'qituvchiga to'lov(1-foiz, 2-qism tulov, 3-qism tulov + bonus)</label>
+            <input type="number" name="paymart" required class="form-control">
+            <label for="" class="my-2">.</label>
             <button class="btn btn-primary w-100">Saqlash</button>
           </div>
         </div>

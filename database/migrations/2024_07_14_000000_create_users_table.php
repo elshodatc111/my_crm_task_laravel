@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->integer('markaz_id')->default(1)->constrained();
-            $table->integer('role_id')->default(2)->constrained();
+            $table->integer('role_id')->default(6)->constrained();
             $table->string('name')->nullable();
             $table->string('phone1')->nullable();
             $table->string('phone2')->nullable();

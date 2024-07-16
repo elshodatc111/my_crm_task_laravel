@@ -5,11 +5,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Markaz;
+use App\Models\User;
 use App\Models\Kassa;
+use App\Models\Role;
 use App\Models\MarkazSmsPaket;
 use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
 use App\Models\MarkazBalans;
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminController extends Controller{
@@ -19,10 +22,53 @@ class AdminController extends Controller{
         return view('admin.index',compact('Markaz'));
     }
 
-
     public function create(){
         $Markaz = Markaz::get();
         return view('admin.create_index');
+    }
+    public function create_story(Request $request){
+        $validated = $request->validate([
+            'name' => 'required',
+            'drektor' => 'required',
+            'phone' => 'required',
+            'addres' => 'required',
+            'payme_id' => 'required',
+            'lessen_time' => 'required',
+            'paymart' => 'required',
+        ]);
+        $Markaz = Markaz::create([
+            'name' => $request->name,
+            'drektor' => $request->drektor,
+            'phone' => $request->phone,
+            'addres' => $request->addres,
+            'payme_id' => $request->payme_id,
+            'lessen_time' => $request->lessen_time,
+            'image' => 'mycrm.png',
+            'paymart' => $request->paymart,
+        ]);
+        Kassa::create([
+            'markaz_id' => $Markaz->id,
+            'kassa_naqt' => 0,
+            'kassa_naqt_chiqim_pedding' => 0,
+            'kassa_naqt_xarajat_pedding' => 0,
+            'kassa_naqt_ish_haqi_pedding' => 0,
+            'kassa_plastik' => 0,
+            'kassa_plastik_chiqim_pedding' => 0,
+            'kassa_plastik_xarajat_pedding' => 0,
+            'kassa_plastik_ish_haqi_pedding' => 0,
+        ]);
+        MarkazBalans::create([
+            'markaz_id' => $Markaz->id,
+            'balans_naqt' => 0,
+            'balans_naqt_chiqim' => 0,
+            'kassa_naqt_xarajat' => 0,
+            'balans_plastik' => 0,
+            'balans_plastik_chiqim' => 0,
+            'kassa_plastik_xarajat' => 0,
+            'balans_payme' => 0,
+            'balans_payme_chiqim' => 0,
+        ]);
+        return redirect()->route('admin.index')->with('success', 'Yangi o`quv markaz yaratildi.');
     }
 
     public function show($id){
@@ -43,7 +89,6 @@ class AdminController extends Controller{
         $Markaz->image = $fileName;
         $Markaz->save();
         return redirect()->back()->with('success', 'Logo yangilandi.');
-        
     }
     // Ogohlantirish
     public function postogoh(Request $request){
@@ -208,5 +253,46 @@ class AdminController extends Controller{
 
     public function show_statistik($id){
         return view('admin.index_show_statistik',compact('id'));
+    }
+
+    public function adminPerson(){
+        $User = User::where('role_id',1)->get();
+        return view('admin.admin',compact('User'));
+    }
+    public function adminPersonBlok(Request $request){
+        $User = User::find($request->id);
+        $User->status='false';
+        $User->save();
+        return redirect()->back()->with('success', 'Administrator bloklandi.');
+    }
+    public function adminPersonOpen(Request $request){
+        $User = User::find($request->id);
+        $User->status='true';
+        $User->save();
+        return redirect()->back()->with('success', 'Administrator aktivlashtirildi.');
+    }
+    public function adminPersonCreate(Request $request){
+        $validate = $request->validate([
+            'name' => 'required',
+            'phone1' => 'required',
+            'addres' => 'required',
+            'email' => ['required', 'string', 'max:255', 'unique:users'],
+        ]);
+        User::create([
+            'markaz_id' => 1,
+            'role_id' => 1,
+            'name' => $request->name,
+            'phone1' => $request->phone1,
+            'addres' => $request->addres,
+            'email' => $request->email,
+            'phone2' => '',
+            'tkun' => '',
+            'about' => '',
+            'smm' => '',
+            'status' => 'true',
+            'balans' => 0,
+            'password' => Hash::make('12345678'),
+        ]);
+        return redirect()->back()->with('success', 'Yangi administrator qo`shildi.');
     }
 }
