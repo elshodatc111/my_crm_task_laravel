@@ -7,7 +7,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="admin_data.html">
+        <a class="nav-link collapsed" href="{{ route('admin.datadaysName') }}">
           <i class="bi bi-calendar"></i>
           <span>Dam olish kunlar</span>
         </a>

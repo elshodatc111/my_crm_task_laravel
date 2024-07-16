@@ -308,4 +308,9 @@ class AdminController extends Controller{
         $User->save();
         return redirect()->back()->with('success', 'Parol yangilandi.');
     }
+
+    // Dam olish kunlari
+    public function datadays(){
+        return view('admin.datadays');
+    }
 }

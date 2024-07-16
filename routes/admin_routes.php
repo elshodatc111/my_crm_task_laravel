@@ -35,5 +35,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/admin/profel', [AdminController::class, 'adminProfel'])->name('admin.adminProfel');
     Route::post('/admin/profel/update', [AdminController::class, 'adminProfelUpdate'])->name('admin.adminProfelUpdate');
+
+    Route::get('/admin/data/days', [AdminController::class, 'datadays'])->name('admin.datadaysName');
     
 });
