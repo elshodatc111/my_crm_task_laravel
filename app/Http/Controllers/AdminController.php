@@ -254,7 +254,7 @@ class AdminController extends Controller{
     public function show_statistik($id){
         return view('admin.index_show_statistik',compact('id'));
     }
-
+    // Administrator
     public function adminPerson(){
         $User = User::where('role_id',1)->get();
         return view('admin.admin',compact('User'));

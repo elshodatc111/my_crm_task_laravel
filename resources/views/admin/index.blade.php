@@ -68,7 +68,13 @@
                 <td>{{ $item['drektor'] }}</td>
                 <td>{{ $item['addres'] }}</td>
                 <td>{{ $item['phone'] }}</td>
-                <td>{{ $item['status'] }}</td>
+                <td>
+                  @if($item['status']=='true')
+                    <span class="badge bg-success">Activ</span>
+                  @else 
+                    <span class="badge bg-danger">Bloklangan</span>
+                  @endif
+                </td>
                 <td>{{ $item['created_at'] }}</td>
               </tr>
               @endforeach

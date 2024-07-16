@@ -9,6 +9,14 @@ class AuthController extends Controller{
         if(!auth()->user()){
             return redirect()->route('login');
         }
+        if(auth()->user()->status=='false'){
+            Auth::guard('web')->logout();
+            return view('lock.lock');
+        }
+        if(auth()->user()->markaz->status=='false'){
+            Auth::guard('web')->logout();
+            return view('lock.block');
+        }
         if(auth()->user()->role->name=='SuperAdmin'){
             return redirect()->route('admin.index');
         }elseif(auth()->user()->role->name=='Techer'){
