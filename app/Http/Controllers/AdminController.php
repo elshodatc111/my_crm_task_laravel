@@ -14,7 +14,7 @@ use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
 use App\Models\MarkazBalans;
 use Illuminate\Support\Facades\Hash;
-
+use DateTime;
 
 class AdminController extends Controller{
 
@@ -312,7 +312,7 @@ class AdminController extends Controller{
 
     // Dam olish kunlari
     public function datadays(){
-        $DamOlish = DamOlish::orderby('data','desc')->get();
+        $DamOlish = DamOlish::orderby('data','asc')->get();
         return view('admin.datadays',compact('DamOlish'));
     }
     public function datadaysCreate(Request $request){
@@ -333,5 +333,41 @@ class AdminController extends Controller{
     public function datadaysDelete(Request $request){
         $DamOlish = DamOlish::find($request->id)->delete();
         return redirect()->back()->with('success', 'Bayram kuni o`chirildi.');
+    }
+    public function datadaysYearsCreate(Request $request){
+        $now = date("Y-m-d");
+        $start = new DateTime($request->years.'-01-01');
+        $end = new DateTime($request->years.'-12-31');
+        $sundays = [];
+        while ($start <= $end) {
+            if ($start->format('N') == 7) {
+                $sundays[] = $start->format('Y-m-d');
+            }
+            $start->modify('+1 day');
+        }
+        $i=0;
+        foreach($sundays as $item){
+            if($item>=$now){
+                $DamOlish = count(DamOlish::where('data',$item)->get());
+                if($DamOlish<1){
+                    $i++;
+                    DamOlish::create([
+                        'data'=>$item,
+                        'description'=>"Yakshanba Dam olish kuni"
+                    ]);
+                }
+            }
+        }
+        return redirect()->back()->with('success', $i.' ta bayram kuni qo`shildi.');
+    }
+    public function datadaysYearsDelete(){
+        $now = date("Y-m-d");
+        $k = 0;
+        $array = DamOlish::where('data','<',$now)->get();
+        foreach ($array as $value) {
+            $value->delete();
+            $k++;
+        }
+        return redirect()->back()->with('success', $k.' ta bayram kuni o`childi.');
     }
 }

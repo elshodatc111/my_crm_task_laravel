@@ -86,10 +86,10 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title w-100 text-center mb-0">Yakshanba kunlarni qo'shish</h5>
-            <form action="" method="post">
+            <form action="{{ route('admin.datadaysYearsCreate') }}" method="post">
               @csrf
               <label class="my-2">Yilni tanlang</label>
-              <select name="" class="form-select">
+              <select name="years" class="form-select">
                 <option value="">Tanlang</option>
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
@@ -106,7 +106,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title w-100 text-center mb-0">O'tgan dam olish kunlarini o'chirish</h5>
-            <form action="" method="post">
+            <form action="{{ route('admin.datadaysYearsDelete') }}" method="post">
               @csrf
               <button class="btn btn-primary w-100 mt-2" type="submit">Dam olish kunlarini arxivini o'chirish</button>
             </form>

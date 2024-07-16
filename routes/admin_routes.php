@@ -39,5 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/data/days', [AdminController::class, 'datadays'])->name('admin.datadaysName');
     Route::post('/admin/data/new/day', [AdminController::class, 'datadaysCreate'])->name('admin.datadaysCreate');
     Route::post('/admin/data/new/delete', [AdminController::class, 'datadaysDelete'])->name('admin.datadaysDelete');
+    Route::post('/admin/data/years/create', [AdminController::class, 'datadaysYearsCreate'])->name('admin.datadaysYearsCreate');
+    Route::post('/admin/data/years/delete', [AdminController::class, 'datadaysYearsDelete'])->name('admin.datadaysYearsDelete');
     
 });
