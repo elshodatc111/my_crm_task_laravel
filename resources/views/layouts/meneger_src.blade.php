@@ -20,11 +20,27 @@
   <link href="https://atko.tech/mycrm/assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <link href="https://atko.tech/mycrm/assets/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
 </head>
 
 <body>
     @yield('content')
-
+    <script>
+      $(document).ready(function() {
+        $('.amount').on('input', function() {
+          var input = $(this).val();
+          var numericValue = input.replace(/[^\d]/g, '');
+          var formattedValue = numericValue ? parseInt(numericValue, 10).toLocaleString() : '';
+          $(this).val(formattedValue);
+        });
+        $('.phone').inputmask({
+          mask: '+\\9\\9\\8 99 999 9999',
+          placeholder: ' ',
+          clearMaskOnLostFocus: true
+        });
+      });
+    </script>
   <script src="https://atko.tech/mycrm/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="https://atko.tech/mycrm/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://atko.tech/mycrm/assets/vendor/chart.js/chart.umd.js"></script>

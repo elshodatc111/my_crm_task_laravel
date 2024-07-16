@@ -3,7 +3,6 @@
 @section('content')
 @extends('layouts.meneger_header')
 @extends('layouts.meneger_menu')
-
 <main id="main" class="main">
 
 <div class="pagetitle">
@@ -11,7 +10,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('meneger.home') }}">Bosh sahifa</a></li>
-      <li class="breadcrumb-item active">Xona sozlamalari</li>
+      <li class="breadcrumb-item active">To'lov sozlamalari</li>
     </ol>
   </nav>
 </div>
@@ -19,10 +18,10 @@
 <section class="section dashboard">
   <div class="row mb-2">
     <div class="col-lg-3 mt-lg-0 mt-2">
-      <a href="{{ route('meneger.rooms') }}" class="btn btn-primary w-100">Xonalar</a>
+      <a href="{{ route('meneger.rooms') }}" class="btn btn-secondary w-100">Xonalar</a>
     </div>
     <div class="col-lg-3 mt-lg-0 mt-2">
-      <a href="{{ route('meneger.paymart') }}" class="btn btn-secondary w-100">To'lovlar</a>
+      <a href="{{ route('meneger.paymart') }}" class="btn btn-primary w-100">To'lovlar</a>
     </div>
     <div class="col-lg-3 mt-lg-0 mt-2">
       <a href="settings_cours.html" class="btn btn-secondary w-100">Kurslar</a>
@@ -31,7 +30,6 @@
       <a href="{{ route('meneger.message') }}" class="btn btn-secondary w-100">SMS</a>
     </div>
   </div>
-
 
   @if (Session::has('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -49,55 +47,43 @@
 
   <div class="row">
     <div class="col-lg-8">
-      <div class="card" style="min-height:290px;">
+      <div class="card">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Dars xonalari </h5>
+          <h5 class="card-title w-100 text-center">To'lov sozlamalari </h5>
           <div class="table-responsive">
             <table class="table text-center table-bordered" style="font-size: 12px;">
               <thead>
                 <tr class="align-items-center">
                   <th>#</th>
-                  <th>Xona nomi</th>
-                  <th>Xona ochildi</th>
-                  <th>Xona holati</th>
+                  <th>To'lov summasi</th>
+                  <th>To'lov chegirmasi</th>
+                  <th>Admin chegirmasi</th>
+                  <th>Chegirma muddati</th>
                   <th>Meneger</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                @forelse($MarkazRoom as $item)
+                @forelse($MarkazPaymart as $item)
                 <tr>
                   <td>{{ $loop->index+1 }}</td>
-                  <td>{{ $item['room_name'] }}</td>
-                  <td>{{ $item['created_at'] }}</td>
-                  <td>
-                    @if($item['status']=='true')
-                    <span class="badge bg-primary">Aktiv</span>
-                    @else
-                    <span class="badge bg-danger">Yopiq</span>
-                    @endif
-                  </td>
+                  <td>{{ number_format($item['summa'], 0, ',', ' ') }}</td>
+                  <td>{{ number_format($item['chegirma'], 0, ',', ' ') }}</td>
+                  <td>{{ number_format($item['admin_chegirma'], 0, ',', ' ') }}</td>
+                  <td>{{ number_format($item['chegirma_time'], 0, ',', ' ') }}</td>
                   <td>{{ $item['meneger'] }}</td>
                   <td>
-                    @if($item['status']=='true')
-                      <form action="{{ route('meneger.rooms_Block') }}" method="post">
-                        @csrf 
-                        <input type="hidden" name="room_id" value="{{ $item['id'] }}">
-                        <button type="submit" class="btn btn-danger p-1" title="Bloklash"><i class="bi bi-lock"></i></button>
-                      </form>
-                    @else
-                      <form action="{{ route('meneger.rooms_Block') }}" method="post">
-                        @csrf 
-                        <input type="hidden" name="room_id" value="{{ $item['id'] }}">
-                        <button class="btn btn-success p-1" title="Akrivlashtirish"><i class="bi bi-unlock"></i></button>
-                      </form>
-                    @endif
+                    <form action="{{ route('meneger.paymart_delete') }}" method="post">
+                      @csrf 
+                      <input type="hidden" name="id" value="{{ $item['id'] }}">
+                      <button class="btn btn-danger p-1"><i class="bi bi-trash"></i></button>
+                    </form>
                   </td>
                 </tr>
                 @empty
-                  <tr>
-                    <td colspan=6 class="text-center">Dars xonalari mavjud emas.</td>
-                  </tr>
+                <tr>
+                  <td colspan=7 class="text-center">To'lov sozlamalari kirityilmagan</td>
+                </tr>
                 @endforelse
               </tbody>
             </table>
@@ -106,14 +92,29 @@
       </div>
     </div>
     <div class="col-lg-4">
-      <div class="card" style="min-height:290px;">
+      <div class="card" style="min-height:430px">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Yangi xona qo'shish</h5>
-          <form action="{{ route('meneger.rooms_create') }}" method="post">
+          <h5 class="card-title w-100 text-center">Yangi to'lov qo'shish</h5>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+          <form action="{{ route('meneger.paymart_reate') }}" method="post" id="form1">
             @csrf 
-            <label for="">Yangi xona nomi</label>
-            <input type="text" name="room_name" class="form-control my-2" required>
-            <button type="submit" class="btn btn-primary w-100">Xonani saqlash</button>
+            <label for="">Yangi to'lov summasi</label>
+            <input type="text" name="summa" class="form-control  amount my-2" value="{{ old('summa') }}" required>
+            <label for="">To'lov uchun chegirma</label>
+            <input type="text" name="chegirma" class="form-control amount  my-2" value="{{ old('chegirma') }}" required>
+            <label for="">Admin uchun chegirma</label>
+            <input type="text" name="admin_chegirma" class="form-control amount  my-2" value="{{ old('admin_chegirma') }}" required>
+            <label for="">Chegirma muddati (kun)</label>
+            <input type="number" name="chegirma_time" class="form-control my-2" value="{{ old('chegirma_time') }}" required>
+            <button class="btn btn-primary w-100">Chegirmani saqlash</button>
           </form>
         </div>
       </div>
@@ -122,6 +123,7 @@
 </section>
 
 </main>
+
 
 <footer id="footer" class="footer">
 <div class="copyright">
@@ -134,5 +136,7 @@
 
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
 
 @endsection

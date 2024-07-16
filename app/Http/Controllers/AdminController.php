@@ -13,6 +13,7 @@ use App\Models\MarkazSmsPaket;
 use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
 use App\Models\MarkazBalans;
+use App\Models\MarkazSmsSetting;
 use Illuminate\Support\Facades\Hash;
 use DateTime;
 
@@ -68,6 +69,9 @@ class AdminController extends Controller{
             'kassa_plastik_xarajat' => 0,
             'balans_payme' => 0,
             'balans_payme_chiqim' => 0,
+        ]);
+        MarkazSmsSetting::create([
+            'markaz_id' => $Markaz->id,
         ]);
         return redirect()->route('admin.index')->with('success', 'Yangi o`quv markaz yaratildi.');
     }

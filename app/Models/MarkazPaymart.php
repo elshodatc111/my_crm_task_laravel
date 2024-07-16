@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MarkazRoom extends Model
+class MarkazPaymart extends Model
 {
     use HasFactory;
     protected $fillable = [
         'markaz_id',
-        'room_name',
-        'status',
+        'summa',
+        'chegirma',
+        'admin_chegirma',
+        'chegirma_time',
         'meneger',
+        'status',
     ];
-    public function rooms(){
+    public function paymarts(){
         return $this->belongsTo(Markaz::class);
     }
 }

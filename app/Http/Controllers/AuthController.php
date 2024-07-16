@@ -24,7 +24,7 @@ class AuthController extends Controller{
         }elseif(auth()->user()->role->name=='User'){
             return redirect()->route('user.index');
         }else{
-            return redirect()->route('meneger.index');
+            return redirect()->route('meneger.home');
         }
     }
 }

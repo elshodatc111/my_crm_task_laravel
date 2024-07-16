@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MarkazRoom extends Model
+class MarkazSmsSetting extends Model
 {
     use HasFactory;
     protected $fillable = [
         'markaz_id',
-        'room_name',
-        'status',
-        'meneger',
+        'new_user',
+        'tkun',
+        'new_pay',
     ];
-    public function rooms(){
+    public function message(){
         return $this->belongsTo(Markaz::class);
     }
 }

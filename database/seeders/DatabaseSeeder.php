@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             KassaSeeder::class,
             UserSeeder::class,
             MarkazBalansSeeder::class,
+            SmsSeeder::class,
         ]);
     }
 }
