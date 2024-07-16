@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Markaz;
 use App\Models\User;
 use App\Models\Kassa;
+use App\Models\DamOlish;
 use App\Models\Role;
 use App\Models\MarkazSmsPaket;
 use App\Models\MarkazOgohlik;
@@ -311,6 +312,26 @@ class AdminController extends Controller{
 
     // Dam olish kunlari
     public function datadays(){
-        return view('admin.datadays');
+        $DamOlish = DamOlish::orderby('data','desc')->get();
+        return view('admin.datadays',compact('DamOlish'));
+    }
+    public function datadaysCreate(Request $request){
+        $validate = $request->validate([
+            'data' => ['required','unique:dam_olishes'],
+            'description' => 'required',
+        ]);
+        $Now = date("Y-m-d");
+        if($Now>=$request->data){
+            return redirect()->back()->with('success', 'Bayram kuni eskirgan.');
+        }
+        $DamOlish = DamOlish::create([
+            'data'=>$request->data,
+            'description'=>$request->description,
+        ]);
+        return redirect()->back()->with('success', 'Yangi bayram kuni qo`shildi.');
+    }
+    public function datadaysDelete(Request $request){
+        $DamOlish = DamOlish::find($request->id)->delete();
+        return redirect()->back()->with('success', 'Bayram kuni o`chirildi.');
     }
 }

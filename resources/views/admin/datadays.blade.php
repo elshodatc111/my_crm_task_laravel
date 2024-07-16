@@ -47,12 +47,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  @foreach($DamOlish as $item)
+                    <tr>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{ $item['data'] }}</td>
+                      <td>{{ $item['description'] }}</td>
+                      <td>
+                        <form action="{{ route('admin.datadaysDelete') }}" method="post">
+                          @csrf 
+                          <input type="hidden" name="id" value="{{ $item['id'] }}">
+                          <button type="submit" class="btn btn-danger p-1"><i class="bi bi-trash"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -65,12 +73,12 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title w-100 text-center mb-0">Yangi dam olish kuni qo'shish</h5>
-            <form action="{{ route('admin.adminProfelUpdate') }}" method="post">
+            <form action="{{ route('admin.datadaysCreate') }}" method="post">
               @csrf
               <label class="my-2">Dam olish kuni sanasi</label>
-              <input type="data" class="form-control" name="password" required>
+              <input type="date" name="data" class="form-control" name="password" required>
               <label class="my-2">Dam olish kuni haqida</label>
-              <textarea name="" required class="form-control"></textarea>
+              <textarea name="description" required class="form-control"></textarea>
               <button class="btn btn-primary w-100 mt-2" type="submit">Parolni yangilash</button>
             </form>
           </div>
@@ -78,7 +86,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title w-100 text-center mb-0">Yakshanba kunlarni qo'shish</h5>
-            <form action="{{ route('admin.adminProfelUpdate') }}" method="post">
+            <form action="" method="post">
               @csrf
               <label class="my-2">Yilni tanlang</label>
               <select name="" class="form-select">
@@ -98,7 +106,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title w-100 text-center mb-0">O'tgan dam olish kunlarini o'chirish</h5>
-            <form action="{{ route('admin.adminProfelUpdate') }}" method="post">
+            <form action="" method="post">
               @csrf
               <button class="btn btn-primary w-100 mt-2" type="submit">Dam olish kunlarini arxivini o'chirish</button>
             </form>

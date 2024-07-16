@@ -37,5 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/profel/update', [AdminController::class, 'adminProfelUpdate'])->name('admin.adminProfelUpdate');
 
     Route::get('/admin/data/days', [AdminController::class, 'datadays'])->name('admin.datadaysName');
+    Route::post('/admin/data/new/day', [AdminController::class, 'datadaysCreate'])->name('admin.datadaysCreate');
+    Route::post('/admin/data/new/delete', [AdminController::class, 'datadaysDelete'])->name('admin.datadaysDelete');
     
 });
