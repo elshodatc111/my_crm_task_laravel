@@ -9,6 +9,8 @@ use App\Models\Kassa;
 use App\Models\MarkazSmsPaket;
 use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
+use App\Models\MarkazBalans;
+
 
 class AdminController extends Controller{
 
@@ -94,6 +96,8 @@ class AdminController extends Controller{
         $response = array();
         $response['markaz'] = Markaz::find($id);
         $response['generatsiya'] = MarkazLessenTime::where('markaz_id',$id)->get();
+        $response['kassa'] = Kassa::where('markaz_id',$id)->first();
+        $response['balans'] = MarkazBalans::where('markaz_id',$id)->first();
         return view('admin.index_show_setting',compact('id','response'));
     }
     public function show_update(Request $request, $id){
@@ -128,6 +132,52 @@ class AdminController extends Controller{
         $Markaz->status = 'true';
         $Markaz->save(); 
         return redirect()->back()->with('success', 'Markaz aktivlashtirildi.');
+    }
+    public function kassaUpdate(Request $request){
+        $validated = $request->validate([
+            'kassa_naqt' => 'required',
+            'kassa_naqt_chiqim_pedding' => 'required',
+            'kassa_naqt_xarajat_pedding' => 'required',
+            'kassa_naqt_ish_haqi_pedding' => 'required',
+            'kassa_plastik' => 'required',
+            'kassa_plastik_chiqim_pedding' => 'required',
+            'kassa_plastik_xarajat_pedding' => 'required',
+            'kassa_plastik_ish_haqi_pedding' => 'required',
+        ]);
+        $Kassa = Kassa::where('markaz_id',$request->id)->first();
+        $Kassa->kassa_naqt = $request->kassa_naqt;
+        $Kassa->kassa_naqt_chiqim_pedding = $request->kassa_naqt_chiqim_pedding;
+        $Kassa->kassa_naqt_xarajat_pedding = $request->kassa_naqt_xarajat_pedding;
+        $Kassa->kassa_naqt_ish_haqi_pedding = $request->kassa_naqt_ish_haqi_pedding;
+        $Kassa->kassa_plastik = $request->kassa_plastik;
+        $Kassa->kassa_plastik_chiqim_pedding = $request->kassa_plastik_chiqim_pedding;
+        $Kassa->kassa_plastik_xarajat_pedding = $request->kassa_plastik_xarajat_pedding;
+        $Kassa->kassa_plastik_ish_haqi_pedding = $request->kassa_plastik_ish_haqi_pedding;
+        $Kassa->save(); 
+        return redirect()->back()->with('success', 'Kassa malumotlari yangilandi.');
+    }
+    public function balansUpdate(Request $request){
+        $validated = $request->validate([
+            'balans_naqt' => 'required',
+            'balans_naqt_chiqim' => 'required',
+            'kassa_naqt_xarajat' => 'required',
+            'balans_plastik' => 'required',
+            'balans_plastik_chiqim' => 'required',
+            'kassa_plastik_xarajat' => 'required',
+            'balans_payme' => 'required',
+            'balans_payme_chiqim' => 'required',
+        ]);
+        $MarkazBalans = MarkazBalans::where('markaz_id',$request->id)->first();
+        $MarkazBalans->balans_naqt = $request->balans_naqt;
+        $MarkazBalans->balans_naqt_chiqim = $request->balans_naqt_chiqim;
+        $MarkazBalans->kassa_naqt_xarajat = $request->kassa_naqt_xarajat;
+        $MarkazBalans->balans_plastik = $request->balans_plastik;
+        $MarkazBalans->balans_plastik_chiqim = $request->balans_plastik_chiqim;
+        $MarkazBalans->kassa_plastik_xarajat = $request->kassa_plastik_xarajat;
+        $MarkazBalans->balans_payme = $request->balans_payme;
+        $MarkazBalans->balans_payme_chiqim = $request->balans_payme_chiqim;
+        $MarkazBalans->save(); 
+        return redirect()->back()->with('success', 'Balans malumotlari yangilandi.');
     }
 
     public function show_sms($id){

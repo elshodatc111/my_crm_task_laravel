@@ -12,6 +12,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/show/setting/lock', [AdminController::class, 'show_update_lock'])->name('admin.show_update_lock');
     Route::post('/admin/show/setting/block', [AdminController::class, 'show_update_lock_block'])->name('admin.show_update_lock_block');
     Route::post('/admin/show/setting/generator', [AdminController::class, 'generator'])->name('admin.generator');
+    Route::post('/admin/show/setting/kassa/update', [AdminController::class, 'kassaUpdate'])->name('admin.kassaUpdate');
+    Route::post('/admin/show/setting/balans/update', [AdminController::class, 'balansUpdate'])->name('admin.balansUpdate');
 
 
 

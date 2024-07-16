@@ -121,6 +121,62 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title w-100 text-center">Markaz kassa</div>
+              <form action="{{ route('admin.kassaUpdate') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $id }}">
+                <label for="" class="my-2">Kassa Naqt</label>
+                <input type="number" name="kassa_naqt" required value="{{ $response['kassa']['kassa_naqt'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Naqt Chiqim Kutilmoqda</label>
+                <input type="number" name="kassa_naqt_chiqim_pedding" required value="{{ $response['kassa']['kassa_naqt_chiqim_pedding'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Naqt Xarajat Kutilmoqda</label>
+                <input type="number" name="kassa_naqt_xarajat_pedding" required value="{{ $response['kassa']['kassa_naqt_xarajat_pedding'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Naqt Ish Haqi Kutilmoqda</label>
+                <input type="number" name="kassa_naqt_ish_haqi_pedding" required value="{{ $response['kassa']['kassa_naqt_ish_haqi_pedding'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Plastik</label>
+                <input type="number" name="kassa_plastik" required value="{{ $response['kassa']['kassa_plastik'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Plastik Chiqim Kutilmoqda</label>
+                <input type="number" name="kassa_plastik_chiqim_pedding" required value="{{ $response['kassa']['kassa_plastik_chiqim_pedding'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Plastik Xarajat Kutilmoqda</label>
+                <input type="number" name="kassa_plastik_xarajat_pedding" required value="{{ $response['kassa']['kassa_plastik_xarajat_pedding'] }}" class="form-control">
+                <label for="" class="my-2">Kassa Plastik Ish haqi Kutilmoqda</label>
+                <input type="number" name="kassa_plastik_ish_haqi_pedding" required value="{{ $response['kassa']['kassa_plastik_ish_haqi_pedding'] }}" class="form-control">
+                <button class="btn btn-primary w-100 my-2">O'zgarishlarni saqlash</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title w-100 text-center">Markaz Balans</div>
+              <form action="{{ route('admin.balansUpdate') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $id }}">
+                <label for="" class="my-2">Balans Naqt</label>
+                <input type="number" name="balans_naqt" required value="{{ $response['balans']['balans_naqt'] }}" class="form-control">
+                <label for="" class="my-2">Balans Naqt Chiqim</label>
+                <input type="number" name="balans_naqt_chiqim" required value="{{ $response['balans']['balans_naqt_chiqim'] }}" class="form-control">
+                <label for="" class="my-2">Balans Naqt Xarajat</label>
+                <input type="number" name="kassa_naqt_xarajat" required value="{{ $response['balans']['kassa_naqt_xarajat'] }}" class="form-control">
+                <label for="" class="my-2">Balans Plastik</label>
+                <input type="number" name="balans_plastik" required value="{{ $response['balans']['balans_plastik'] }}" class="form-control">
+                <label for="" class="my-2">Balans Plastik Chiqim</label>
+                <input type="number" name="balans_plastik_chiqim" required value="{{ $response['balans']['balans_plastik_chiqim'] }}" class="form-control">
+                <label for="" class="my-2">Balans Plastik Xarajat</label>
+                <input type="number" name="kassa_plastik_xarajat" required value="{{ $response['balans']['kassa_plastik_xarajat'] }}" class="form-control">
+                <label for="" class="my-2">Balans Payme</label>
+                <input type="number" name="balans_payme" required value="{{ $response['balans']['balans_payme'] }}" class="form-control">
+                <label for="" class="my-2">Balans Payme Chiqim</label>
+                <input type="number" name="balans_payme_chiqim" required value="{{ $response['balans']['balans_payme_chiqim'] }}" class="form-control">
+                <button class="btn btn-primary w-100 my-2">O'zgarishlarni saqlash</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
 
 </section>
