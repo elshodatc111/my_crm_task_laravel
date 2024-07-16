@@ -24,7 +24,7 @@
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="profel.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.adminProfel') }}">
                 <i class="bi bi-person"></i>
                 <span>Kabinet</span>
               </a>

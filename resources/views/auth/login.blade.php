@@ -17,7 +17,9 @@
                 <div class="card-body">
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Kirish</h5>
-                    <p class="text-center small">Login yoki parol xato</p>
+                    @if ($errors->all())
+                      <p class="text-center text-danger small">Login yoki parol xato</p>
+                    @endif
                   </div>
                   <form class="row g-3 needs-validation" action="{{ route('login') }}" method="POST" novalidate>
                   @csrf

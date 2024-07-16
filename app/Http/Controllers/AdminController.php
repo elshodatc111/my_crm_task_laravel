@@ -43,7 +43,7 @@ class AdminController extends Controller{
             'addres' => $request->addres,
             'payme_id' => $request->payme_id,
             'lessen_time' => $request->lessen_time,
-            'image' => 'mycrm.png',
+            'image' => 'mycrm.jpg',
             'paymart' => $request->paymart,
         ]);
         Kassa::create([
@@ -294,5 +294,18 @@ class AdminController extends Controller{
             'password' => Hash::make('12345678'),
         ]);
         return redirect()->back()->with('success', 'Yangi administrator qo`shildi.');
+    }
+    //Profel
+    public function adminProfel(){
+        return view('admin.profel');
+    }
+    public function adminProfelUpdate(Request $request){
+        $validate = $request->validate([
+            'password' => 'required|min:8',
+        ]);
+        $User = User::find(auth()->user()->id);
+        $User->password = Hash::make($request->password);
+        $User->save();
+        return redirect()->back()->with('success', 'Parol yangilandi.');
     }
 }

@@ -33,4 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/person/open', [AdminController::class, 'adminPersonOpen'])->name('admin.adminPersonOpen');
     Route::post('/admin/person/create', [AdminController::class, 'adminPersonCreate'])->name('admin.adminPersonCreate');
     
+    Route::get('/admin/profel', [AdminController::class, 'adminProfel'])->name('admin.adminProfel');
+    Route::post('/admin/profel/update', [AdminController::class, 'adminProfelUpdate'])->name('admin.adminProfelUpdate');
+    
 });
