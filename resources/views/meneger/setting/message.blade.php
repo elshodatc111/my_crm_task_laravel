@@ -25,7 +25,7 @@
       <a href="{{ route('meneger.paymart') }}" class="btn btn-secondary w-100">To'lovlar</a>
     </div>
     <div class="col-lg-3 mt-lg-0 mt-2">
-      <a href="settings_cours.html" class="btn btn-secondary w-100">Kurslar</a>
+      <a href="{{ route('meneger.cours') }}" class="btn btn-secondary w-100">Kurslar</a>
     </div>
     <div class="col-lg-3 mt-lg-0 mt-2">
       <a href="{{ route('meneger.message') }}" class="btn btn-primary w-100">SMS</a>
