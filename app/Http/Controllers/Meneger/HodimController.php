@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\MarkazAddres;
 
 class HodimController extends Controller
 {
@@ -27,7 +28,11 @@ class HodimController extends Controller
         }
     }
     public function hodimCreate(){
-        return view('meneger.hodim.hodim_create');
+        $MarkazAddres = MarkazAddres::where('markaz_id',auth()->user()->markaz_id)->get();
+        return view('meneger.hodim.hodim_create',compact('MarkazAddres'));
+    }
+    public function hodimCreateStore(Request $request){
+        dd($request);
     }
     public function hodimShow($id){
         return view('meneger.hodim.hodim_show');

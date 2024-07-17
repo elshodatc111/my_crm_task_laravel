@@ -41,35 +41,39 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title w-100 text-center">Yangi hodim</h5>
-      <form action="">
+      <form action="{{ route('meneger.hodim_create_store') }}" method="POST">
+        @csrf
         <div class="row">
           <div class="col-lg-6">
             <label class="my-2">Hodimning FIO</label>
-            <input type="text" class="form-control" required>
+            <input type="text" name="name" class="form-control" required> 
             <label class="my-2">Yashash manzili</label>
-            <select name="" required class="form-select">
-              <option value=""></option>
+            <select name="addres" required class="form-select">
+            <option value="">Tanlang...</option>
+              @foreach($MarkazAddres as $item)
+              <option value="{{ $item['addres'] }}">{{ $item['addres'] }}</option>
+              @endforeach
             </select>
             <label class="my-2">Hodimning tug'ilgan kuni</label>
-            <input type="date" class="form-control" required>
+            <input type="date" name="tkun" class="form-control" required>
             <label class="my-2">Hodim haqida</label>
-            <textarea name=""  class="form-control" required></textarea>
+            <textarea name="about"  class="form-control" required></textarea>
           </div>
           <div class="col-lg-6">
             <label class="my-2">Telefon raqam</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="phone1" required class="form-control phone">
             <label class="my-2">Qo'shimcha telefon raqami</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="phone2" required class="form-control phone">
             <label class="my-2">Lovazimi</label>
-            <select name="" required class="form-select">
+            <select name="role_id" required class="form-select">
               <option value="">Tanlang ...</option>
               <option value="2">Drektor</option>
               <option value="3">Admin</option>
               <option value="4">Meneger</option>
             </select>
             <label class="my-2">Hodim uchun login</label>
-            <input type="text" required class="form-control">
-            <button class="btn btn-primary w-100 mt-2">Yangi hodimni saqlash</button>
+            <input type="text" name="email" required class="form-control">
+            <button type="submit" class="btn btn-primary w-100 mt-2">Yangi hodimni saqlash</button>
           </div>
         </div>
       </form>

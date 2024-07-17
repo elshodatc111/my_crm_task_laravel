@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/hodim/hodim', [HodimController::class, 'hodim'])->name('meneger.hodim');
         Route::post('/meneger/hodim/hodim/unlock', [HodimController::class, 'hodimUnlock'])->name('meneger.hodim_unlock');
         Route::get('/meneger/hodim/hodim/create', [HodimController::class, 'hodimCreate'])->name('meneger.hodim_create');
+        Route::post('/meneger/hodim/hodim/create', [HodimController::class, 'hodimCreateStore'])->name('meneger.hodim_create_store');
         Route::get('/meneger/hodim/hodim/show/{id}', [HodimController::class, 'hodimShow'])->name('meneger.hodim_show');
         Route::get('/meneger/techer/techer', [HodimController::class, 'techer'])->name('meneger.techer');
         Route::get('/meneger/techer/techer/create', [HodimController::class, 'techerCreate'])->name('meneger.techer_create');
