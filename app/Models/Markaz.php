@@ -31,4 +31,6 @@ class Markaz extends Model
     public function paymarts(){return $this->hasMany(MarkazPaymart::class);}
     public function message(){return $this->hasMany(MarkazSmsSetting::class);}
     public function cours(){return $this->hasMany(MarkazCours::class);}
+    public function addres(){return $this->hasMany(MarkazAddres::class);}
+    public function smm(){return $this->hasMany(MarkazSmm::class);}
 }

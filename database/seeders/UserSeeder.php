@@ -34,13 +34,24 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'markaz_id' => 1,
-            'role_id' => 4,
+            'role_id' => 3,
             'name' => 'Elshod Musurmonov',
             'phone1' => "90 883 0450",
             'phone2' => "90 883 0450",
             'addres' => "Qarshi shaxar",
             'tkun' => '2024-01-01',
             'email' => 'adminmeneger@gmail.com',
+            'password' => Hash::make('12345678')
+        ]);
+        User::create([
+            'markaz_id' => 1,
+            'role_id' => 4,
+            'name' => 'Elshod Musurmonov',
+            'phone1' => "90 883 0450",
+            'phone2' => "90 883 0450",
+            'addres' => "Qarshi shaxar",
+            'tkun' => '2024-01-01',
+            'email' => 'meneger@gmail.com',
             'password' => Hash::make('12345678')
         ]);
         User::create([

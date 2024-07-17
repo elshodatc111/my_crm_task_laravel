@@ -25,7 +25,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="hodimlar.html">
+        <a class="nav-link collapsed" href="{{ route('meneger.hodim') }}">
           <i class="bi bi-person-check"></i>
           <span>Hodimlar</span>
         </a>

@@ -123,7 +123,9 @@ class SettingController extends Controller
         return redirect()->back()->with('success', "Yangi kurs qo'shildi");
     }
     public function coursdelete(Request $request){
-        MarkazCours::find($request->cours_id)->delete();
+        $MarkazCours = MarkazCours::find($request->cours_id);
+        $MarkazCours->status = 'false';
+        $MarkazCours->save();
         MarkazCoursVideo::where('cours_id',$request->cours_id)->delete();
         MarkazCoursTest::where('cours_id',$request->cours_id)->delete();
         return redirect()->back()->with('success', "Kurs o'chirildi");
