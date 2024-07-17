@@ -26,7 +26,7 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Login</label>
                       <div class="input-group has-validation">
-                        <input type="text" class="form-control" name="email" :value="old('email')" required autofocus autocomplete="username">
+                        <input type="text" class="form-control" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
                         <div class="invalid-feedback">Login kiritish majburiy.</div>
                       </div>
                     </div>

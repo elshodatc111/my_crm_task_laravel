@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58ef83953920e06181ea84f65f0b2635",
+    "content-hash": "bc5935986db3e149414ad07635dd4d3e",
     "packages": [
         {
             "name": "brick/math",
@@ -1916,6 +1916,55 @@
                 }
             ],
             "time": "2024-06-28T09:40:51+00:00"
+        },
+        {
+            "name": "mrmuminov/php-eskiz-uz",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrmuminov/php-eskiz-uz.git",
+                "reference": "2d48974920e8ddf7565c63a587746b85dc45994e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrmuminov/php-eskiz-uz/zipball/2d48974920e8ddf7565c63a587746b85dc45994e",
+                "reference": "2d48974920e8ddf7565c63a587746b85dc45994e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mrmuminov\\eskizuz\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bahriddin Mo'minov",
+                    "email": "darkshadeuz@gmail.com"
+                }
+            ],
+            "description": "PHP Eskiz.uz SMS Gateway package",
+            "keywords": [
+                "eskiz",
+                "gateway",
+                "php",
+                "shlyuz",
+                "sms"
+            ],
+            "support": {
+                "issues": "https://github.com/mrmuminov/php-eskiz-uz/issues",
+                "source": "https://github.com/mrmuminov/php-eskiz-uz/tree/2.1.0"
+            },
+            "time": "2023-03-10T06:47:50+00:00"
         },
         {
             "name": "nesbot/carbon",

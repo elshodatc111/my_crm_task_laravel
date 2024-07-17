@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('markaz_sen_messeges', function (Blueprint $table) {
+        Schema::create('markaz_send_messages', function (Blueprint $table) {
             $table->id();
-            $table->integer('markaz_id')->default(1)->constrained();
+            $table->integer('markaz_id')->constrained();
             $table->string('phone');
             $table->string('description');
             $table->timestamps();
         });
     }
 
-
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('markaz_sen_messeges');
+        Schema::dropIfExists('markaz_send_messages');
     }
 };

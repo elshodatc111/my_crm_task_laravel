@@ -32,71 +32,78 @@
     </div>
   </div>
 
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Yangi xodim qo'shildi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+  @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @elseif (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
 
-  
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Hodim faoliyati yakunlandi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Hodim faoliyati qayta tiklandi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
 
 
   <div class="card">
     <div class="card-body">
       <h5 class="card-title w-100 text-center">O'qituvchilar</h5>
       <div class="table-responsive">
-        <table class="table text-center table-bordered" style="font-size: 12px;">
+      <table class="table text-center table-bordered" style="font-size: 12px;">
           <thead>
             <tr class="align-items-center">
               <th>#</th>
-              <th>O'qituvchi</th>
+              <th>Hodim</th>
               <th>Login</th>
               <th>Telefon</th>
+              <th>Lavozim</th>
               <th>Faoliyati</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
+            @forelse($User as $item)
             <tr>
-              <td>1</td>
+              <td>{{ $loop->index+1 }}</td>
               <td style="text-align:left;">
-                <a href="{{ route('meneger.techer_show',1) }}"><b>Elshod Musurmonov</b></a>
+                <a href="{{ route('meneger.hodim_show', $item['id']) }}"><b class="m-0 p-0">{{ $item['name'] }}</b></a>
               </td>
-              <td>elshodatc1116</td>
-              <td>90 883 0450</td>
-              <td><span class="bg-success p-1 text-white">Aktiv</span></td>
+              <td style="text-align:left">{{ $item['email'] }}</td>
+              <td>{{ $item['phone1'] }}</td>
               <td>
-                <form action="" method="post">
-                  <button class="btn btn-danger p-0 px-1 m-0">Yakunlash</button>
-                </form>
+                O'qituvchi
+              </td>
+              <td>
+                @if($item['status']=='true')
+                <span class="bg-success p-1 text-white">Aktiv</span>
+                @else
+                <span class="bg-danger p-1 text-white">Bloklangan</span>
+                @endif
+              </td>
+              <td>
+                @if($item['status']=='true')
+                  <form action="{{ route('meneger.hodim_unlock') }}" method="post" class="m-0">
+                    @csrf 
+                    <input type="hidden" name="id" value="{{$item['id']}}">
+                    <button type="submit" class="btn btn-danger p-1 m-0" title="Bloklash"><i class="bi bi-lock"></i></button>
+                  </form>
+                @else
+                  <form action="{{ route('meneger.hodim_unlock') }}" method="post" class="m-0">
+                    @csrf 
+                    <input type="hidden" name="id" value="{{$item['id']}}">
+                    <button type="submit" class="btn btn-danger p-1 m-0" title="Aktivlashtirish"><i class="bi bi-unlock"></i></button>
+                  </form>
+                @endif
               </td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td style="text-align:left;">
-                <a href="{{ route('meneger.techer_show',1) }}"><b>Elshod Musurmonov</b></a>
-              </td>
-              <td>elshodatc1116</td>
-              <td>90 883 0450</td>
-              <td><span class="bg-danger p-1 text-white">Yakunlangan</span></td>
-              <td>
-                <form action="" method="post">
-                  <button class="btn btn-success p-0 px-1 m-0">Aktivlashtirish</button>
-                </form>
-              </td>
-            </tr>
-            
+            @empty
+              <tr>
+                <td class="text-center">Hodimlar vajud emas</td>
+              </tr>
+            @endforelse
           </tbody>
         </table>
       </div>

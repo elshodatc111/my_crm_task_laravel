@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MarkazSenMessege extends Model
+class MarkazSendMessage extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -13,7 +13,7 @@ class MarkazSenMessege extends Model
         'phone',
         'description',
     ];
-    public function markaz(){
+    public function sendmessege(){
         return $this->belongsTo(Markaz::class);
     }
 }

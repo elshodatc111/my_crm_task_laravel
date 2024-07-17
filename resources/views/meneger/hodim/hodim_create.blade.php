@@ -31,12 +31,19 @@
       <a href="{{ route('meneger.techer_create') }}" class="btn btn-secondary w-100">Yangi o'qituvchi</a>
     </div>
   </div>
-
-
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    Login band.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+  @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @elseif (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
 
   <div class="card">
     <div class="card-body">
@@ -46,24 +53,27 @@
         <div class="row">
           <div class="col-lg-6">
             <label class="my-2">Hodimning FIO</label>
-            <input type="text" name="name" class="form-control" required> 
+            <input type="text" name="name" value="{{ old('name') }}" class="form-control" required> 
             <label class="my-2">Yashash manzili</label>
-            <select name="addres" required class="form-select">
+            <select name="addres" value="{{ old('addres') }}" required class="form-select">
             <option value="">Tanlang...</option>
               @foreach($MarkazAddres as $item)
               <option value="{{ $item['addres'] }}">{{ $item['addres'] }}</option>
               @endforeach
             </select>
             <label class="my-2">Hodimning tug'ilgan kuni</label>
-            <input type="date" name="tkun" class="form-control" required>
-            <label class="my-2">Hodim haqida</label>
-            <textarea name="about"  class="form-control" required></textarea>
+            <input type="date" name="tkun" value="{{ old('tkun') }}" class="form-control" required>
+            @error('tkun')
+              <span class="text-danger w-100" style="font-size:10px;">Yosh chagarasi (16yoshdan 65 yoshgacha).</span>
+            @enderror
+            <label class="my-2 w-100">Hodim haqida</label>
+            <textarea name="about"  class="form-control" required>{{ old('about') }}</textarea>
           </div>
           <div class="col-lg-6">
             <label class="my-2">Telefon raqam</label>
-            <input type="text" name="phone1" required class="form-control phone">
+            <input type="text" name="phone1" value="{{ old('phone1') }}" value="+998" required class="form-control phone">
             <label class="my-2">Qo'shimcha telefon raqami</label>
-            <input type="text" name="phone2" required class="form-control phone">
+            <input type="text" name="phone2" value="{{ old('phone2') }}" value="+998" required class="form-control phone">
             <label class="my-2">Lovazimi</label>
             <select name="role_id" required class="form-select">
               <option value="">Tanlang ...</option>
@@ -72,7 +82,10 @@
               <option value="4">Meneger</option>
             </select>
             <label class="my-2">Hodim uchun login</label>
-            <input type="text" name="email" required class="form-control">
+            <input type="text" name="email" value="{{ old('email') }}" required class="form-control  @error('email') is-invalid @enderror">
+            @error('email')
+              <span class="text-danger" style="font-size:10px;">Siz kiritgan login band.</span>
+            @enderror
             <button type="submit" class="btn btn-primary w-100 mt-2">Yangi hodimni saqlash</button>
           </div>
         </div>

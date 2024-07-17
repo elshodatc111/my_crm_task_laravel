@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/hodim/hodim/show/{id}', [HodimController::class, 'hodimShow'])->name('meneger.hodim_show');
         Route::get('/meneger/techer/techer', [HodimController::class, 'techer'])->name('meneger.techer');
         Route::get('/meneger/techer/techer/create', [HodimController::class, 'techerCreate'])->name('meneger.techer_create');
+        Route::post('/meneger/techer/techer/create', [HodimController::class, 'techerCreateStore'])->name('meneger.techer_create_store');
         Route::get('/meneger/techer/techer/show/{id}', [HodimController::class, 'techerShow'])->name('meneger.techer_show');
     /*  End Hodimlar */
 }); 
