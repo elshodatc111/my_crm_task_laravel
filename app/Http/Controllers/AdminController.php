@@ -16,6 +16,8 @@ use App\Models\MarkazBalans;
 use App\Models\MarkazSmsSetting;
 use Illuminate\Support\Facades\Hash;
 use DateTime;
+use App\Models\MarkazAddres;
+use App\Models\MarkazSmm;
 
 class AdminController extends Controller{
 
@@ -148,7 +150,9 @@ class AdminController extends Controller{
         $response['generatsiya'] = MarkazLessenTime::where('markaz_id',$id)->get();
         $response['kassa'] = Kassa::where('markaz_id',$id)->first();
         $response['balans'] = MarkazBalans::where('markaz_id',$id)->first();
-        return view('admin.index_show_setting',compact('id','response'));
+        $MarkazAddres = MarkazAddres::where('markaz_id',$id)->get();
+        $MarkazSmm = MarkazSmm::where('markaz_id',$id)->get();
+        return view('admin.index_show_setting',compact('id','response','MarkazSmm','MarkazAddres'));
     }
     public function show_update(Request $request, $id){
         $validate = $request->validate([
@@ -373,5 +377,37 @@ class AdminController extends Controller{
             $k++;
         }
         return redirect()->back()->with('success', $k.' ta bayram kuni o`childi.');
+    }
+    // Manzil sozlamalari
+    public function manzilCreate(Request $request){
+        $validate = $request->validate([
+            'markaz_id' => ['required'],
+            'addres' => 'required',
+        ]);
+        MarkazAddres::create([
+            'markaz_id' => $request->markaz_id,
+            'addres' => $request->addres,
+        ]);
+        return redirect()->back()->with('success', 'Yangi manzil qo`shildi.');
+    }
+    public function manzilDelete(Request $request){
+        MarkazAddres::find($request->id)->delete();
+        return redirect()->back()->with('success', 'Manzil o`chirildi.');
+    }
+    // SMM sozlamalari
+    public function smmCreate(Request $request){
+        $validate = $request->validate([
+            'markaz_id' => ['required'],
+            'smm' => 'required',
+        ]);
+        MarkazSmm::create([
+            'markaz_id' => $request->markaz_id,
+            'smm' => $request->smm,
+        ]);
+        return redirect()->back()->with('success', 'Yangi smm qo`shildi.');
+    }
+    public function smmDelete(Request $request){
+        MarkazSmm::find($request->id)->delete();
+        return redirect()->back()->with('success', 'SMM o`chirildi.');
     }
 }

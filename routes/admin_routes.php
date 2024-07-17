@@ -18,6 +18,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/show/setting/kassa/update', [AdminController::class, 'kassaUpdate'])->name('admin.kassaUpdate');
     Route::post('/admin/show/setting/balans/update', [AdminController::class, 'balansUpdate'])->name('admin.balansUpdate');
 
+    Route::post('/admin/show/setting/manzil/create', [AdminController::class, 'manzilCreate'])->name('admin.manzilCreate');
+    Route::post('/admin/show/setting/manzil/delete', [AdminController::class, 'manzilDelete'])->name('admin.manzilDelete');
+
+    Route::post('/admin/show/setting/smm/create', [AdminController::class, 'smmCreate'])->name('admin.smmCreate');
+    Route::post('/admin/show/setting/smm/delete', [AdminController::class, 'smmDelete'])->name('admin.smmDelete');
+
     Route::get('/admin/show/sms/set/{id}', [AdminController::class, 'show_sms'])->name('admin.show_sms');
     Route::post('/admin/show/sms/set/add', [AdminController::class, 'addSmsPaket'])->name('admin.addSmsPaket');
 

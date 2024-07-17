@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('markaz_smms', function (Blueprint $table) {
             $table->id();
+            $table->integer('markaz_id')->constrained();
+            $table->string('smm');
             $table->timestamps();
         });
     }

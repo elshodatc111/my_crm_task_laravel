@@ -14,8 +14,8 @@ use App\Models\MarkazCours;
 use App\Models\MarkazCoursVideo;
 use App\Models\MarkazCoursTest;
 
-class SettingController extends Controller
-{
+
+class SettingController extends Controller{
     // Room Setting
     public function rooms(){
         $MarkazRoom = MarkazRoom::where('markaz_id',auth()->user()->markaz_id)->get();
@@ -181,5 +181,7 @@ class SettingController extends Controller
         MarkazCoursTest::find($request->id)->delete();
         return redirect()->back()->with('success', "Test o'chirildi.");
     }
+
+
 
 }

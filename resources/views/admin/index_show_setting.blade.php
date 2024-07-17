@@ -121,6 +121,92 @@
             </div>
           </div>
         </div>
+        
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title w-100 text-center">Xizmat ko'rsatish manzillari</div>
+              <table class="table text-center table-bordered" style="font-size: 12px;">
+                <thead>
+                  <tr class="align-items-center">
+                    <th>#</th>
+                    <th>Manzil</th>
+                    <th>Yaratildi</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($MarkazAddres as $item)
+                  <tr>
+                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $item['addres'] }}</td>
+                    <td>{{ $item['created_at'] }}</td>
+                    <td>
+                      <form action="{{ route('admin.manzilDelete') }}" method="post" class="m-0">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                        <button type="submit" class="btn btn-danger p-1"><i class="bi bi-trash"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              <hr>
+              <form action="{{ route('admin.manzilCreate') }}" method="post">
+                @csrf 
+                <input type="hidden" name="markaz_id" value="{{ $id }}">
+                <label class="w-100 text-center">Yangi xizmar ko'rsatish manzili</label>
+                <input type="text" name="addres" required class="form-control mb-2">
+                <button class="btn btn-primary w-100">Yangi manzilni saqlash</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title w-100 text-center">SMM sozlamalari</div>
+              <table class="table text-center table-bordered" style="font-size: 12px;">
+                <thead>
+                  <tr class="align-items-center">
+                    <th>#</th>
+                    <th>SMM</th>
+                    <th>Yaratildi</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($MarkazSmm as $item)
+                  <tr>
+                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $item['smm'] }}</td>
+                    <td>{{ $item['created_at'] }}</td>
+                    <td>
+                      <form action="{{ route('admin.smmDelete') }}" method="post" class="m-0">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                        <button type="submit" class="btn btn-danger p-1"><i class="bi bi-trash"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              <hr>
+              <form action="{{ route('admin.smmCreate') }}" method="post">
+                @csrf 
+                <input type="hidden" name="markaz_id" value="{{ $id }}">
+                <label class="w-100 text-center">Yangi SMM</label>
+                <input type="text" name="smm" required class="form-control mb-2">
+                <button class="btn btn-primary w-100">Yangi SMMni saqlash</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+
+
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
