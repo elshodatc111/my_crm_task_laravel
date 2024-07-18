@@ -3,8 +3,6 @@
 @section('content')
 @extends('layouts.meneger_header')
 @extends('layouts.meneger_menu')
-
-
   
   <main id="main" class="main">
 
@@ -32,74 +30,37 @@
         </div>
       </div>
 
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-1"></i>
-        Yangi talalaba qo'shildi.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-
       <div class="card">
         <div class="card-body">
           <h5 class="card-title w-100 text-center">Tashriflar</h5>
-          <div class="table-responsive">
-            <table class="table text-center table-bordered" style="font-size: 12px;">
-              <thead>
-                <tr class="align-items-center">
-                  <th>#</th>
-                  <th>Talaba</th>
-                  <th>Telefon raqam</th>
-                  <th>Address</th>
-                  <th>Guruhlar</th>
-                  <th>Ro'yhatdan o'tdi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td style="text-align:left;">
-                    <a href="{{ route('meneger.all_show', 1 ) }}"><b>Elshod Musurmonov</b></a>
-                  </td>
-                  <td>99 890 88 55</td>
-                  <td>Qarshi shaxar</td>
-                  <td>3</td>
-                  <td>10.07.2024 15:24:45</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td style="text-align:left;">
-                    <a href="{{ route('meneger.all_show', 1 ) }}"><b>Elshod Musurmonov</b></a>
-                  </td>
-                  <td>99 890 88 55</td>
-                  <td>Qarshi shaxar</td>
-                  <td>3</td>
-                  <td>10.07.2024 15:24:45</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td style="text-align:left;">
-                    <a href="{{ route('meneger.all_show', 1 ) }}"><b>Elshod Musurmonov</b></a>
-                  </td>
-                  <td>99 890 88 55</td>
-                  <td>Qarshi shaxar</td>
-                  <td>3</td>
-                  <td>10.07.2024 15:24:45</td>
-                </tr>
-              </tbody>
-            </table>
+          <input type="text" id="search" class="form-control mb-2" placeholder="Qidruv...">
+          <div id="userTable">
+            <div class="table-responsive">
+                @include('meneger.students.pagination_data', ['users' => $users])
+            </div>
           </div>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination  pagination-sm justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+          <script>
+            $(document).on('keyup', '#search', function() {
+                let query = $(this).val();
+                fetch_data(1, query);
+            });
+
+            $(document).on('click', '.pagination a', function(event) {
+                event.preventDefault();
+                let page = $(this).attr('href').split('page=')[1];
+                let query = $('#search').val();
+                fetch_data(page, query);
+            });
+
+            function fetch_data(page, query) {
+                $.ajax({
+                    url: "{{ route('meneger.all_search') }}" + "?page=" + page + "&query=" + query,
+                    success: function(data) {
+                        $('#userTable').html(data);
+                    }
+                });
+            }
+          </script>
         </div>
       </div>
     </section>

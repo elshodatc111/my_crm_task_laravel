@@ -18,10 +18,46 @@ use App\Jobs\SendMessage;
 class TashrifController extends Controller
 {
     public function allTashrif(){
-        return view('meneger.students.index');
+        $users = User::where('markaz_id',auth()->user()->markaz_id)->where('role_id',6)->orderby('created_at','desc')->paginate(15);
+        return view('meneger.students.index',compact('users'));
     }
+    public function TashrifSearch(Request $request){
+        $query = $request->get('query');
+        $users = User::where('markaz_id', auth()->user()->markaz_id)
+                 ->where('role_id', 6)
+                 ->when($query, function($queryBuilder) use ($query) {
+                     $queryBuilder->where(function($subQuery) use ($query) {
+                         $subQuery->where('name', 'LIKE', "%{$query}%")
+                                  ->orWhere('email', 'LIKE', "%{$query}%");
+                     });
+                 })->paginate(10);
+
+        return view('meneger.students.pagination_data', compact('users'))->render();
+    }
+
+
+
+
     public function allDebet(){
-        return view('meneger.students.debet');
+        $users = User::where('markaz_id',auth()->user()->markaz_id)
+            ->where('role_id',6)
+            ->where('balans','<',0)
+            ->orderby('created_at','desc')
+            ->paginate(15);
+        return view('meneger.students.debet', compact('users'));
+    }
+    public function TashrifDebitSearch(Request $request){
+        $query = $request->get('query');
+        $users = User::where('markaz_id', auth()->user()->markaz_id)
+                 ->where('role_id', 6)->where('balans','<',0)
+                 ->when($query, function($queryBuilder) use ($query) {
+                     $queryBuilder->where(function($subQuery) use ($query) {
+                         $subQuery->where('name', 'LIKE', "%{$query}%")
+                                  ->orWhere('email', 'LIKE', "%{$query}%");
+                     });
+                 })->paginate(10);
+
+        return view('meneger.students.pagination_data', compact('users'))->render();
     }
     public function allCreate(){
         $MarkazAddres = MarkazAddres::where('markaz_id',auth()->user()->markaz_id)->get();

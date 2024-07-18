@@ -45,7 +45,9 @@ Route::middleware('auth')->group(function () {
 
     /* Start Tashriflar */
         Route::get('/meneger/student/all', [TashrifController::class, 'allTashrif'])->name('meneger.all_tashrif');
+        Route::get('/meneger/student/search', [TashrifController::class, 'TashrifSearch'])->name('meneger.all_search');
         Route::get('/meneger/student/debit', [TashrifController::class, 'allDebet'])->name('meneger.all_debet');
+        Route::get('/meneger/student/debit/search', [TashrifController::class, 'TashrifDebitSearch'])->name('meneger.all_debet_search');
         Route::get('/meneger/student/create', [TashrifController::class, 'allCreate'])->name('meneger.all_create');
         Route::post('/meneger/student/create', [TashrifController::class, 'allCreateStory'])->name('meneger.all_create_story');
         Route::get('/meneger/student/show/{id}', [TashrifController::class, 'allShow'])->name('meneger.all_show');

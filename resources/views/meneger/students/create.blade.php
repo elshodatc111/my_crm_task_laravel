@@ -32,12 +32,6 @@
         </div>
       </div>
 
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-1"></i>
-        Yangi talalaba qo'shildi.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-
       
       <div class="card">
         <div class="card-body">

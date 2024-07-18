@@ -22,6 +22,17 @@ use App\Models\MarkazSmm;
 class AdminController extends Controller{
 
     public function index(){
+        if(auth()->user()->role->name=='Admin'){
+            return redirect()->route('meneger.home');
+        }elseif(auth()->user()->role->name=='MenegerAdmin'){
+            return redirect()->route('meneger.home');
+        }elseif(auth()->user()->role->name=='Meneger'){
+            return redirect()->route('meneger.home');
+        }elseif(auth()->user()->role->name=='Techer'){
+            return redirect()->route('techer.index');
+        }elseif(auth()->user()->role->name=='User'){
+            return redirect()->route('user.index');
+        }
         $Markaz = Markaz::get();
         return view('admin.index',compact('Markaz'));
     }

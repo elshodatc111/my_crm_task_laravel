@@ -32,12 +32,40 @@
         </div>
       </div>
 
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-1"></i>
-        Yangi talalaba qo'shildi.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title w-100 text-center">Qarzdorlar</h5>
+          <input type="text" id="search" class="form-control mb-2" placeholder="Qidruv...">
+          <div id="userTable">
+            <div class="table-responsive">
+                @include('meneger.students.pagination_data', ['users' => $users])
+            </div>
+          </div>
+          <script>
 
+            $(document).on('keyup', '#search', function() {
+                let query = $(this).val();
+                fetch_data(1, query);
+            });
+
+            $(document).on('click', '.pagination a', function(event) {
+                event.preventDefault();
+                let page = $(this).attr('href').split('page=')[1];
+                let query = $('#search').val();
+                fetch_data(page, query);
+            });
+
+            function fetch_data(page, query) {
+                $.ajax({
+                    url: "{{ route('meneger.all_debet_search') }}" + "?page=" + page + "&query=" + query,
+                    success: function(data) {
+                        $('#userTable').html(data);
+                    }
+                });
+            }
+          </script>
+        </div>
+      </div>
 
       
     </section>
