@@ -11,7 +11,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('meneger.home') }}">Bosh sahifa</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('meneger.hodim') }}">O'qituvchlar</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('meneger.techer') }}">O'qituvchlar</a></li>
       <li class="breadcrumb-item active">O'qituvchi</li>
     </ol>
   </nav>
@@ -97,25 +97,26 @@
           <h5 class="modal-title w-100 text-center">O'qituvchi ma`lumotlarini yangilash</h5>
         </div>
         <div class="modal-body">
-          <form action="" method="post">
+          <form action="{{ route('meneger.techer_update_store') }}" method="post">
+            @csrf
+            <input type="hidden" name="id" value="{{ $User->id }}">
             <label for="" class="mb-2">FIO</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="name" value="{{ $User->name }}" required class="form-control">
             <label for="" class="my-2">Yashash manzili</label>
-            <select name="" id="" required class="form-select">
+            <select name="addres" required class="form-select">
               <option value="">Tanlang</option>
+              @foreach($MarkazAddres as $item)
+                <option value="{{ $item['addres'] }}">{{ $item['addres'] }}</option>
+              @endforeach
             </select>
             <label for="" class="my-2">Tug'ilgan kuni</label>
-            <input type="text" required class="form-control">
+            <input type="date" name="tkun" value="{{ $User['tkun'] }}" required class="form-control">
             <label for="" class="my-2">Telefon raqam</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="phone1" value="{{ $User['phone1'] }}" required class="form-control phone">
             <label for="" class="my-2">Qo'shimcha telefin raqam</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">Lavozimi</label>
-            <select name="" id="" required class="form-select">
-              <option value="">Tanlang</option>
-            </select>
-            <label for="" class="my-2">Talaba haqida</label>
-            <textarea required class="form-control mb-2"></textarea>
+            <input type="text" name="phone2" value="{{ $User['phone2'] }}" required class="form-control phone">
+            <label for="" class="my-2">O'qituvchi haqida</label>
+            <textarea required class="form-control mb-2" name="about">{{ $User['about'] }}</textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>

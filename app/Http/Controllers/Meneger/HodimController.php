@@ -176,7 +176,8 @@ class HodimController extends Controller
     }
     public function techerShow($id){
         $User = User::find($id);
-        return view('meneger.hodim.techer_show',compact('User'));
+        $MarkazAddres = MarkazAddres::where('markaz_id',auth()->user()->markaz_id)->get();
+        return view('meneger.hodim.techer_show',compact('User','MarkazAddres'));
     }
     public function techerUpdatePassword(Request $request){
         $User = User::find($request->id);
@@ -189,5 +190,24 @@ class HodimController extends Controller
         $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password." websayt: ".$Url;
         SendMessage::dispatch($Markaz_ID, $Phone, $Text);
         return redirect()->back()->with('success', "O'qituvchi paroli yangilandi.");
+    }
+    public function techerUpdateStore(Request $request){
+        $validate = $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'addres' => 'required',
+            'tkun' => 'required',
+            'about' => 'required',
+            'phone1' => 'required',
+            'phone2' => 'required',
+        ]);
+        $User = User::find($request->id);
+        $User->name = $request->name;
+        $User->addres = $request->addres;
+        $User->about = $request->about;
+        $User->phone1 = $request->phone1;
+        $User->phone2 = $request->phone2;
+        $User->save();
+        return redirect()->back()->with('success', "O'qituvchi ma`lumotlari yangilandi.");
     }
 }

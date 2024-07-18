@@ -7,18 +7,14 @@ use App\Http\Controllers\Meneger\HodimController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
-        //Settings Room
         Route::get('/meneger/setting/room', [SettingController::class, 'rooms'])->name('meneger.rooms');
         Route::POST('/meneger/setting/room/create', [SettingController::class, 'roomsCreate'])->name('meneger.rooms_create');
         Route::POST('/meneger/setting/room/block', [SettingController::class, 'roomsBlock'])->name('meneger.rooms_Block');
-        //Settings Paymart
         Route::get('/meneger/setting/paymart', [SettingController::class, 'paymart'])->name('meneger.paymart');
         Route::POST('/meneger/setting/paymart/create', [SettingController::class, 'paymartCreate'])->name('meneger.paymart_reate');
         Route::POST('/meneger/setting/paymart/delete', [SettingController::class, 'paymartDelete'])->name('meneger.paymart_delete');
-        // Strring Message(SMS)
         Route::get('/meneger/setting/message', [SettingController::class, 'message'])->name('meneger.message');
         Route::post('/meneger/setting/update', [SettingController::class, 'messageUpdate'])->name('meneger.message_update');
-        // Cours Setting
         Route::get('/meneger/setting/cours', [SettingController::class, 'cours'])->name('meneger.cours');
         Route::get('/meneger/setting/cours/show/{id}', [SettingController::class, 'coursShow'])->name('meneger.cours_show');
         Route::post('/meneger/setting/cours/create', [SettingController::class, 'courscreate'])->name('meneger.cours_create');
@@ -42,6 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/techer/techer/create', [HodimController::class, 'techerCreate'])->name('meneger.techer_create');
         Route::post('/meneger/techer/techer/create', [HodimController::class, 'techerCreateStore'])->name('meneger.techer_create_store');
         Route::get('/meneger/techer/techer/show/{id}', [HodimController::class, 'techerShow'])->name('meneger.techer_show');
-        Route::post('/meneger/hodim/techer/update/password', [HodimController::class, 'techerUpdatePassword'])->name('meneger.techer_update_password');
+        Route::post('/meneger/techer/techer/update/password', [HodimController::class, 'techerUpdatePassword'])->name('meneger.techer_update_password');
+        Route::post('/meneger/techer/techer/update', [HodimController::class, 'techerUpdateStore'])->name('meneger.techer_update_store');
     /*  End Hodimlar */
 }); 
