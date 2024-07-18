@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class MenegerController extends Controller
 {
-
     public function index(){
-        return view('meneger.index');
+        return redirect()->route('meneger.all_tashrif');
     }
 }

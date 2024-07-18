@@ -4,6 +4,7 @@ use App\Http\Controllers\MenegerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Meneger\SettingController;
 use App\Http\Controllers\Meneger\HodimController;
+use App\Http\Controllers\Meneger\TashrifController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -26,19 +27,27 @@ Route::middleware('auth')->group(function () {
     /*  End Setting  */
 
     /*  Start Hodimlar */
-        Route::get('/meneger/hodim/hodim', [HodimController::class, 'hodim'])->name('meneger.hodim');
-        Route::post('/meneger/hodim/hodim/unlock', [HodimController::class, 'hodimUnlock'])->name('meneger.hodim_unlock');
-        Route::get('/meneger/hodim/hodim/create', [HodimController::class, 'hodimCreate'])->name('meneger.hodim_create');
-        Route::post('/meneger/hodim/hodim/create', [HodimController::class, 'hodimCreateStore'])->name('meneger.hodim_create_store');
-        Route::post('/meneger/hodim/hodim/update', [HodimController::class, 'hodimUpdateStore'])->name('meneger.hodim_update_store');
-        Route::post('/meneger/hodim/hodim/statistik/clear', [HodimController::class, 'hodimStatistikClear'])->name('meneger.hodim_statistik_clear');
-        Route::get('/meneger/hodim/hodim/show/{id}', [HodimController::class, 'hodimShow'])->name('meneger.hodim_show');
-        Route::post('/meneger/hodim/hodim/update/password', [HodimController::class, 'hodimUpdatePassword'])->name('meneger.hodim_update_password');
-        Route::get('/meneger/techer/techer', [HodimController::class, 'techer'])->name('meneger.techer');
-        Route::get('/meneger/techer/techer/create', [HodimController::class, 'techerCreate'])->name('meneger.techer_create');
-        Route::post('/meneger/techer/techer/create', [HodimController::class, 'techerCreateStore'])->name('meneger.techer_create_store');
-        Route::get('/meneger/techer/techer/show/{id}', [HodimController::class, 'techerShow'])->name('meneger.techer_show');
-        Route::post('/meneger/techer/techer/update/password', [HodimController::class, 'techerUpdatePassword'])->name('meneger.techer_update_password');
-        Route::post('/meneger/techer/techer/update', [HodimController::class, 'techerUpdateStore'])->name('meneger.techer_update_store');
+        Route::get('/meneger/employee', [HodimController::class, 'hodim'])->name('meneger.hodim');
+        Route::post('/meneger/employee/unlock', [HodimController::class, 'hodimUnlock'])->name('meneger.hodim_unlock');
+        Route::get('/meneger/employee/create', [HodimController::class, 'hodimCreate'])->name('meneger.hodim_create');
+        Route::post('/meneger/employee/create', [HodimController::class, 'hodimCreateStore'])->name('meneger.hodim_create_store');
+        Route::post('/meneger/employee/update', [HodimController::class, 'hodimUpdateStore'])->name('meneger.hodim_update_store');
+        Route::post('/meneger/employee/statistik/clear', [HodimController::class, 'hodimStatistikClear'])->name('meneger.hodim_statistik_clear');
+        Route::get('/meneger/employee/show/{id}', [HodimController::class, 'hodimShow'])->name('meneger.hodim_show');
+        Route::post('/meneger/employee/update/password', [HodimController::class, 'hodimUpdatePassword'])->name('meneger.hodim_update_password');
+        Route::get('/meneger/techer', [HodimController::class, 'techer'])->name('meneger.techer');
+        Route::get('/meneger/techer/create', [HodimController::class, 'techerCreate'])->name('meneger.techer_create');
+        Route::post('/meneger/techer/create', [HodimController::class, 'techerCreateStore'])->name('meneger.techer_create_store');
+        Route::get('/meneger/techer/show/{id}', [HodimController::class, 'techerShow'])->name('meneger.techer_show');
+        Route::post('/meneger/techer/update/password', [HodimController::class, 'techerUpdatePassword'])->name('meneger.techer_update_password');
+        Route::post('/meneger/techer/update', [HodimController::class, 'techerUpdateStore'])->name('meneger.techer_update_store');
     /*  End Hodimlar */
+
+    /* Start Tashriflar */
+        Route::get('/meneger/student/all', [TashrifController::class, 'allTashrif'])->name('meneger.all_tashrif');
+        Route::get('/meneger/student/debit', [TashrifController::class, 'allDebet'])->name('meneger.all_debet');
+        Route::get('/meneger/student/create', [TashrifController::class, 'allCreate'])->name('meneger.all_create');
+        Route::post('/meneger/student/create', [TashrifController::class, 'allCreateStory'])->name('meneger.all_create_story');
+        Route::get('/meneger/student/show/{id}', [TashrifController::class, 'allShow'])->name('meneger.all_show');
+    /* End Tashriflar */
 }); 

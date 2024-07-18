@@ -12,25 +12,23 @@
       <h1>Tashriflar</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Bosh sahifa</a></li>
-          <li class="breadcrumb-item active">Tashriflar {{ auth()->user()->role->name }}</li>
+          <li class="breadcrumb-item"><a href="{{ route('meneger.all_tashrif') }}">Bosh sahifa</a></li>
+          <li class="breadcrumb-item active">Tashriflar</li>
         </ol>
       </nav>
     </div>
 
     <section class="section dashboard"> 
 
-
-
       <div class="row mb-2">
         <div class="col-4">
-          <a href="index.html" class="btn btn-primary w-100">Tashriflar</a>
+          <a href="{{ route('meneger.all_tashrif') }}" class="btn btn-primary w-100">Tashriflar</a>
         </div>
         <div class="col-4">
-          <a href="index_debit.html" class="btn btn-secondary w-100">Qarzdorlar</a>
+          <a href="{{ route('meneger.all_debet') }}" class="btn btn-secondary w-100">Qarzdorlar</a>
         </div>
         <div class="col-4">
-          <a href="index_create.html" class="btn btn-secondary w-100">Yangi tashrif</a>
+          <a href="{{ route('meneger.all_create') }}" class="btn btn-secondary w-100">Yangi tashrif</a>
         </div>
       </div>
 
@@ -59,7 +57,7 @@
                 <tr>
                   <td>1</td>
                   <td style="text-align:left;">
-                    <a href="index_show.html"><b>Elshod Musurmonov</b></a>
+                    <a href="{{ route('meneger.all_show', 1 ) }}"><b>Elshod Musurmonov</b></a>
                   </td>
                   <td>99 890 88 55</td>
                   <td>Qarshi shaxar</td>
@@ -69,7 +67,7 @@
                 <tr>
                   <td>2</td>
                   <td style="text-align:left;">
-                    <a href="index_show.html"><b>Elshod Musurmonov</b></a>
+                    <a href="{{ route('meneger.all_show', 1 ) }}"><b>Elshod Musurmonov</b></a>
                   </td>
                   <td>99 890 88 55</td>
                   <td>Qarshi shaxar</td>
@@ -79,7 +77,7 @@
                 <tr>
                   <td>3</td>
                   <td style="text-align:left;">
-                    <a href="index_show.html"><b>Elshod Musurmonov</b></a>
+                    <a href="{{ route('meneger.all_show', 1 ) }}"><b>Elshod Musurmonov</b></a>
                   </td>
                   <td>99 890 88 55</td>
                   <td>Qarshi shaxar</td>
