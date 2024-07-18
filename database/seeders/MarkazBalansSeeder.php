@@ -7,8 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\MarkazBalans;
 class MarkazBalansSeeder extends Seeder
 {
-    public function run(): void
-    {
+    public function run(): void{
         MarkazBalans::create([
             'markaz_id'=>1,
             'balans_naqt'=>0,

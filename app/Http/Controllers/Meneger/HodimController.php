@@ -11,6 +11,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\SendMessage;
 use App\Models\MarkazAddres;
+use App\Models\MarkazHodimStatistka;
 use Illuminate\Support\Facades\Hash;
 
 class HodimController extends Controller
@@ -55,7 +56,7 @@ class HodimController extends Controller
             'phone2' => 'required',
             'email' => ['required','unique:users'],
         ]);
-        User::create([
+        $User = User::create([
             'markaz_id' => auth()->user()->markaz_id,
             'role_id' => $request->role_id,
             'name' => $request->name,
@@ -67,6 +68,15 @@ class HodimController extends Controller
             'email' => $request->email,
             'password' => Hash::make('12345678'),
         ]);
+        MarkazHodimStatistka::create([
+            'markaz_id'=>auth()->user()->markaz_id,
+            'user_id'=>$User->id,
+            'naqt'=>0,
+            'plastik'=>0,
+            'chegirma'=>0,
+            'qaytarildi'=>0,
+            'tashrif'=>0,
+        ]);
         $Markaz_ID = auth()->user()->markaz_id;
         $Phone = str_replace(" ","",$request->phone1);
         $Url = "https://atko.uz";
@@ -76,8 +86,54 @@ class HodimController extends Controller
 
         return redirect()->route('meneger.hodim')->with('success', "Yangi hodim qo'shildi.");
     }
+    public function hodimUpdateStore(Request $request){
+        $validate = $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'addres' => 'required',
+            'tkun' => 'required',
+            'role_id' => 'required',
+            'about' => 'required',
+            'phone1' => 'required',
+            'phone2' => 'required',
+        ]);
+        $User = User::find($request->id);
+        $User->name = $request->name;
+        $User->addres = $request->addres;
+        $User->role_id = $request->role_id;
+        $User->about = $request->about;
+        $User->phone1 = $request->phone1;
+        $User->phone2 = $request->phone2;
+        $User->save();
+        return redirect()->back()->with('success', "Hodim malumotlari yangilandi.");
+    }
     public function hodimShow($id){
-        return view('meneger.hodim.hodim_show');
+        $User = User::find($id);
+        $Statistik = MarkazHodimStatistka::where('user_id',$id)->first();
+        $MarkazAddres = MarkazAddres::where('markaz_id',auth()->user()->markaz_id)->get();
+        return view('meneger.hodim.hodim_show',compact('User','Statistik','MarkazAddres'));
+    }
+    public function hodimUpdatePassword(Request $request){
+        $User = User::find($request->id);
+        $User->password = Hash::make('12345678');
+        $User->save();
+        $Phone = str_replace($User->phone1, " ", ""); 
+        $Markaz_ID = auth()->user()->markaz_id;
+        $password = '12345678';
+        $Url = "https://atko.uz";
+        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password." websayt: ".$Url;
+        SendMessage::dispatch($Markaz_ID, $Phone, $Text);
+        return redirect()->back()->with('success', "Hodim paroli yangilandi.");
+    }
+    public function hodimStatistikClear(Request $request){
+        $MarkazHodimStatistka = MarkazHodimStatistka::where('user_id',$request->id)->first();
+        $MarkazHodimStatistka->naqt = 0;
+        $MarkazHodimStatistka->plastik = 0;
+        $MarkazHodimStatistka->chegirma = 0;
+        $MarkazHodimStatistka->qaytarildi = 0;
+        $MarkazHodimStatistka->tashrif = 0;
+        $MarkazHodimStatistka->save();
+        return redirect()->back()->with('success', "Hodim statistikasi tozalandi.");
     }
     public function techer(){
         $User = User::where('markaz_id',auth()->user()->markaz_id)->where('role_id',5)->where('id','!=',auth()->user()->id)->get();
@@ -119,6 +175,19 @@ class HodimController extends Controller
         return redirect()->route('meneger.techer')->with('success', "Yangi o'qituvchi qo'shildi.");
     }
     public function techerShow($id){
-        return view('meneger.hodim.techer_show');
+        $User = User::find($id);
+        return view('meneger.hodim.techer_show',compact('User'));
+    }
+    public function techerUpdatePassword(Request $request){
+        $User = User::find($request->id);
+        $User->password = Hash::make('12345678');
+        $User->save();
+        $Phone = str_replace($User->phone1, " ", ""); 
+        $Markaz_ID = auth()->user()->markaz_id;
+        $password = '12345678';
+        $Url = "https://atko.uz";
+        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password." websayt: ".$Url;
+        SendMessage::dispatch($Markaz_ID, $Phone, $Text);
+        return redirect()->back()->with('success', "O'qituvchi paroli yangilandi.");
     }
 }

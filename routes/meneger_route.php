@@ -34,10 +34,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/hodim/hodim/unlock', [HodimController::class, 'hodimUnlock'])->name('meneger.hodim_unlock');
         Route::get('/meneger/hodim/hodim/create', [HodimController::class, 'hodimCreate'])->name('meneger.hodim_create');
         Route::post('/meneger/hodim/hodim/create', [HodimController::class, 'hodimCreateStore'])->name('meneger.hodim_create_store');
+        Route::post('/meneger/hodim/hodim/update', [HodimController::class, 'hodimUpdateStore'])->name('meneger.hodim_update_store');
+        Route::post('/meneger/hodim/hodim/statistik/clear', [HodimController::class, 'hodimStatistikClear'])->name('meneger.hodim_statistik_clear');
         Route::get('/meneger/hodim/hodim/show/{id}', [HodimController::class, 'hodimShow'])->name('meneger.hodim_show');
+        Route::post('/meneger/hodim/hodim/update/password', [HodimController::class, 'hodimUpdatePassword'])->name('meneger.hodim_update_password');
         Route::get('/meneger/techer/techer', [HodimController::class, 'techer'])->name('meneger.techer');
         Route::get('/meneger/techer/techer/create', [HodimController::class, 'techerCreate'])->name('meneger.techer_create');
         Route::post('/meneger/techer/techer/create', [HodimController::class, 'techerCreateStore'])->name('meneger.techer_create_store');
         Route::get('/meneger/techer/techer/show/{id}', [HodimController::class, 'techerShow'])->name('meneger.techer_show');
+        Route::post('/meneger/hodim/techer/update/password', [HodimController::class, 'techerUpdatePassword'])->name('meneger.techer_update_password');
     /*  End Hodimlar */
 }); 

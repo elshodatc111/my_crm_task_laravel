@@ -18,32 +18,39 @@
 </div>
 
 <section class="section dashboard">
-  
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Hodim faoliyati qayta tiklandi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+@if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @elseif (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
   <div class="row">
     <div class="col-lg-8">      
       <div class="card" style="min-height: 300px;">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Elshod Musurmonov</h5>
+          <h5 class="card-title w-100 text-center">{{ $User['name'] }}</h5>
           <div class="row">
             <div class="col-6  mt-1"><b>Telefon raqam:</b></div>
-            <div class="col-6" style="text-align:right;">90 883 0450</div>
+            <div class="col-6" style="text-align:right;">{{ $User['phone1'] }}</div>
             <div class="col-6  mt-1"><b>Telefon raqam:</b></div>
-            <div class="col-6" style="text-align:right;">90 883 0450</div>
+            <div class="col-6" style="text-align:right;">{{ $User['phone2'] }}</div>
             <div class="col-6  mt-1"><b>Manzil:</b></div>
-            <div class="col-6" style="text-align:right;">Qarshi shaxar</div>
+            <div class="col-6" style="text-align:right;">{{ $User['addres'] }}</div>
             <div class="col-6  mt-1"><b>Tug'ilgan kun:</b></div>
-            <div class="col-6" style="text-align:right;">2024.07.17</div>
+            <div class="col-6" style="text-align:right;">{{ $User['tkun'] }}</div>
             <div class="col-6  mt-1"><b>Login:</b></div>
-            <div class="col-6" style="text-align:right;">Telegram</div>
+            <div class="col-6" style="text-align:right;">{{ $User['email'] }}</div>
             <div class="col-6  mt-1"><b>Ishga olindi:</b></div>
-            <div class="col-6" style="text-align:right;">Telegram</div>
+            <div class="col-6" style="text-align:right;">{{ $User['created_at'] }}</div>
             <div class="col-6  mt-1"><b>O'qituvchi haqida:</b></div>
-            <div class="col-6" style="text-align:right;">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
+            <div class="col-6" style="text-align:right;">{{ $User['about'] }}</div>
           </div>
         </div>
       </div>
@@ -52,8 +59,6 @@
       <div class="card" style="min-height: 300px;">
         <div class="card-body">
           <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#updatePassword">Parolni yangilash</button>
-          <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimBlock">O'qituvchini bloklash</button>
-          <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimOpen">O'qituvchini aktivlashtirish</button>
           <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#updateUser">Taxrirlash</button>
           <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimPay">Ish haqi to'lash</button>
         </div>
@@ -68,57 +73,15 @@
           <h5 class="modal-title w-100 text-center">Parolni yangilash</h5>
         </div>
         <div class="modal-body">
-          <form action="" method="post">
+          <form action="{{ route('meneger.techer_update_password') }}" method="post">
+            @csrf
+            <input type="hidden" name="id" value="{{ $User->id }}">
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
               </div>
               <div class="col-6">
                 <button type="submit" class="btn btn-primary w-100">Yangilash</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Hodimni bloklash-->
-  <div class="modal fade" id="hodimBlock" tabindex="-1">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center">O'qituvchini bloklash</h5>
-        </div>
-        <div class="modal-body">
-          <form action="">
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="submit" class="btn btn-primary w-100">Block</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Hodimni aktivlkashtirish-->
-  <div class="modal fade" id="hodimOpen" tabindex="-1">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center">O'qituvchini aktivlashtirish</h5>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="btn btn-primary w-100">Aktiv</button>
               </div>
             </div>
           </form>

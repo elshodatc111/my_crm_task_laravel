@@ -18,32 +18,39 @@
 </div>
 
 <section class="section dashboard">
-  
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-1"></i>
-    Hodim faoliyati qayta tiklandi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
+  @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @elseif (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-1"></i>
+      {{Session::get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
   <div class="row">
     <div class="col-lg-8">      
       <div class="card" style="min-height: 300px;">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Elshod Musurmonov</h5>
+          <h5 class="card-title w-100 text-center">{{ $User->name }}</h5>
           <div class="row">
             <div class="col-6  mt-1"><b>Telefon raqam:</b></div>
-            <div class="col-6" style="text-align:right;">90 883 0450</div>
+            <div class="col-6" style="text-align:right;">{{ $User->phone1 }}</div>
             <div class="col-6  mt-1"><b>Telefon raqam:</b></div>
-            <div class="col-6" style="text-align:right;">90 883 0450</div>
+            <div class="col-6" style="text-align:right;">{{ $User->phone2 }}</div>
             <div class="col-6  mt-1"><b>Manzil:</b></div>
-            <div class="col-6" style="text-align:right;">Qarshi shaxar</div>
+            <div class="col-6" style="text-align:right;">{{ $User->addres }}</div>
             <div class="col-6  mt-1"><b>Tug'ilgan kun:</b></div>
-            <div class="col-6" style="text-align:right;">2024.07.17</div>
+            <div class="col-6" style="text-align:right;">{{ $User->tkun }}</div>
             <div class="col-6  mt-1"><b>Login:</b></div>
-            <div class="col-6" style="text-align:right;">Telegram</div>
+            <div class="col-6" style="text-align:right;">{{ $User->email }}</div>
             <div class="col-6  mt-1"><b>Ishga olindi:</b></div>
-            <div class="col-6" style="text-align:right;">Telegram</div>
+            <div class="col-6" style="text-align:right;">{{ $User->created_at }}</div>
             <div class="col-6  mt-1"><b>Hodim haqida:</b></div>
-            <div class="col-6" style="text-align:right;">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
+            <div class="col-6" style="text-align:right;">{{ $User->about }}</div>
           </div>
         </div>
       </div>
@@ -52,13 +59,11 @@
       <div class="card" style="min-height: 300px;">
         <div class="card-body">
           <button class="btn btn-outline-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#updatePassword">Parolni yangilash</button>
-          <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimBlock">Hodinmi bloklash</button>
-          <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimOpen">Hodimni aktivlashtirish</button>
           <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#updateUser">Taxrirlash</button>
+          <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimStatistik">Hodim Statistikasi</button>
           <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimPay">Ish haqi to'lash</button>
-          <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#hodimStatistik">Hodimni Statistikasi</button>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
   <!--Hodimni parolini yangilash-->
@@ -69,57 +74,15 @@
           <h5 class="modal-title w-100 text-center">Parolni yangilash</h5>
         </div>
         <div class="modal-body">
-          <form action="" method="post">
+          <form action="{{ route('meneger.hodim_update_password') }}" method="post">
+            @csrf
+            <input type="hidden" name="id" value="{{ $User->id }}">
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
               </div>
               <div class="col-6">
                 <button type="submit" class="btn btn-primary w-100">Yangilash</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Hodimni bloklash-->
-  <div class="modal fade" id="hodimBlock" tabindex="-1">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center">Hodimni bloklash</h5>
-        </div>
-        <div class="modal-body">
-          <form action="">
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="submit" class="btn btn-primary w-100">Block</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Hodimni aktivlkashtirish-->
-  <div class="modal fade" id="hodimOpen" tabindex="-1">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center">Hodimni aktivlashtirish</h5>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="btn btn-primary w-100">Aktiv</button>
               </div>
             </div>
           </form>
@@ -135,25 +98,33 @@
           <h5 class="modal-title w-100 text-center">Hodim ma`lumotlarini yangilash</h5>
         </div>
         <div class="modal-body">
-          <form action="" method="post">
+          <form action="{{ route('meneger.hodim_update_store') }}" method="post">
+            @csrf
+            <input type="hidden" name="id" value="{{ $User->id }}">
             <label for="" class="mb-2">FIO</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="name" value="{{ $User->name }}" required class="form-control">
             <label for="" class="my-2">Yashash manzili</label>
-            <select name="" id="" required class="form-select">
-              <option value="">Tanlang</option>
+            <select name="addres" required class="form-select">
+              <option value="">Tanlang...</option>
+              @foreach($MarkazAddres as $item)
+              <option value="{{ $item['addres'] }}">{{ $item['addres'] }}</option>
+              @endforeach
             </select>
-            <label for="" class="my-2">Tug'ilgan kuni</label>
-            <input type="text" required class="form-control">
+            <label for=""  class="my-2">Tug'ilgan kuni</label>
+            <input type="date" name="tkun" value="{{ $User->tkun }}" required class="form-control">
             <label for="" class="my-2">Telefon raqam</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="phone1" value="{{ $User->phone1 }}" required class="form-control phone">
             <label for="" class="my-2">Qo'shimcha telefin raqam</label>
-            <input type="text" required class="form-control">
+            <input type="text" name="phone2" value="{{ $User->phone2 }}" required class="form-control phone">
             <label for="" class="my-2">Lavozimi</label>
-            <select name="" id="" required class="form-select">
+            <select name="role_id" id="" required class="form-select">
               <option value="">Tanlang</option>
+              <option value="2">Drektor</option>
+              <option value="3">Admin</option>
+              <option value="4">Meneger</option>
             </select>
-            <label for="" class="my-2">Talaba haqida</label>
-            <textarea required class="form-control mb-2"></textarea>
+            <label for="" class="my-2">Hodim haqida</label>
+            <textarea required name="about" class="form-control mb-2">{{ $User->about }}</textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -163,6 +134,52 @@
               </div>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Hodim Statistikasi-->
+  <div class="modal fade" id="hodimStatistik" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center">Hodim statistikasi</h5>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Naqt
+              <span class="badge bg-primary rounded-pill">{{ $Statistik->naqt }} so'm</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Plastik
+              <span class="badge bg-primary rounded-pill">{{ $Statistik->plastik }} so'm</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Chegirma
+              <span class="badge bg-primary rounded-pill">{{ $Statistik->chegirma }} so'm</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Qaytarildi
+              <span class="badge bg-primary rounded-pill">{{ $Statistik->qaytarildi }} so'm</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Tashriflar
+              <span class="badge bg-primary rounded-pill">{{ $Statistik->tashrif }}</span>
+            </li>
+          </ul>
+          <div class="row mt-2">
+            <div class="col-6">
+              <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+            </div>
+            <div class="col-6">
+              <form action="{{ route('meneger.hodim_statistik_clear') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $User->id }}">
+                <button type="submit" class="btn btn-primary w-100">Tozalash</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -201,50 +218,6 @@
               </div>
               <div class="col-6">
                 <button type="submit" class="btn btn-primary w-100">To'lov</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Hodim Statistikasi-->
-  <div class="modal fade" id="hodimStatistik" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center">Hodim statistikasi</h5>
-        </div>
-        <div class="modal-body">
-          <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Naqt
-              <span class="badge bg-primary rounded-pill">1400 000 so'm</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Plastik
-              <span class="badge bg-primary rounded-pill">200 000 so'm</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Chegirma
-              <span class="badge bg-primary rounded-pill">100 000 so'm</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Qaytarildi
-              <span class="badge bg-primary rounded-pill">100 000 so'm</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Tashriflar
-              <span class="badge bg-primary rounded-pill">1</span>
-            </li>
-          </ul>
-          <form action="" method="post">
-            <div class="row mt-2">
-              <div class="col-6">
-                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="btn btn-primary w-100">Tozalash</button>
               </div>
             </div>
           </form>

@@ -69,7 +69,7 @@
             <tr>
               <td>{{ $loop->index+1 }}</td>
               <td style="text-align:left;">
-                <a href="{{ route('meneger.hodim_show', $item['id']) }}"><b class="m-0 p-0">{{ $item['name'] }}</b></a>
+                <a href="{{ route('meneger.techer_show', $item['id']) }}"><b class="m-0 p-0">{{ $item['name'] }}</b></a>
               </td>
               <td style="text-align:left">{{ $item['email'] }}</td>
               <td>{{ $item['phone1'] }}</td>
