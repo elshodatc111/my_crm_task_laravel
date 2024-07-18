@@ -16,10 +16,10 @@ class MarkazCoursVideo extends Model
         'cours_number',
         'meneger',
     ];
-    public function coursvideo(){
+    public function video(){
         return $this->belongsTo(MarkazCours::class);
     }
-    public function coursvideos(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

@@ -14,7 +14,7 @@ class MarkazCours extends Model
         'meneger',
         'status',
     ];
-    public function cours(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

@@ -18,10 +18,10 @@ class MarkazCoursTest extends Model
         'test_javon_false3',
         'meneger',
     ];
-    public function courstest(){
+    public function cours(){
         return $this->belongsTo(MarkazCours::class);
     }
-    public function courstests(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

@@ -14,7 +14,7 @@ class MarkazRoom extends Model
         'status',
         'meneger',
     ];
-    public function rooms(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

@@ -47,4 +47,7 @@ class User extends Authenticatable
     public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
+    public function history(){
+        return $this->hasMany(UserHistory::class);
+    }
 }

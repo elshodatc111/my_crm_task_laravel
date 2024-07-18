@@ -34,4 +34,5 @@ class Markaz extends Model
     public function addres(){return $this->hasMany(MarkazAddres::class);}
     public function smm(){return $this->hasMany(MarkazSmm::class);}
     public function sendmessege(){return $this->hasMany(MarkazSendMessage::class);}
+    public function history(){return $this->hasMany(UserHistory::class);}
 }

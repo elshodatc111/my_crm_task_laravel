@@ -5,15 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MarkazSmsSetting extends Model
+class UserBalans extends Model
 {
     use HasFactory;
     protected $fillable = [
         'markaz_id',
-        'new_user',
-        'tkun',
-        'new_pay',
+        'user_id',
+        'naqt',
+        'plastik',
+        'payme',
+        'qaytarildi',
+        'chegirma',
+        'jarima',
     ];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     public function markaz(){
         return $this->belongsTo(Markaz::class);
     }

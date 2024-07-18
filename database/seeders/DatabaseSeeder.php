@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             MarkazBalansSeeder::class,
             SmsSeeder::class,
             MarkazHodimSeeder::class,
+            UserBalansSeeder::class,
+            UserHistorySeeder::class,
         ]);
     }
 }

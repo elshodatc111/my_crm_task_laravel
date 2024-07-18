@@ -17,7 +17,7 @@ class MarkazPaymart extends Model
         'meneger',
         'status',
     ];
-    public function paymarts(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

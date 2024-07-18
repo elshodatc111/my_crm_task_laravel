@@ -12,7 +12,7 @@ class MarkazSmm extends Model
         'markaz_id',
         'smm',
     ];
-    public function smm(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

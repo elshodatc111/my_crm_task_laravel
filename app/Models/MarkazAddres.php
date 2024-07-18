@@ -12,7 +12,7 @@ class MarkazAddres extends Model
         'markaz_id',
         'addres',
     ];
-    public function addres(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }

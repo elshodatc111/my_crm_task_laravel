@@ -13,7 +13,7 @@ class MarkazSendMessage extends Model
         'phone',
         'description',
     ];
-    public function sendmessege(){
+    public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
 }
