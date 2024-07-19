@@ -33,8 +33,15 @@ class AlertController extends Controller{
     public function form(){
         return view('meneger.alert.form');
     }
-    
     public function murojat(){
         return view('meneger.alert.murojat');
     }
+    public function formShowUser($id){
+        return view('meneger.alert.formShowUser');
+    }
+    public function formShowTecher($id){
+        return view('meneger.alert.formShowTecher');
+    }
+
 }
+ 
