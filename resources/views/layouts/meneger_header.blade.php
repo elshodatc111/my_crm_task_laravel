@@ -8,28 +8,28 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="search.html">
-        <input type="text" name="query" placeholder="Qidiruv..." title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item ">
-          <a class="nav-link nav-icon" href="tkun.html" title="Tug'ilgan kunlar">
+          <a class="nav-link nav-icon" href="{{ route('eslatma') }}" title="Eslatmalar">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number">@include('layouts.alert.eslatma')</span>
+          </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link nav-icon" href="{{ route('tkun') }}" title="Tug'ilgan kunlar">
+            <i class="bi bi-gift"></i>
+            <span class="badge bg-primary badge-number">@include('layouts.alert.tkun')</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-icon" href="message.html" title="Murojatlar">
-            <i class="bi bi-chat-left-text"></i>
+          <a class="nav-link nav-icon" href="{{ route('murojat') }}" title="Murojatlar">
+            <i class="bi bi-chat-text"></i>
             <span class="badge bg-success badge-number">3</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-icon" href="form.html" title="Form">
+          <a class="nav-link nav-icon" href="{{ route('form') }}" title="Form">
             <i class="bi bi-card-checklist"></i>
             <span class="badge bg-warning badge-number">3</span>
           </a>

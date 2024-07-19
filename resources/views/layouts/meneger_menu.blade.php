@@ -13,12 +13,6 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="note.html">
-          <i class="bi bi-bell"></i>
-          <span>Eslatmalar</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link collapsed" href="moliya.html">
           <i class="bi bi-collection"></i>
           <span>Moliya</span>

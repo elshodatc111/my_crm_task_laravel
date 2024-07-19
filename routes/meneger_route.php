@@ -55,4 +55,5 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/student/update', [TashrifController::class, 'studentUpdate'])->name('meneger.student_update');
         Route::post('/meneger/student/eslatma/create', [TashrifController::class, 'studentCreatEslatma'])->name('meneger.create_eslatma');
     /* End Tashriflar */
+
 }); 
