@@ -15,6 +15,7 @@ class UserHistory extends Model
         'guruh',
         'summa',
         'tulov_type',
+        'comment',
         'xisoblash',
         'balans',
         'meneger',

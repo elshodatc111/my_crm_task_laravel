@@ -51,5 +51,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/student/create', [TashrifController::class, 'allCreate'])->name('meneger.all_create');
         Route::post('/meneger/student/create', [TashrifController::class, 'allCreateStory'])->name('meneger.all_create_story');
         Route::get('/meneger/student/show/{id}', [TashrifController::class, 'allShow'])->name('meneger.all_show');
+        Route::post('/meneger/student/password/update', [TashrifController::class, 'allPasswordUpdate'])->name('meneger.password_update');
+        Route::post('/meneger/student/update', [TashrifController::class, 'studentUpdate'])->name('meneger.student_update');
+        Route::post('/meneger/student/eslatma/create', [TashrifController::class, 'studentCreatEslatma'])->name('meneger.create_eslatma');
     /* End Tashriflar */
 }); 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('guruh');
             $table->string('summa');
             $table->string('tulov_type');
+            $table->string('comment');
             $table->string('xisoblash');
             $table->string('balans');
             $table->string('meneger');

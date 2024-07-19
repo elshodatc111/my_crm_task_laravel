@@ -20,25 +20,40 @@
     </div>
 
 
+    @if (Session::has('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        {{Session::get('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @elseif (Session::has('error'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        {{Session::get('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
 
   <div class="row">
     <div class="col-lg-6">      
       <div class="card" style="min-height: 280px;">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Elshod Musurmonov</h5>
+          <h5 class="card-title w-100 text-center">{{ $User['name'] }}</h5>
           <div class="row">
             <div class="col-6  mt-1"><b>Telefon raqam:</b></div>
-            <div class="col-6" style="text-align:right;">90 883 0450</div>
+            <div class="col-6" style="text-align:right;">{{ $User['phone1'] }}</div>
             <div class="col-6  mt-1"><b>Telefon raqam:</b></div>
-            <div class="col-6" style="text-align:right;">90 883 0450</div>
+            <div class="col-6" style="text-align:right;">{{ $User['phone2'] }}</div>
             <div class="col-6  mt-1"><b>Manzil:</b></div>
-            <div class="col-6" style="text-align:right;">Qarshi shaxar</div>
+            <div class="col-6" style="text-align:right;">{{ $User['addres'] }}</div>
             <div class="col-6  mt-1"><b>Tug'ilgan kun:</b></div>
-            <div class="col-6" style="text-align:right;">2024.07.17</div>
+            <div class="col-6" style="text-align:right;">{{ $User['tkun'] }}</div>
             <div class="col-6  mt-1"><b>Biz haqimizda:</b></div>
-            <div class="col-6" style="text-align:right;">Telegram</div>
+            <div class="col-6" style="text-align:right;">{{ $User['smm'] }}</div>
             <div class="col-6  mt-1"><b>Talaba haqida:</b></div>
-            <div class="col-6" style="text-align:right;">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
+            <div class="col-6" style="text-align:right;">{{ $User['about'] }}</div>
+            <div class="col-6  mt-1"><b>Talaba login:</b></div>
+            <div class="col-6" style="text-align:right;">{{ $User['email'] }}</div>
           </div>
         </div>
       </div>
@@ -46,20 +61,20 @@
     <div class="col-lg-6">      
       <div class="card" style="min-height: 280px;">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Balans: 145 000 so'm</h5>
+          <h5 class="card-title w-100 text-center" @if($User['balans']>0) style="color:green;" @elseif($User['balans']<0) style='color:red' @endif >Balans: {{ number_format($User['balans'], 0, '.', ' ') }} so'm</h5>
           <div class="row">
             <div class="col-6  mt-1"><b>Naqt to'lovlar:</b></div>
-            <div class="col-6" style="text-align:right;">260 000</div>
+            <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['naqt'], 0, '.', ' ') }} so'm</div>
             <div class="col-6  mt-1"><b>Plastik to'lovlar:</b></div>
-            <div class="col-6" style="text-align:right;">130 000</div>
+            <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['plastik'], 0, '.', ' ') }} so'm</div>
             <div class="col-6  mt-1"><b>Payme orqali to'lov:</b></div>
-            <div class="col-6" style="text-align:right;">80 000</div>
+            <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['payme'], 0, '.', ' ') }} so'm</div>
             <div class="col-6  mt-1"><b>Qaytarilgan:</b></div>
-            <div class="col-6" style="text-align:right;">45 000</div>
+            <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['qaytarildi'], 0, '.', ' ') }} so'm</div>
             <div class="col-6  mt-1"><b>Chegirmalar:</b></div>
-            <div class="col-6" style="text-align:right;">50 000</div>
+            <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['chegirma'], 0, '.', ' ') }} so'm</div>
             <div class="col-6  mt-1"><b>Jarimalar:</b></div>
-            <div class="col-6" style="text-align:right;">30 000</div>                
+            <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['jarima'], 0, '.', ' ') }} so'm</div>              
           </div>
         </div>
       </div>
@@ -76,12 +91,12 @@
         <div class="col-lg-4 mt-3">
           <button class="btn btn-outline-success w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addGroups">Yangi guruhga qo'shish</button>
           <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="modal"  data-bs-target="#arxivGroups">Arxiv guruhlar</button>
-          <button class="btn btn-success w-100" data-bs-toggle="modal"  data-bs-target="#addMessages">Eslatma qoldirish</button>
+          <button class="btn btn-info w-100" data-bs-toggle="modal"  data-bs-target="#arxvPaymart">To'lovlar tarixi</button>
         </div>
         <div class="col-lg-4 mt-3">
           <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal"  data-bs-target="#updateUser">Taxrirlash</button>
           <button class="btn btn-outline-primary w-100 mb-3" data-bs-toggle="modal"  data-bs-target="#updatePassword">Parolni yangilash</button>
-          <button class="btn btn-info w-100" data-bs-toggle="modal"  data-bs-target="#arxvPaymart">To'lovlar tarixi</button>
+          <button class="btn btn-success w-100" data-bs-toggle="modal"  data-bs-target="#addMessages">Eslatma qoldirish</button>
         </div>
       </div>
     </div>
@@ -106,7 +121,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <!--
+          <tr>
               <td>1</td>
               <td>2024.07.12 15:15:29</td>
               <td>To'lov</td>
@@ -214,18 +230,25 @@
               <td>-400 000</td>
               <td>elshodatc1116</td>
             </tr>
-            <tr>
-              <td>10</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Markazga tashrif</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>0</td>
-              <td>elshodatc1116</td>
-            </tr>
+-->
+            @forelse($UserHistory as $item)
+              <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $item['created_at'] }}</td>
+                <td>{{ $item['status'] }}</td>
+                <td>{{ $item['guruh'] }}</td>
+                <td>{{ $item['summa'] }}</td>
+                <td>{{ $item['tulov_type'] }}</td>
+                <td>{{ $item['comment'] }}</td>
+                <td>{{ $item['xisoblash'] }}</td>
+                <td>{{ $item['balans'] }}</td>
+                <td>{{ $item['meneger'] }}</td>
+              </tr>
+            @empty
+              <tr>
+                <td colspan=10 class="text-center">Talaba tarixi mavjud emas.</td>
+              </tr>
+            @endif
           </tbody>
         </table>
       </div>
@@ -411,71 +434,6 @@
       </div>
     </div>
   </div>
-  <!--Eslatma qoldirish-->
-  <div class="modal fade" id="addMessages" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Eslatma qoldirish</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            <label for="" class="my-2">Eslatma matni</label>
-            <textarea name="" required class="form-control"></textarea>
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="submit" class="btn btn-primary w-100 mt-2">Eslatma saqlash</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Taxrirlash-->
-  <div class="modal fade" id="updateUser" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">updateUser</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--Update Password-->
-  <div class="modal fade" id="updatePassword" tabindex="-1">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center">Parolni yangilash</h5>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
-              </div>
-              <div class="col-6">
-                <button type="submit" class="btn btn-primary w-100 mt-2">Yangilash</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <!--To'lov tarixi-->
   <div class="modal fade" id="arxvPaymart" tabindex="-1">
     <div class="modal-dialog modal-xl">
@@ -508,6 +466,92 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Eslatma qoldirish-->
+  <div class="modal fade" id="addMessages" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center">Eslatma qoldirish</h5>
+        </div>
+        <div class="modal-body pt-0">
+          <form action="{{ route('meneger.create_eslatma') }}" method="post" class="m-0 p-0">
+            @csrf
+            <input type="hidden" name="id" value="{{ $User['id'] }}">
+            <label for="" class="my-2">Eslatma matni</label>
+            <textarea name="comment" required class="form-control"></textarea>
+            <div class="row">
+              <div class="col-6">
+                <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
+              </div>
+              <div class="col-6">
+                <button type="submit" class="btn btn-primary w-100 mt-2">Eslatmani saqlash</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Taxrirlash ++++++ -->
+  <div class="modal fade" id="updateUser" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center">Talaba ma`lumotlarini yangilash</h5>
+        </div>
+        <div class="modal-body">
+          <form action="{{ route('meneger.student_update') }}" method="post" class="p-0 m-0">
+            @csrf
+            <input type="hidden" name="id" value="{{ $User['id'] }}">
+            <label for="name" class="mb-1">FIO</label>
+            <input type="text" name="name" class="form-control" value="{{ $User['name'] }}" required>
+            <label for="phone1" class="my-1">Telefon raqam</label>
+            <input type="text" name="phone1" class="form-control phone" value="{{ $User['phone1'] }}" required>
+            <label for="phone2" class="my-1">Qo'shimcha telefon raqam</label>
+            <input type="text" name="phone2" class="form-control phone" value="{{ $User['phone2'] }}" required>
+            <label for="tkun" class="my-1">Tug'ilgan kuni</label>
+            <input type="date" name="tkun" class="form-control" value="{{ $User['tkun'] }}" required>
+            <label for="addres" class="my-1">Yashash manzili</label>
+            <input type="text" name="addres" value="{{ $User['addres'] }}" class="form-control" required>
+            <label for="about" class="my-1">Talaba haqida</label>
+            <textarea name="about" class="form-control">{{ $User['about'] }}</textarea>
+            <div class="row">
+              <div class="col-6">
+                <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
+              </div>
+              <div class="col-6">
+                <button type="submit" class="btn btn-primary w-100 mt-2">O'zgarishlarni saqlash</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Update Password ++++++ -->
+  <div class="modal fade" id="updatePassword" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center">Parolni yangilash</h5>
+        </div>
+        <div class="modal-body p-1 m-0">
+          <div class="row">
+            <div class="col-6">
+              <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
+            </div>
+            <div class="col-6">
+              <form action="{{ route('meneger.password_update') }}" method="post" class="p-0 m-0">
+                @csrf 
+                <input type="hidden" name="user_id" value="{{ $User['id'] }}">
+                <button type="submit" class="btn btn-primary w-100 mt-2">Yangilash</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

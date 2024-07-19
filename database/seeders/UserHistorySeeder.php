@@ -16,6 +16,7 @@ class UserHistorySeeder extends Seeder
             'guruh' => '-',
             'summa' => '-',
             'tulov_type' => '-',
+            'comment' => '-',
             'xisoblash' => '-',
             'balans' => 0,
             'meneger' => 'elshodatc1116',
