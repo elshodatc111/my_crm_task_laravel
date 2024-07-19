@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [AuthController::class, 'dashboard'])->name('dashboard');
-    Route::get('/eslatma', [AlertController::class, 'eslatma'])->name('eslatma');
-    Route::get('/tkun', [AlertController::class, 'tkun'])->name('tkun');
-    Route::get('/form', [AlertController::class, 'form'])->name('form');
-    Route::get('/murojat', [AlertController::class, 'murojat'])->name('murojat');
+    Route::get('/note', [AlertController::class, 'eslatma'])->name('eslatma');
+    Route::post('/note', [AlertController::class, 'eslatmaDelete'])->name('eslatma_delete');
+    Route::get('/birthday', [AlertController::class, 'tkun'])->name('tkun');
+    Route::get('/advertising', [AlertController::class, 'form'])->name('form');
+    Route::get('/appeals', [AlertController::class, 'murojat'])->name('murojat');
 });
 
 

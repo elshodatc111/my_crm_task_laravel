@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\UserBalans;
 use App\Models\UserHistory;
 use App\Models\MarkazSmsSetting;
+use App\Models\MarkazHodimStatistka;
 use App\Models\Markaz;
 use App\Models\UserEslatma;
 use Illuminate\Support\Facades\Hash;
@@ -122,6 +123,9 @@ class TashrifController extends Controller
         if(MarkazSmsSetting::where('markaz_id',auth()->user()->markaz_id)->first()->new_user == 'true'){
             SendMessage::dispatch(auth()->user()->markaz_id, $Phone, $Text);
         }
+        $MarkazHodimStatistka = MarkazHodimStatistka::where('user_id',auth()->user()->id)->first();
+        $MarkazHodimStatistka->tashrif = $MarkazHodimStatistka->tashrif + 1;
+        $MarkazHodimStatistka->save();
         return redirect()->route('meneger.all_show', $User->id )->with('success', "Yangi tashrif qo'shildi.");
     }
     public function allShow($id){
