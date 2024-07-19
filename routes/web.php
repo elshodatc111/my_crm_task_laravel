@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 
 /* Start Form Show */
-    Route::get('/form/user/{id}', [AlertController::class, 'formShowUser'])->name('form_show_user');
-    Route::get('/form/techer/{id}', [AlertController::class, 'formShowTecher'])->name('form_show_techer');
+    Route::get('/form/user/{markaz_id}/{smm}', [AlertController::class, 'formShowUser'])->name('form_show_user');
+    Route::get('/form/techer/{markaz_id}/{smm}', [AlertController::class, 'formShowTecher'])->name('form_show_techer');
 /* End Form Show */
 
 
