@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Meneger\SettingController;
 use App\Http\Controllers\Meneger\HodimController;
 use App\Http\Controllers\Meneger\TashrifController;
+use App\Http\Controllers\Meneger\GropsController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -56,6 +57,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/student/eslatma/create', [TashrifController::class, 'studentCreatEslatma'])->name('meneger.create_eslatma');
     /* End Tashriflar */
 
-
+    /* Start Guruhlar */
+        Route::get('/meneger/groups/all', [GropsController::class, 'allGroups'])->name('meneger_groups');
+        Route::get('/meneger/groups/end', [GropsController::class, 'ebdGroups'])->name('meneger_groups_end');
+        Route::get('/meneger/groups/create', [GropsController::class, 'createGroups'])->name('meneger_groups_create');
+        Route::post('/meneger/groups/create', [GropsController::class, 'createGroupsStoryOne'])->name('meneger_groups_create_story');
+        Route::get('/meneger/groups/create/two', [GropsController::class, 'createGroupsTwo'])->name('meneger_groups_create_two');
+        Route::get('/meneger/groups/create/two/{room_id}', [GropsController::class, 'darsvaqtlari']);
+        Route::post('/meneger/groups/create/two', [GropsController::class, 'createGroupsStoreTwo'])->name('meneger_groups_create_story_two');
+        Route::get('/meneger/groups/show/{id}', [GropsController::class, 'showGroups'])->name('meneger_groups_show');
+    /* End Guruhlar */
 
 }); 

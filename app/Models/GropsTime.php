@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MarkazPaymart extends Model
+class GropsTime extends Model
 {
     use HasFactory;
     protected $fillable = [
         'markaz_id',
-        'summa',
-        'chegirma',
-        'admin_chegirma',
-        'chegirma_time',
-        'meneger',
-        'status',
+        'room_id',
+        'grops_id',
+        'data',
+        'time',
     ];
     public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
-    public function groups(){return $this->hasMany(Grops::class);}
+    public function room(){
+        return $this->belongsTo(MarkazRoom::class);
+    }
+    public function cours(){
+        return $this->belongsTo(MarkazCours::class);
+    }
 }

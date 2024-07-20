@@ -50,4 +50,5 @@ class User extends Authenticatable
     public function history(){
         return $this->hasMany(UserHistory::class);
     }
+    public function groups(){return $this->hasMany(Grops::class);}
 }

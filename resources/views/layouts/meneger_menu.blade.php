@@ -7,7 +7,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="groups.html">
+        <a class="nav-link collapsed" href="{{ route('meneger_groups') }}">
           <i class="bi bi-diagram-3"></i>
           <span>Guruhlar</span>
         </a>

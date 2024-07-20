@@ -17,4 +17,5 @@ class MarkazCours extends Model
     public function markaz(){
         return $this->belongsTo(Markaz::class);
     }
+    public function groups(){return $this->hasMany(Grops::class);}
 }
