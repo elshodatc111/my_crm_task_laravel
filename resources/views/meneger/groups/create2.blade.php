@@ -134,8 +134,12 @@
                                             });
                                         });
                                     </script>
-                                    <div class="col-lg-12 text-center">
-                                        <button class="btn btn-primary w-50 mt-2">Guruhni saqlash</button>
+                                    
+                                    <div class="col-lg-6 text-center mt-4">
+                                        <a href="{{ route('meneger_groups_create') }}" class="btn btn-danger w-50">Bekor qilish</a>
+                                    </div>
+                                    <div class="col-lg-6 text-center mt-4">
+                                        <button class="btn btn-primary w-50">Guruhni saqlash</button>
                                     </div>
                                 </div>
                             </form>
