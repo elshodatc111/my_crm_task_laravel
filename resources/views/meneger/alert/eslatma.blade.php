@@ -62,7 +62,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td class="text-center" colspan=5>Eslatmalar mavjud emas.</td>
+                                <td class="text-center" colspan=6>Eslatmalar mavjud emas.</td>
                             </tr>
                             @endforelse
                         <tbody>

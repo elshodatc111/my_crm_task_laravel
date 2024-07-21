@@ -84,19 +84,19 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-4 mt-3">
-          <button class="btn btn-success w-100 mb-3" data-bs-toggle="modal" data-bs-target="#createPaymart">To'lov qilish</button>
-          <button class="btn btn-outline-danger w-100 mb-3" data-bs-toggle="modal" data-bs-target="#repetPaymart">To'lov qaytarish</button>
-          <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#createChegirma">Chegirma kiritish</button>
+          <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#createPaymart">To'lov qilish</button>
+          <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#repetPaymart">To'lov qaytarish</button>
+          <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createChegirma">Chegirma kiritish</button>
         </div>
         <div class="col-lg-4 mt-3">
-          <button class="btn btn-outline-success w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addGroups">Yangi guruhga qo'shish</button>
-          <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="modal"  data-bs-target="#arxivGroups">Arxiv guruhlar</button>
-          <button class="btn btn-info w-100" data-bs-toggle="modal"  data-bs-target="#arxvPaymart">To'lovlar tarixi</button>
+          <button class="btn btn-primary w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addGroups">Yangi guruhga qo'shish</button>
+          <button class="btn btn-primary mb-3 w-100" data-bs-toggle="modal"  data-bs-target="#arxivGroups">Arxiv guruhlar</button>
+          <button class="btn btn-primary w-100" data-bs-toggle="modal"  data-bs-target="#arxvPaymart">To'lovlar tarixi</button>
         </div>
         <div class="col-lg-4 mt-3">
           <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal"  data-bs-target="#updateUser">Taxrirlash</button>
-          <button class="btn btn-outline-primary w-100 mb-3" data-bs-toggle="modal"  data-bs-target="#updatePassword">Parolni yangilash</button>
-          <button class="btn btn-success w-100" data-bs-toggle="modal"  data-bs-target="#addMessages">Eslatma qoldirish</button>
+          <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal"  data-bs-target="#updatePassword">Parolni yangilash</button>
+          <button class="btn btn-primary w-100" data-bs-toggle="modal"  data-bs-target="#addMessages">Eslatma qoldirish</button>
         </div>
       </div>
     </div>

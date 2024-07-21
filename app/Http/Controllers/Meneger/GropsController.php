@@ -47,7 +47,7 @@ class GropsController extends Controller{
         $Grops = Grops::where('markaz_id',auth()->user()->markaz_id)->where('guruh_end','<',date('Y-m-d'))->get();
         $Guruh = array();
         foreach ($Grops as $key => $value) {
-            $UserCount = 0;
+            $UserCount = count(UserGroup::where('grops_id',$value->id)->where('status','true')->get());
             $Guruh[$key]['id']=$value->id;
             $Guruh[$key]['guruh_name']=$value->guruh_name;
             $Guruh[$key]['guruh_start']=$value->guruh_start;
@@ -238,11 +238,17 @@ class GropsController extends Controller{
         $guruh['techer_foiz'] = $Grops->techer_foiz;
         $guruh['techer_paymart'] = $Grops->techer_paymart;
         $guruh['techer_bonus'] = $Grops->techer_bonus;
-        $guruh['next_id'] = $Grops->next_id;
         $guruh['meneger'] = $Grops->meneger;
         $guruh['created_at'] = $Grops->created_at;
         $guruh['updated_at'] = $Grops->updated_at;
         $guruh['users'] = $GU;
+        if($guruh['next_id']!=='false'){
+            $guruh['newGroup'] = Grops::find($guruh['next_id'])->guruh_name;
+            $guruh['newGroupID'] = Grops::find($guruh['next_id'])->id;
+        }else{
+            $guruh['newGroup'] = null;
+            $guruh['newGroupID'] = null;
+        }
         $guruh['users_active'] = UserGroup::where('user_groups.grops_id',$id)->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
         //dd($guruh['usersDelete']['users']);
         return view('meneger.groups.group_show',compact('guruh'));

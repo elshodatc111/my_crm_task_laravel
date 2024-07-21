@@ -18,7 +18,7 @@
         </div>
 
         <section class="section dashboard">
-            <div class="card" style="min-height: 280px;">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">      
@@ -66,33 +66,38 @@
                             </div>
                         </div>
                     </div>  
-                    <div class="row">
-                        <div class="col-lg-3 my-1">
-                            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createPaymart">Qarzdorlarga SMS</button>
-                        </div>
-                        <div class="col-lg-3 mt-1">
-                            <button class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#repetPaymart">Guruhni taxrirlash</button>
-                        </div>
-                        <div class="col-lg-3 mt-1">
-                            <button class="btn btn-outline-success w-100"  data-bs-toggle="modal" data-bs-target="#addGroups">Talaba o'chirish</button>
-                        </div>
-                        <div class="col-lg-3 mt-1">
-                            <button class="btn btn-danger w-100" data-bs-toggle="modal"  data-bs-target="#endGroups">Davomat</button>
-                        </div>
-                        <div class="col-lg-4 mt-1">
-                            <button class="btn btn-outline-danger w-100" data-bs-toggle="modal"  data-bs-target="#lessenDays">Dars kunlari</button>
-                        </div>
-                        <div class="col-lg-4 mt-1">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal"  data-bs-target="#updateUser">Test natijalari</button>
-                        </div>
-                        <div class="col-lg-4 mt-1">
-                            @if($guruh['next_id']=='false')
-                            <a class="btn btn-outline-primary w-100" href="{{ route('meneger_groups_next_create',$guruh['id'] ) }}">Guruhni davom etish</a>
-                            @else
-                            <a class="btn btn-outline-warning w-100" href="{{ route('meneger_groups_show',$guruh['next_id'] ) }}">Guruh davom ettirilgan</a>
-                            @endif
-                        </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                <div class="row mt-3">
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal"  data-bs-target="#lessenDays">Dars kunlari</button>
                     </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal"  data-bs-target="#updateUser">Test natijalari</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#createPaymart">Qarzdorlarga sms yuborish</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary my-1 w-100"  data-bs-toggle="modal" data-bs-target="#addGroups">Guruhdan talaba o'chirish</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#repetPaymart">Guruh ma`lumotini yangilash</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal"  data-bs-target="#endGroups">Talabalar davomati</button>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        @if($guruh['next_id']=='false')
+                            <a class="btn btn-primary my-1 w-50" href="{{ route('meneger_groups_next_create',$guruh['id'] ) }}">Guruhni davom ettirish</a>
+                        @else
+                            <a class="btn btn-success my-1 w-50" href="{{ route('meneger_groups_show',$guruh['newGroupID'] ) }}">Guruh davomi ({{ $guruh['newGroup'] }})</a>
+                        @endif
+                    </div>
+                </div>
                 </div>
             </div>
 
@@ -119,19 +124,19 @@
                             @foreach($guruh['users'] as $item)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td><a href="{{ route('meneger.all_show',$item['User']['user_id']) }}">{{ $item['UserName'] }}</a></td>
+                                <td style="text-align:left;"><a href="{{ route('meneger.all_show',$item['User']['user_id']) }}">{{ $item['UserName'] }}</a></td>
                                 <td>{{ $item['User']['grops_start_data'] }}</td>
-                                <td>{{ $item['User']['grops_start_comment'] }}</td>
+                                <td style="text-align:left;">{{ $item['User']['grops_start_comment'] }}</td>
                                 <td>{{ $item['User']['grops_start_meneger'] }}</td>
                                 <td>{{ $item['User']['grops_end_data'] }}</td>
                                 <td>{{ $item['User']['grops_end_meneger'] }}</td>
-                                <td>{{ $item['User']['grops_end_comment'] }}</td>
+                                <td style="text-align:left;">{{ $item['User']['grops_end_comment'] }}</td>
                                 <td>{{ $item['User']['jarima'] }}</td>
                                 <td>
                                     @if($item['User']['status'] == 'true')
-                                        aktiv
+                                        <b class="text-success p-0 m-0">Aktiv<b>
                                     @else 
-                                        End
+                                        <b class="text-danger p-0 m-0">O'chirildi<b>
                                     @endif
                                 </td>
                             </tr>
