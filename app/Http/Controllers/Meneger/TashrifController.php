@@ -14,7 +14,10 @@ use App\Models\UserHistory;
 use App\Models\MarkazSmsSetting;
 use App\Models\MarkazHodimStatistka;
 use App\Models\Markaz;
+use App\Models\MarkazPaymart;
 use App\Models\UserEslatma;
+use App\Models\Grops;
+use App\Models\UserGroup;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendMessage;
 
@@ -132,7 +135,50 @@ class TashrifController extends Controller
         $User = User::find($id);
         $UserBalans = UserBalans::where('user_id',$id)->first();
         $UserHistory = UserHistory::where('user_id',$id)->orderby('id','desc')->get();
-        return view('meneger.students.show',compact('User','UserBalans','UserHistory'));
+        $Guruhlar = Grops::where('markaz_id',auth()->user()->markaz_id)->where('guruh_end','>=',date('Y-m-d'))->get();
+        $GropsNew = array();
+        foreach ($Guruhlar as $key => $value) {
+            $UserGroup = count(UserGroup::where('user_id',$id)->where('grops_id',$value->id)->where('status','true')->get());
+            if($UserGroup==0){
+                $GropsNew[$key]['id'] = $value->id;
+                $GropsNew[$key]['guruh_name'] = $value->guruh_name;
+                $GropsNew[$key]['guruh_price'] = MarkazPaymart::find($value->tulov_id)->summa;
+            }
+        }
+        return view('meneger.students.show',compact('User','UserBalans','UserHistory','GropsNew'));
+    }
+    public function userAddGroup(Request $request){
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'grops_id' => 'required',
+            'grops_start_comment' => 'required',
+        ]);
+        $User = User::find($request->user_id);
+        $Guruh = Grops::find($request->grops_id);
+        UserGroup::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $request->user_id,
+            'grops_id' => $request->grops_id,
+            'grops_start_data' => date('Y-m-d'),
+            'grops_end_data' => '...',
+            'grops_start_comment' => $request->grops_start_comment,
+            'grops_start_meneger' => auth()->user()->email,
+        ]);
+        UserHistory::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $User->id,
+            'status' => "Guruhga qo'shildi",
+            'guruh' => $Guruh->guruh_name,
+            'summa' => number_format(MarkazPaymart::find($Guruh->tulov_id)->summa, 0, '.', ' '),
+            'tulov_type' => '-',
+            'comment' => $request->grops_start_comment,
+            'xisoblash' => number_format($User->balans, 0, '.', ' ')." - ".number_format(MarkazPaymart::find($Guruh->tulov_id)->summa, 0, '.', ' ')." = ".number_format($User->balans - MarkazPaymart::find($Guruh->tulov_id)->summa, 0, '.', ' '),
+            'balans' => number_format($User->balans - MarkazPaymart::find($Guruh->tulov_id)->summa, 0, '.', ' '),
+            'meneger' => auth()->user()->email,
+        ]);
+        $User->balans = $User->balans - MarkazPaymart::find($Guruh->tulov_id)->summa;
+        $User->save();
+        return redirect()->back()->with('success', "Talaba yangi guruhga qo'shildi.");
     }
     public function allPasswordUpdate(Request $request){
         $User = User::find($request->user_id);

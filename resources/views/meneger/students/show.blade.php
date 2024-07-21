@@ -105,7 +105,7 @@
     <div class="card-body">
       <h5 class="card-title w-100 text-center">Talaba tarixi</h5>
       <div class="table-responsive">
-        <table class="table text-center table-bordered" style="font-size: 12px;">
+        <table class="table text-center table-bordered" style="font-size: 10px;">
           <thead>
             <tr class="align-items-center">
               <th>#</th>
@@ -216,18 +216,6 @@
               <td>Guruhdan o'chirish sababi</td>
               <td>-400 000 + 400 000 = 0</td>
               <td>0</td>
-              <td>elshodatc1116</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Guruhga qo'shildi</td>
-              <td>Guruhning nomi</td>
-              <td>400 000</td>
-              <td>-</td>
-              <td>Guruhga qo'shish sababi</td>
-              <td>0-400 000 = -400 000</td>
-              <td>-400 000</td>
               <td>elshodatc1116</td>
             </tr>
 -->
@@ -370,14 +358,19 @@
           <h5 class="modal-title">Yangi guruhga qo'shish</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            <label for="" class="my-2">Guruhni tanlang</label>
-            <select name="" required class="form-select">
-              <option value="">Tanlang</option>
+        <div class="modal-body pt-1">
+          <form action="{{ route('meneger.user_add_group') }}" method="post" class="p-0 m-0">
+            @csrf 
+            <input type="hidden" name="user_id" value="{{ $User->id }}">
+            <label for="grops_id" class="my-2">Guruhni tanlang</label>
+            <select name="grops_id" required class="form-select">
+              <option value="">Tanlang...</option>
+              @foreach($GropsNew as $item)
+              <option value="{{ $item['id'] }}">{{ $item['guruh_name'] }} Narxi: {{ number_format($item['guruh_price'], 0, '.', ' ') }} so'm</option>
+              @endforeach
             </select>
-            <label for="" class="my-2">Guruhga qo'shish haqida</label>
-            <input type="text" required class="form-control">
+            <label for="grops_start_comment" class="my-2">Guruhga qo'shish haqida</label>
+            <textarea name="grops_start_comment" required class="form-control"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
@@ -471,14 +464,14 @@
       </div>
     </div>
   </div>
-  <!--Eslatma qoldirish-->
+  <!--Eslatma qoldirish ++++ -->
   <div class="modal fade" id="addMessages" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center">Eslatma qoldirish</h5>
         </div>
-        <div class="modal-body pt-0">
+        <div class="modal-body p-3">
           <form action="{{ route('meneger.create_eslatma') }}" method="post" class="m-0 p-0">
             @csrf
             <input type="hidden" name="id" value="{{ $User['id'] }}">

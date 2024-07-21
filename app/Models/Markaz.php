@@ -36,4 +36,5 @@ class Markaz extends Model
     public function sendmessege(){return $this->hasMany(MarkazSendMessage::class);}
     public function history(){return $this->hasMany(UserHistory::class);}
     public function groups(){return $this->hasMany(Grops::class);}
+    public function groupuser(){return $this->hasMany(UserGroup::class);}
 }

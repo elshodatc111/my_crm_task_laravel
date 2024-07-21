@@ -42,4 +42,5 @@ class Grops extends Model
         return $this->belongsTo(User::class);
     }
     public function grouptime(){return $this->hasMany(Grops::class);}
+    public function groupuser(){return $this->hasMany(UserGroup::class);}
 }
