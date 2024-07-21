@@ -153,7 +153,7 @@ class GropsController extends Controller{
             'room_id'=>$Guruh['room_id'],
             'cours_id'=>$Guruh['cours_id'],
             'techer_id'=>$Guruh['techer_id'],
-            'guruh_name'=>$Guruh['guruh_name'],
+            'guruh_name'=>strtoupper($Guruh['guruh_name']),
             'guruh_start'=>$Guruh['guruh_start'],
             'guruh_end'=>$Guruh['guruh_end'],
             'hafta_kun'=>$Guruh['hafta_kun'],
@@ -178,6 +178,28 @@ class GropsController extends Controller{
         return redirect()->route('meneger_groups_show',$Guruxs->id)->with('success', "Yangi guruh ochildi");
     }
     public function showGroups($id){
-        dd("All Groups");
+        $Grops = Grops::find($id);
+        $guruh = array();
+        $guruh['id'] = $id;
+        $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
+        $guruh['room_name'] = MarkazRoom::find($Grops->room_id)->room_name;
+        $guruh['cours_name'] = MarkazCours::find($Grops->cours_id)->cours_name;
+        $guruh['guruh_start'] = $Grops->guruh_start;
+        $guruh['guruh_end'] = $Grops->guruh_end;
+        $guruh['hafta_kun'] = $Grops->hafta_kun;
+        $guruh['dars_count'] = $Grops->dars_count;
+        $guruh['dars_time'] = $Grops->dars_time;
+        $guruh['dars_data'] = GropsTime::where('grops_id',$id)->orderby('data','asc')->get();
+        $guruh['next_id'] = $Grops->next_id;
+        $guruh['techer'] = User::find($Grops->techer_id)->name;
+        $guruh['techer_tulov'] = Markaz::find(auth()->user()->markaz_id)->paymart;
+        $guruh['techer_foiz'] = $Grops->techer_foiz;
+        $guruh['techer_paymart'] = $Grops->techer_paymart;
+        $guruh['techer_bonus'] = $Grops->techer_bonus;
+        $guruh['meneger'] = $Grops->meneger;
+        $guruh['created_at'] = $Grops->created_at;
+        $guruh['updated_at'] = $Grops->updated_at;
+
+        return view('meneger.groups.group_show',compact('guruh'));
     }
 }

@@ -83,7 +83,7 @@ class TashrifController extends Controller
         $User = User::create([
             'markaz_id' => auth()->user()->markaz_id,
             'role_id' => 6,
-            'name' => $request->name,
+            'name' => strtoupper($request->name),
             'phone1' => $request->phone1,
             'phone2' => $request->phone2,
             'addres' => $request->addres,
