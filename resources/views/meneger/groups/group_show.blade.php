@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">      
-                            <h5 class="card-title w-100 text-center">{{ $guruh['cours_name'] }}</h5>
+                            <h5 class="card-title w-100 text-center">{{ $guruh['guruh_name'] }}</h5>
                             <div class="row">
                                 <div class="col-6  mt-1"><b>Dars xonasi:</b></div>
                                 <div class="col-6" style="text-align:right;">{{ $guruh['room_name'] }}</div>

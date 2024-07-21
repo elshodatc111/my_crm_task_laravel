@@ -19,10 +19,42 @@ use Illuminate\Support\Facades\Cache;
 
 class GropsController extends Controller{
     public function allGroups(){
-        return view('meneger.groups.groups');
+        $Grops = Grops::where('markaz_id',auth()->user()->markaz_id)->where('guruh_end','>=',Carbon::now()->subDays(30)->format('Y-m-d'))->get();
+        $Guruh = array();
+        foreach ($Grops as $key => $value) {
+            $UserCount = 0;
+            if($value->guruh_start>date('Y-m-d')){
+                $Status = 'new';
+            }elseif($value->guruh_end<date('Y-m-d')){
+                $Status = 'end';
+            }else{
+                $Status = 'activ';
+            }
+            $Guruh[$key]['id']=$value->id;
+            $Guruh[$key]['guruh_name']=$value->guruh_name;
+            $Guruh[$key]['guruh_start']=$value->guruh_start;
+            $Guruh[$key]['guruh_end']=$value->guruh_end;
+            $Guruh[$key]['room']=MarkazRoom::where('id',$value->room_id)->first()->room_name;
+            $Guruh[$key]['dars_time']=$value->dars_time;
+            $Guruh[$key]['users']=$UserCount;
+            $Guruh[$key]['status']=$Status;
+        }
+        return view('meneger.groups.groups',compact('Guruh'));
     }
     public function ebdGroups(){
-        dd("All Groups");
+        $Grops = Grops::where('markaz_id',auth()->user()->markaz_id)->where('guruh_end','<',date('Y-m-d'))->get();
+        $Guruh = array();
+        foreach ($Grops as $key => $value) {
+            $UserCount = 0;
+            $Guruh[$key]['id']=$value->id;
+            $Guruh[$key]['guruh_name']=$value->guruh_name;
+            $Guruh[$key]['guruh_start']=$value->guruh_start;
+            $Guruh[$key]['guruh_end']=$value->guruh_end;
+            $Guruh[$key]['room']=MarkazRoom::where('id',$value->room_id)->first()->room_name;
+            $Guruh[$key]['dars_time']=$value->dars_time;
+            $Guruh[$key]['users']=$UserCount;
+        }
+        return view('meneger.groups.group_end',compact('Guruh'));
     }
     public function createGroups(){
         $MarkazPaymart = MarkazPaymart::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
@@ -184,6 +216,7 @@ class GropsController extends Controller{
         $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
         $guruh['room_name'] = MarkazRoom::find($Grops->room_id)->room_name;
         $guruh['cours_name'] = MarkazCours::find($Grops->cours_id)->cours_name;
+        $guruh['guruh_name'] = $Grops->guruh_name;
         $guruh['guruh_start'] = $Grops->guruh_start;
         $guruh['guruh_end'] = $Grops->guruh_end;
         $guruh['hafta_kun'] = $Grops->hafta_kun;

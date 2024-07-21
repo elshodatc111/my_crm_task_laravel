@@ -49,18 +49,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($Guruh as $item)
                                 <tr>
-                                    <td>1</td>
+                                    <td>{{ $loop->index+1 }}</td>
                                     <td style="text-align:left;">
-                                        <a href="{{ route('meneger_groups_show',1) }}"><b>Hangil</b></a>
+                                        <a href="{{ route('meneger_groups_show',$item['id']) }}"><b>{{ $item['guruh_name'] }}</b></a>
                                     </td>
-                                    <td>10.07.2024</td>
-                                    <td>10.07.2024</td>
-                                    <td>1-xona</td>
-                                    <td>08:00-09:30</td>
-                                    <td>12</td>
-                                    <td><p class="text-primary p-0 m-0">Yangi</p></td>
+                                    <td>{{ $item['guruh_start'] }}</td>
+                                    <td>{{ $item['guruh_end'] }}</td>
+                                    <td>{{ $item['room'] }}</td>
+                                    <td>{{ $item['dars_time'] }}</td>
+                                    <td>{{ $item['users'] }}</td>
+                                    <td>
+                                        @if($item['status']=='new')
+                                        <span class='badge border-1 text-primary'>YANGI</span>
+                                        @elseif($item['status']=='activ')
+                                        <span class='badge border-1 text-success'>AKTIV</span>
+                                        @else
+                                        <span class='badge border-1 text-danger'>YAKUNLANGAN</span>
+                                        @endif
+                                    </td>
                                 </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan=8 class="text-center">Guruhlar mavjud emas.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
