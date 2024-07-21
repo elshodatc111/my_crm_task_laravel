@@ -194,30 +194,6 @@
               <td>150 000</td>
               <td>elshodatc1116</td>
             </tr>
-            <tr>
-              <td>4</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Jarima</td>
-              <td>Guruh nomi</td>
-              <td>200 000</td>
-              <td>-</td>
-              <td>Guruhdan o'chirilganlik uchun jarima</td>
-              <td>0 - 200 000 = -200 000</td>
-              <td>-200 000</td>
-              <td>elshodatc1116</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Guruhdan o'chirildi</td>
-              <td>Guruh nomi</td>
-              <td>400 000</td>
-              <td>-</td>
-              <td>Guruhdan o'chirish sababi</td>
-              <td>-400 000 + 400 000 = 0</td>
-              <td>0</td>
-              <td>elshodatc1116</td>
-            </tr>
 -->
             @forelse($UserHistory as $item)
               <tr>
@@ -350,7 +326,7 @@
       </div>
     </div>
   </div>
-  <!--Yangi guruhga qo'shish-->
+  <!--Yangi guruhga qo'shish ++++ -->
   <div class="modal fade" id="addGroups" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -384,7 +360,7 @@
       </div>
     </div>
   </div>
-  <!--Arxiv Guruhlar-->
+  <!--Arxiv Guruhlar +++++ -->
   <div class="modal fade" id="arxivGroups" tabindex="-1">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -409,17 +385,23 @@
                 </tr>
               </thead>
               <tbody>
+                @forelse($UserGuruh as $item)
                 <tr>
-                  <td>1</td>
-                  <td><a href="">Test guruh</a></td>
-                  <td>2024.07.12 15:15:29</td>
-                  <td>Guruh komment</td>
-                  <td>elshodatc1116</td>
-                  <td>2024.07.12 15:15:29</td>
-                  <td>Guruh komment</td>
-                  <td>400 000</td>
-                  <td>elshodatc1116</td>
+                  <td>{{ $loop->index+1 }}</td>
+                  <td><a href="{{ route('meneger_groups_show',$item['about']['id']) }}">{{ $item['guruh'] }}</a></td>
+                  <td>{{ $item['about']['grops_start_data'] }}</td>
+                  <td>{{ $item['about']['grops_start_comment'] }}</td>
+                  <td>{{ $item['about']['grops_start_meneger'] }}</td>
+                  <td>{{ $item['about']['grops_end_data'] }}</td>
+                  <td>{{ $item['about']['grops_end_comment'] }}</td>
+                  <td>{{ $item['about']['jarima'] }}</td>
+                  <td>{{ $item['about']['grops_end_meneger'] }}</td>
                 </tr>
+                @empty
+                  <tr>
+                    <td colspan=9 class="text-center">Guruhlar mavjud emas</td>
+                  </tr>
+                @endforelse
               </tbody>
             </table>
           </div>

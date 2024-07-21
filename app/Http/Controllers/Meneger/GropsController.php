@@ -14,6 +14,7 @@ use App\Models\MarkazPaymart;
 use App\Models\GropsTime;
 use App\Models\DamOlish;
 use App\Models\MarkazLessenTime;
+use App\Models\UserGroup;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -22,7 +23,7 @@ class GropsController extends Controller{
         $Grops = Grops::where('markaz_id',auth()->user()->markaz_id)->where('guruh_end','>=',Carbon::now()->subDays(30)->format('Y-m-d'))->get();
         $Guruh = array();
         foreach ($Grops as $key => $value) {
-            $UserCount = 0;
+            $UserCount = count(UserGroup::where('grops_id',$value->id)->where('status','true')->get());
             if($value->guruh_start>date('Y-m-d')){
                 $Status = 'new';
             }elseif($value->guruh_end<date('Y-m-d')){
@@ -211,6 +212,13 @@ class GropsController extends Controller{
     }
     public function showGroups($id){
         $Grops = Grops::find($id);
+        $GuruhUsers = UserGroup::where('grops_id',$id)->get();
+        $GU = array();
+        foreach($GuruhUsers as $key => $item){
+            $GU[$key]['User'] = $item;
+            $GU[$key]['UserName'] = User::find($item->user_id)->name;
+        }
+        $GUD['guruh_price'] = MarkazPaymart::find($Grops->tulov_id)->summa;
         $guruh = array();
         $guruh['id'] = $id;
         $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
@@ -232,7 +240,9 @@ class GropsController extends Controller{
         $guruh['meneger'] = $Grops->meneger;
         $guruh['created_at'] = $Grops->created_at;
         $guruh['updated_at'] = $Grops->updated_at;
-
+        $guruh['users'] = $GU;
+        $guruh['users_active'] = UserGroup::where('user_groups.grops_id',$id)->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
+        //dd($guruh['usersDelete']['users']);
         return view('meneger.groups.group_show',compact('guruh'));
     }
 }

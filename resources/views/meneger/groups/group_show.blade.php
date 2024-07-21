@@ -107,23 +107,31 @@
                             <th>Guruhdan o'chirildi</th>
                             <th>Meneger</th>
                             <th>Izoh</th>
-                            <th>Balans</th>
+                            <th>Jarima</th>
                             <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($guruh['users'] as $item)
                             <tr>
-                            <td>1</td>
-                            <td><a href="">Elshod Musurmonov</a></td>
-                            <td>To'lov</td>
-                            <td>Guruh nomi(Tanlanmasa bo'sh)</td>
-                            <td>350 000</td>
-                            <td>Plastik</td>
-                            <td>To'lov haqida komment</td>
-                            <td>650 000 + 350 000 = 1 000 000</td>
-                            <td>1 000 000</td>
-                            <td>elshodatc1116</td>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td><a href="{{ route('meneger.all_show',$item['User']['user_id']) }}">{{ $item['UserName'] }}</a></td>
+                                <td>{{ $item['User']['grops_start_data'] }}</td>
+                                <td>{{ $item['User']['grops_start_comment'] }}</td>
+                                <td>{{ $item['User']['grops_start_meneger'] }}</td>
+                                <td>{{ $item['User']['grops_end_data'] }}</td>
+                                <td>{{ $item['User']['grops_end_meneger'] }}</td>
+                                <td>{{ $item['User']['grops_end_comment'] }}</td>
+                                <td>{{ $item['User']['jarima'] }}</td>
+                                <td>
+                                    @if($item['User']['status'] == 'true')
+                                        aktiv
+                                    @else 
+                                        End
+                                    @endif
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                         </table>
                     </div>
@@ -197,18 +205,25 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Guruh talabasin o'chirish</h5>
+                            <h5 class="modal-title w-100 text-center">Guruh talabasin o'chirish</h5>
                         </div>
                         <div class="modal-body">
-                        <form action="" method="post">
-                            <label for="" class="mb-2">O'chiladigan talabani tanlang</label>
-                            <select name="" required class="form-select">
-                            <option value="">Tanlang</option>
+                        <form action="{{ route('meneger.user_delete_group') }}" method="post">
+                            @csrf 
+                            <input type="hidden" name="guruh_id" value="{{ $guruh['id'] }}">
+                            <input type="hidden" name="guruh_price" value="{{ $guruh['paymart']['summa'] }}">
+                            <label for="user_id" class="mb-2">Guruhdan o'chiladigan talabani tanlang</label>
+                            <select name="user_id" required class="form-select">
+                                <option value="">Tanlang...</option>
+                                    @forelse($guruh['users_active'] as $item)
+                                        <option value="{{ $item['user_id'] }}">{{ $item['name'] }} Balansi: {{ number_format($item['balans'], 0, '.', ' ') }} so'm</option>
+                                    @empty
+                                    @endforelse
                             </select>
-                            <label for="" class="mt-2 mb-2">Jarima summasi (Max: guruh narxi)</label>
-                            <input type="text" required class="form-control">
-                            <label for="" class="mt-2 mb-2">Guruhdan o'chirish sababi</label>
-                            <input type="text" required class="form-control">
+                            <label for="jarima" class="mt-2 mb-2">Jarima summasi <i>(Maksima jarima summasi: {{ number_format($guruh['paymart']['summa'], 0, '.', ' ') }} so'm)</i></label>
+                            <input type="number" name="jarima" max={{ $guruh['paymart']['summa'] }} required class="form-control">
+                            <label for="grops_end_comment" class="mt-2 mb-2">Guruhdan o'chirish sababi</label>
+                            <textarea type="text" name="grops_end_comment" required class="form-control"></textarea>
                             <div class="row mt-2">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>

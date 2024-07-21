@@ -131,6 +131,15 @@ class TashrifController extends Controller
         $MarkazHodimStatistka->save();
         return redirect()->route('meneger.all_show', $User->id )->with('success', "Yangi tashrif qo'shildi.");
     }
+    protected function UserAllGroups($id){
+        $UserGuruh = UserGroup::where('user_id',$id)->get();
+        $Guruhlar = array();
+        foreach ($UserGuruh as $key => $value) {
+            $Guruhlar[$key]['about'] = $value;
+            $Guruhlar[$key]['guruh'] = Grops::find($value->grops_id)->guruh_name;
+        }
+        return $Guruhlar;
+    }
     public function allShow($id){
         $User = User::find($id);
         $UserBalans = UserBalans::where('user_id',$id)->first();
@@ -145,7 +154,8 @@ class TashrifController extends Controller
                 $GropsNew[$key]['guruh_price'] = MarkazPaymart::find($value->tulov_id)->summa;
             }
         }
-        return view('meneger.students.show',compact('User','UserBalans','UserHistory','GropsNew'));
+        $UserGuruh = $this->UserAllGroups($id);
+        return view('meneger.students.show',compact('User','UserBalans','UserHistory','GropsNew','UserGuruh'));
     }
     public function userAddGroup(Request $request){
         $validated = $request->validate([
@@ -179,6 +189,51 @@ class TashrifController extends Controller
         $User->balans = $User->balans - MarkazPaymart::find($Guruh->tulov_id)->summa;
         $User->save();
         return redirect()->back()->with('success', "Talaba yangi guruhga qo'shildi.");
+    }
+    public function userDeleteGroup(Request $request){
+        $validated = $request->validate([
+            'guruh_id' => 'required',
+            'user_id' => 'required',
+            'jarima' => 'required',
+            'grops_end_comment' => 'required',
+            'guruh_price' => 'required',
+        ]);
+        $User = User::find($request->user_id);
+        $Guruh = Grops::find($request->guruh_id);
+        $UserGroup = UserGroup::where('user_id',$request->user_id)->where('grops_id',$request->guruh_id)->where('status','true')->first();
+        $UserGroup->grops_end_data = date("Y-m-d");
+        $UserGroup->grops_end_comment = $request->grops_end_comment;
+        $UserGroup->grops_end_meneger =auth()->user()->email;
+        $UserGroup->jarima = number_format($request->jarima, 0, '.', ' ');
+        $UserGroup->status = 'false';
+        $UserGroup->save();
+        UserHistory::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $User->id,
+            'status' => "Guruhdan o'chirildi",
+            'guruh' => $Guruh->guruh_name,
+            'summa' => number_format($request->guruh_price, 0, '.', ' '),
+            'tulov_type' => '-',
+            'comment' => $request->grops_end_comment,
+            'xisoblash' => number_format($User->balans, 0, '.', ' ')." + ".number_format($request->guruh_price, 0, '.', ' ')." = ".number_format($User->balans + $request->guruh_price, 0, '.', ' '),
+            'balans' => number_format($User->balans + $request->guruh_price, 0, '.', ' '),
+            'meneger' => auth()->user()->email,
+        ]);
+        UserHistory::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $User->id,
+            'status' => "Jarima",
+            'guruh' => $Guruh->guruh_name,
+            'summa' => number_format($request->jarima, 0, '.', ' '),
+            'tulov_type' => '-',
+            'comment' => "Guruhdan o'chirilganlik uchun jarima",
+            'xisoblash' => number_format($User->balans + $request->guruh_price, 0, '.', ' ')." - ".number_format($request->jarima, 0, '.', ' ')." = ".number_format($User->balans + $request->guruh_price - $request->jarima, 0, '.', ' '),
+            'balans' => number_format($User->balans + $request->guruh_price - $request->jarima, 0, '.', ' '),
+            'meneger' => auth()->user()->email,
+        ]);
+        $User->balans = $User->balans + $request->guruh_price - $request->jarima;
+        $User->save();
+        return redirect()->back()->with('success', "Talaba yangi guruhga o'chirildi.");
     }
     public function allPasswordUpdate(Request $request){
         $User = User::find($request->user_id);
