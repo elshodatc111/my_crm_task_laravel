@@ -13,6 +13,7 @@ use App\Models\MarkazCours;
 use App\Models\MarkazPaymart;
 use App\Models\GropsTime;
 use App\Models\DamOlish;
+use App\Models\UserHistory;
 use App\Models\MarkazLessenTime;
 use App\Models\UserGroup;
 use Carbon\Carbon;
@@ -237,6 +238,7 @@ class GropsController extends Controller{
         $guruh['techer_foiz'] = $Grops->techer_foiz;
         $guruh['techer_paymart'] = $Grops->techer_paymart;
         $guruh['techer_bonus'] = $Grops->techer_bonus;
+        $guruh['next_id'] = $Grops->next_id;
         $guruh['meneger'] = $Grops->meneger;
         $guruh['created_at'] = $Grops->created_at;
         $guruh['updated_at'] = $Grops->updated_at;
@@ -244,5 +246,153 @@ class GropsController extends Controller{
         $guruh['users_active'] = UserGroup::where('user_groups.grops_id',$id)->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
         //dd($guruh['usersDelete']['users']);
         return view('meneger.groups.group_show',compact('guruh'));
+    }
+    public function createNextGroups($id){
+        $Grops = Grops::find($id);
+        $guruh = array();
+        $guruh['id'] = $id;
+        $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
+        $guruh['room_name'] = MarkazRoom::find($Grops->room_id)->room_name;
+        $guruh['cours_name'] = MarkazCours::find($Grops->cours_id)->cours_name;
+        $guruh['guruh_name'] = $Grops->guruh_name;
+        $guruh['guruh_start'] = $Grops->guruh_start;
+        $guruh['guruh_end'] = $Grops->guruh_end;
+        $guruh['hafta_kun'] = $Grops->hafta_kun;
+        $guruh['dars_count'] = $Grops->dars_count;
+        $guruh['dars_time'] = $Grops->dars_time;
+        $guruh['next_id'] = $Grops->next_id;
+        $guruh['techer'] = User::find($Grops->techer_id)->name;
+        $guruh['techer_tulov'] = Markaz::find(auth()->user()->markaz_id)->paymart;
+        $guruh['techer_foiz'] = $Grops->techer_foiz;
+        $guruh['techer_paymart'] = $Grops->techer_paymart;
+        $guruh['techer_bonus'] = $Grops->techer_bonus;
+        $guruh['meneger'] = $Grops->meneger;
+        $guruh['created_at'] = $Grops->created_at;
+        $MarkazPaymart = MarkazPaymart::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
+        $Techer = User::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->where('role_id',5)->get();
+        $Cours = MarkazCours::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
+        $Markaz = Markaz::find(auth()->user()->markaz_id)->paymart;
+        return view('meneger.groups.create_next',compact('guruh','MarkazPaymart','Cours','Techer','Markaz'));
+    }
+    public function createNextStoryGroups(Request $request){
+        $today = now()->format('Y-m-d');
+        $validate = $request->validate([
+            'id' => 'required',
+            'guruh_name' => 'required',
+            'guruh_start' => 'required',
+            'dars_count' => 'required',
+            'guruh_start' => ['nullable', 'date', 'after_or_equal:' . $today],
+            'cours_id' => 'required',
+            'tulov_id' => 'required',
+            'techer_id' => 'required',
+        ]);
+        if($request->techer_foiz){
+            $validate['techer_foiz'] = $request->techer_foiz;
+        }else{
+            $validate['techer_foiz'] = 0;
+        }
+        if($request->techer_paymart){
+            $validate['techer_paymart'] = $request->techer_paymart;
+        }else{
+            $validate['techer_paymart'] = 0;
+        }
+        if($request->techer_bonus){
+            $validate['techer_bonus'] = $request->techer_bonus;
+        }else{
+            $validate['techer_bonus'] = 0;
+        }
+        $ArxivGroups = Grops::find($validate['id']);
+        $validate['room'] = MarkazRoom::find($ArxivGroups['room_id'])->room_name;
+        $validate['room_id'] = $ArxivGroups['room_id'];
+        $validate['hafta_kun'] = $ArxivGroups['hafta_kun'];
+        $validate['cours_name'] = MarkazCours::find($ArxivGroups['cours_id'])->cours_name;
+        $validate['dars_time'] = $ArxivGroups['dars_time'];
+        $validate['summa'] = MarkazPaymart::find($ArxivGroups['tulov_id'])->summa;
+        $validate['chegirma'] = MarkazPaymart::find($ArxivGroups['tulov_id'])->chegirma;
+        $validate['admin_chegirma'] = MarkazPaymart::find($ArxivGroups['tulov_id'])->admin_chegirma;
+        $validate['chegirma_time'] = MarkazPaymart::find($ArxivGroups['tulov_id'])->chegirma_time;
+        $validate['techer'] = User::find($ArxivGroups['techer_id'])->name;
+        Cache::pull(auth()->user()->id.'NewGropNext');
+        Cache::pull(auth()->user()->id.'DataNext');
+        $type = Grops::find($request->id)->hafta_kun;
+        $Dars_kunlar = $this->toqKunlar($request->guruh_start, $type, $request->dars_count);
+        $validate['guruh_end'] = $Dars_kunlar[$validate['dars_count']]['data'];
+        Cache::add(auth()->user()->id.'NewGropNext', $validate, now()->addSeconds(86400));
+        Cache::add(auth()->user()->id.'DataNext', $Dars_kunlar, now()->addSeconds(86400));
+        return redirect()->route('meneger_groups_next_create_two');
+    }
+    public function createNextTwoGroups(){
+        $guruh = Cache::get(auth()->user()->id.'NewGropNext');
+        $datas = Cache::get(auth()->user()->id.'DataNext');
+        $Markaz = Markaz::find(auth()->user()->markaz_id)->paymart;
+        $Users = UserGroup::where('user_groups.grops_id',$guruh['id'])->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
+        return view('meneger.groups.create_next_two',compact('guruh','Markaz','datas','Users'));
+    }
+    public function createNextStoryEnd(Request $request){
+        $guruh = Cache::get(auth()->user()->id.'NewGropNext');
+        $datas = Cache::get(auth()->user()->id.'DataNext');
+        $Users = UserGroup::where('user_groups.grops_id',$guruh['id'])->where('user_groups.status','true')->get();
+        $AddGuruhUser = array();
+        $Guruxs = Grops::create([
+            'markaz_id'=>auth()->user()->markaz_id,
+            'tulov_id'=>$guruh['tulov_id'],
+            'room_id'=>$guruh['room_id'],
+            'cours_id'=>$guruh['cours_id'],
+            'techer_id'=>$guruh['techer_id'],
+            'guruh_name'=>strtoupper($guruh['guruh_name']),
+            'guruh_start'=>$guruh['guruh_start'],
+            'guruh_end'=>$guruh['guruh_end'],
+            'hafta_kun'=>$guruh['hafta_kun'],
+            'dars_count'=>$guruh['dars_count'],
+            'techer_foiz'=>$guruh['techer_foiz'],
+            'techer_paymart'=>$guruh['techer_paymart'],
+            'techer_bonus'=>$guruh['techer_bonus'],
+            'dars_time'=>$guruh['dars_time'],
+            'next_id'=>'false',
+            'meneger'=>auth()->user()->email,
+        ]);
+        foreach($datas as $item){
+            GropsTime::create([
+                'markaz_id'=>auth()->user()->markaz_id,
+                'room_id'=>$guruh['room_id'],
+                'grops_id'=>$Guruxs->id,
+                'data'=>$item['data'],
+                'time'=>$guruh['dars_time'],
+            ]);
+        }
+        foreach ($Users as $value) {
+            $User = User::find($value->user_id);
+            $query = 'user'.$value->user_id;
+            echo $value->user_id;
+            if($request[$query]){
+                UserGroup::create([
+                    'markaz_id' => auth()->user()->markaz_id,
+                    'user_id' => $User->id,
+                    'grops_id' => $Guruxs->id,
+                    'grops_start_data' => date('Y-m-d'),
+                    'grops_end_data' => '...',
+                    'grops_start_comment' => "Eski guruhdan ko'chirildi",
+                    'grops_start_meneger' => auth()->user()->email,
+                ]);
+                UserHistory::create([
+                    'markaz_id' => auth()->user()->markaz_id,
+                    'user_id' => $User->id,
+                    'status' => "Guruhga qo'shildi",
+                    'guruh' => $Guruxs->guruh_name,
+                    'summa' => number_format(MarkazPaymart::find($Guruxs->tulov_id)->summa, 0, '.', ' '),
+                    'tulov_type' => '-',
+                    'comment' => "Eski guruhdan ko'chirildi",
+                    'xisoblash' => number_format($User->balans, 0, '.', ' ')." - ".number_format(MarkazPaymart::find($Guruxs->tulov_id)->summa, 0, '.', ' ')." = ".number_format($User->balans - MarkazPaymart::find($Guruxs->tulov_id)->summa, 0, '.', ' '),
+                    'balans' => number_format($User->balans - MarkazPaymart::find($Guruxs->tulov_id)->summa, 0, '.', ' '),
+                    'meneger' => auth()->user()->email,
+                ]);
+                $User->balans = $User->balans - MarkazPaymart::find($Guruxs->tulov_id)->summa;
+                $User->save();
+            }
+        }
+        $Grops1 = Grops::find($guruh['id']);
+        $Grops1->next_id = $Guruxs->id;
+        $Grops1->save();
+        return redirect()->route('meneger_groups_show',$Guruxs->id)->with('success', "Yangi guruh ochildi");
     }
 }

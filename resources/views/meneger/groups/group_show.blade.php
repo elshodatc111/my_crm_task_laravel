@@ -86,7 +86,11 @@
                             <button class="btn btn-primary w-100" data-bs-toggle="modal"  data-bs-target="#updateUser">Test natijalari</button>
                         </div>
                         <div class="col-lg-4 mt-1">
-                            <a class="btn btn-outline-primary w-100" href="group_show_next.html">Guruhni davom etish</a>
+                            @if($guruh['next_id']=='false')
+                            <a class="btn btn-outline-primary w-100" href="{{ route('meneger_groups_next_create',$guruh['id'] ) }}">Guruhni davom etish</a>
+                            @else
+                            <a class="btn btn-outline-warning w-100" href="{{ route('meneger_groups_show',$guruh['next_id'] ) }}">Guruh davom ettirilgan</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -200,7 +204,7 @@
                     </div>
                 </div>
             </div>
-            <!--Talabani o'chirish-->
+            <!--Talabani o'chirish +++++ -->
             <div class="modal fade" id="addGroups" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">

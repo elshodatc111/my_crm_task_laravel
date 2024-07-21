@@ -68,6 +68,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/groups/create/two/{room_id}', [GropsController::class, 'darsvaqtlari']);
         Route::post('/meneger/groups/create/two', [GropsController::class, 'createGroupsStoreTwo'])->name('meneger_groups_create_story_two');
         Route::get('/meneger/groups/show/{id}', [GropsController::class, 'showGroups'])->name('meneger_groups_show');
+        Route::post('/meneger/groups/next/create/story', [GropsController::class, 'createNextStoryGroups'])->name('meneger_groups_next_create_story');
+        Route::get('/meneger/groups/next/create/two', [GropsController::class, 'createNextTwoGroups'])->name('meneger_groups_next_create_two');
+        Route::post('/meneger/groups/next/create/story/end', [GropsController::class, 'createNextStoryEnd'])->name('meneger_groups_next_create_story_end');
+        Route::get('/meneger/groups/next/create/{id}', [GropsController::class, 'createNextGroups'])->name('meneger_groups_next_create');
     /* End Guruhlar */
 
 }); 
