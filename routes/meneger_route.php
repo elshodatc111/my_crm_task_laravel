@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/student/password/update', [TashrifController::class, 'allPasswordUpdate'])->name('meneger.password_update');
         Route::post('/meneger/student/update', [TashrifController::class, 'studentUpdate'])->name('meneger.student_update');
         Route::post('/meneger/student/eslatma/create', [TashrifController::class, 'studentCreatEslatma'])->name('meneger.create_eslatma');
+
+        
+        Route::get('/meneger/student/leseen/table', [TashrifController::class, 'darsJadvali'])->name('meneger.dars_jadval');
     /* End Tashriflar */
 
     /* Start Guruhlar */

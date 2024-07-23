@@ -82,10 +82,10 @@
                             <div class="col-lg-6">
                                 <label for="guruh_name" class="my-2">Yangi guruhning nomi</label>
                                 <input type="text" name="guruh_name" value="{{ old('guruh_name') }}" required class="form-control">
-                                <label for="guruh_start" class="my-2">Darslar boshlanish vaqti</label>
+                                <label for="guruh_start" class="my-2">Darslar boshlanish vaqti (<i class='text-danger' style="font-size:14px;">{{ $guruh['guruh_end'] }} dan kiyingi kunlar</i>)</label>
                                 <input type="date" name="guruh_start" value="{{ old('guruh_start') }}" required class="form-control">
                                 @error('guruh_start')
-                                    <span class="text-danger w-100" style="font-size:10px;">Darslar boshlanishi bugungi kun va keyingi kunlarni qabul qilinadi.</span>
+                                    <span class="text-danger w-100" style="font-size:10px;">Guruhni davom ettirish uchun {{ $guruh['guruh_end'] }} sanada keyingi kunlarda davom ettirish mumkun.</span>
                                 @enderror
                                 <label for="dars_count" class="my-2">Darslar sonini kiriting ( Maksima darslar soni : 30 )</label>
                                 <input type="number" value="{{ old('dars_count') }}" max=30 min=9 name="dars_count" required class="form-control">                                

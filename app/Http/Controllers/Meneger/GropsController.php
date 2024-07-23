@@ -281,13 +281,18 @@ class GropsController extends Controller{
         return view('meneger.groups.create_next',compact('guruh','MarkazPaymart','Cours','Techer','Markaz'));
     }
     public function createNextStoryGroups(Request $request){
-        $today = now()->format('Y-m-d');
+        $givenDate = Grops::find($request->id)->guruh_end;
+        $date = Carbon::parse($givenDate);
+        $nextDay = $date->addDay()->toDateString();
+
+        
+        
         $validate = $request->validate([
             'id' => 'required',
             'guruh_name' => 'required',
             'guruh_start' => 'required',
             'dars_count' => 'required',
-            'guruh_start' => ['nullable', 'date', 'after_or_equal:' . $today],
+            'guruh_start' => ['nullable', 'date', 'after_or_equal:' . $nextDay],
             'cours_id' => 'required',
             'tulov_id' => 'required',
             'techer_id' => 'required',

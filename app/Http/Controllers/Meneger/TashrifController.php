@@ -315,5 +315,8 @@ class TashrifController extends Controller
         ]);
         return redirect()->back()->with('success', "Eslatma saqlandi.");
     }
+    public function darsJadvali(){
+        return view('meneger.table.lessen_table');
+    }
     
 }

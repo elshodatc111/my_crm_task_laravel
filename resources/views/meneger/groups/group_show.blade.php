@@ -36,6 +36,14 @@
                                 <div class="col-6" style="text-align:right;">{{ $guruh['dars_count'] }}</div>
                                 <div class="col-6  mt-1"><b>Hafta kuni:</b></div>
                                 <div class="col-6" style="text-align:right;">{{ $guruh['hafta_kun'] }}</div>
+                                <div class="col-6  mt-1"><b>Guruh davomi:</b></div>
+                                <div class="col-6" style="text-align:right;">
+                                    @if($guruh['next_id']!=='false')
+                                        <a href="{{ route('meneger_groups_show',$guruh['newGroupID'] ) }}">Davom ettirilgan: ({{ $guruh['newGroup'] }})</a>
+                                    @else 
+                                        Davom ettirilmagan
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">      
@@ -93,8 +101,6 @@
                     <div class="col-lg-12 text-center">
                         @if($guruh['next_id']=='false')
                             <a class="btn btn-primary my-1 w-50" href="{{ route('meneger_groups_next_create',$guruh['id'] ) }}">Guruhni davom ettirish</a>
-                        @else
-                            <a class="btn btn-success my-1 w-50" href="{{ route('meneger_groups_show',$guruh['newGroupID'] ) }}">Guruh davomi ({{ $guruh['newGroup'] }})</a>
                         @endif
                     </div>
                 </div>
