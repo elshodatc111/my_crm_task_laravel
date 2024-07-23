@@ -16,10 +16,13 @@ use App\Models\MarkazHodimStatistka;
 use App\Models\Markaz;
 use App\Models\MarkazPaymart;
 use App\Models\UserEslatma;
+use App\Models\UserPaymart;
 use App\Models\Grops;
 use App\Models\UserGroup;
+use App\Models\Kassa;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendMessage;
+use Carbon\Carbon;
 
 class TashrifController extends Controller
 {
@@ -154,8 +157,52 @@ class TashrifController extends Controller
                 $GropsNew[$key]['guruh_price'] = MarkazPaymart::find($value->tulov_id)->summa;
             }
         }
+        $Paymart = Markaz::find(auth()->user()->markaz_id)->paymart;
         $UserGuruh = $this->UserAllGroups($id);
-        return view('meneger.students.show',compact('User','UserBalans','UserHistory','GropsNew','UserGuruh'));
+        $UserPayGroupOne = UserGroup::where('user_groups.user_id',$id)->where('user_groups.status','true')->join('grops','grops.id','user_groups.grops_id')->get();
+        $ChegirmaliGuruh = array();
+        $ChegirmaAdmin = array();
+        foreach ($UserPayGroupOne as $key => $value) {
+            $MarkazPaymart = MarkazPaymart::find($value->tulov_id);
+            $BugungiKun = Carbon::now()->format('Y-m-d');
+            if($MarkazPaymart->chegirma_time>0 AND $MarkazPaymart->status == 'true' AND $MarkazPaymart->chegirma>0){
+                $ChegirmaOxirgiKuni = Carbon::createFromFormat('Y-m-d', $value->guruh_start)->addDays(3)->format('Y-m-d');
+                if($ChegirmaOxirgiKuni>=$BugungiKun){
+                    $UserPaymart = count(
+                        UserPaymart::where('user_id',$id)
+                        ->where('tulov_type','Chegirma')
+                        ->where('tulov_type','Chegirma')
+                        ->where('guruh',$value->grops_id)
+                        ->get());
+                    if($UserPaymart==0){
+                        $ChegirmaliGuruh[$key]['grops_id'] = $value->grops_id;
+                        $ChegirmaliGuruh[$key]['guruh_name'] = $value->guruh_name;
+                        $ChegirmaliGuruh[$key]['tulovsumma'] = $MarkazPaymart->summa-$MarkazPaymart->chegirma;
+                        $ChegirmaliGuruh[$key]['chegirma'] = $MarkazPaymart->chegirma;
+                    }
+                }
+            }
+            $UserPaymart2 = count(UserPaymart::where('user_id',$id)->where('tulov_type','Chegirma')->where('tulov_type','Chegirma')->where('guruh',$value->grops_id)->get());
+            if($UserPaymart2==0){  
+                $ChegirmaAdmin[$key]['grops_id'] = $value->grops_id;
+                $ChegirmaAdmin[$key]['guruh_name'] = $value->guruh_name;
+                $ChegirmaAdmin[$key]['admin_chegirma'] = $MarkazPaymart->admin_chegirma;
+            }
+        }
+        $Kassa = Kassa::where('markaz_id',auth()->user()->markaz_id)->first();
+        
+        return view('meneger.students.show',compact(
+            'User',
+            'UserBalans',
+            'Paymart',
+            'UserHistory',
+            'GropsNew',
+            'UserGuruh',
+            'UserPayGroupOne',
+            'ChegirmaliGuruh',
+            'Kassa',
+            'ChegirmaAdmin'
+        ));
     }
     public function userAddGroup(Request $request){
         $validated = $request->validate([
@@ -318,5 +365,118 @@ class TashrifController extends Controller
     public function darsJadvali(){
         return view('meneger.table.lessen_table');
     }
+
+    protected function paymarts($user_id, $summa, $tulov_type, $guruh, $comment){
+        UserPaymart::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $user_id,
+            'summa' => $summa,
+            'tulov_type' => $tulov_type,
+            'guruh' => $guruh,
+            'comment' => $comment,
+            'meneger' => auth()->user()->email,
+        ]);
+    }
+    protected function payHistory($User_id,$Status,$Guruh_Name,$Summa,$TulovType,$Comment,$Xisob,$Balans){
+        UserHistory::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $User_id,
+            'status' => $Status,
+            'guruh' => $Guruh_Name,
+            'summa' => number_format($Summa, 0, '.', ' '),
+            'tulov_type' => $TulovType,
+            'comment' => $Comment,
+            'xisoblash' => $Xisob,
+            'balans' => number_format($Balans, 0, '.', ' '),
+            'meneger' => auth()->user()->email,
+        ]);
+    }
+
+    public function UserPaymarts(Request $request){
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'paymart' => 'required',
+            'summaNaqt' => 'required',
+            'summaPlastik' => 'required',
+            'guruh_id' => 'required',
+            'comment' => 'required',
+        ]);
+        $MarkazHodimStatistka = MarkazHodimStatistka::find(auth()->user()->id);
+        $MarkazHodimStatistka->naqt = $MarkazHodimStatistka->naqt + preg_replace('/\D/','',$request->summaNaqt);
+        $MarkazHodimStatistka->plastik = $MarkazHodimStatistka->plastik + preg_replace('/\D/','',$request->summaPlastik);
+        if($request->guruh_id != 'NULL'){
+            $GURUHNAME = Grops::find($request->guruh_id)->guruh_name;
+        }else{
+            $GURUHNAME = "";
+        }
+        $Kassa = Kassa::where('markaz_id',auth()->user()->markaz_id)->first();
+        $Kassa->kassa_naqt = preg_replace('/\D/','',$Kassa->kassa_naqt) + preg_replace('/\D/','',$request->summaNaqt);
+        $Kassa->kassa_plastik = preg_replace('/\D/','',$Kassa->kassa_plastik) + preg_replace('/\D/','',$request->summaPlastik);
+        $Kassa->save();
+        $User = User::find($request->user_id);
+        $UserBalans = UserBalans::where('user_id',$request->user_id)->first();
+        if(preg_replace('/\D/','',$request->summaNaqt) != 0){
+            $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summaNaqt), 'Naqt', $request->guruh_id, $request->comment);
+            $UserBalans->naqt = $UserBalans->naqt + preg_replace('/\D/','',$request->summaNaqt);
+            $this->payHistory(
+                $request->user_id,
+                "To'lov",
+                $GURUHNAME ,
+                preg_replace('/\D/','',$request->summaNaqt),
+                'Naqt',
+                $request->comment,
+                number_format($User->balans, 0, '.', ' ')." + ".number_format(preg_replace('/\D/','',$request->summaNaqt), 0, '.', ' ')." = ".number_format($User->balans+preg_replace('/\D/','',$request->summaNaqt), 0, '.', ' '),
+                $User->balans + preg_replace('/\D/','',$request->summaNaqt)
+            );
+            $User->balans = $User->balans + preg_replace('/\D/','',$request->summaNaqt);
+        }
+        if(preg_replace('/\D/','',$request->summaPlastik) != 0){
+            $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summaPlastik), 'Naqt', $request->guruh_id, $request->comment);
+            $UserBalans->plastik = $UserBalans->plastik + preg_replace('/\D/','',$request->summaPlastik);
+            $this->payHistory(
+                $request->user_id,
+                "To'lov",
+                $GURUHNAME,
+                preg_replace('/\D/','',$request->summaPlastik),
+                'Plastik',
+                $request->comment,
+                number_format($User->balans, 0, '.', ' ')." + ".number_format(preg_replace('/\D/','',$request->summaPlastik), 0, '.', ' ')." = ".number_format($User->balans+preg_replace('/\D/','',$request->summaPlastik), 0, '.', ' '),
+                $User->balans + preg_replace('/\D/','',$request->summaPlastik)
+            );
+            $User->balans = $User->balans + preg_replace('/\D/','',$request->summaPlastik);
+        }
+        if($request->paymart==3 AND $request->guruh_id != 'NULL'){
+            $Grops = Grops::find($request->guruh_id)->tulov_id;
+            $MarkazPaymart = MarkazPaymart::find($Grops);
+            $Tulov = intval($MarkazPaymart->summa - $MarkazPaymart->chegirma);
+            $Chegirma = $MarkazPaymart->chegirma;
+            $AllTul = intval(preg_replace('/\D/','',$request->summaNaqt) + preg_replace('/\D/','',$request->summaPlastik));
+            if($AllTul == $Tulov){
+                $this->paymarts($request->user_id, $Chegirma, 'Chegirma', $request->guruh_id, $request->comment);
+                $UserBalans->chegirma = $UserBalans->chegirma + preg_replace('/\D/','',$MarkazPaymart->chegirma);
+                $this->payHistory(
+                    $request->user_id,
+                    "Chegirma",
+                    $GURUHNAME,
+                    preg_replace('/\D/','',$Chegirma),
+                    'Chegirma',
+                    $request->comment,
+                    number_format($User->balans, 0, '.', ' ')." + ".number_format(preg_replace('/\D/','',$Chegirma), 0, '.', ' ')." = ".number_format($User->balans+preg_replace('/\D/','',$Chegirma), 0, '.', ' '),
+                    $User->balans + preg_replace('/\D/','',$Chegirma)
+                );
+                $User->balans = $User->balans + preg_replace('/\D/','',$Chegirma);
+                $MarkazHodimStatistka->chegirma = $MarkazHodimStatistka->chegirma + preg_replace('/\D/','',$Chegirma);
+            }
+        }
+        $User->save();
+        $UserBalans->save();
+        $MarkazHodimStatistka->save();
+
+        // SMS Yuborish XIZMATINI QO"SHISH KERAK
+        
+        return redirect()->back()->with('success', "To'lov qabul qilindi.");
+    }
+
+
     
 }

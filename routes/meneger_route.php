@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/student/update', [TashrifController::class, 'studentUpdate'])->name('meneger.student_update');
         Route::post('/meneger/student/eslatma/create', [TashrifController::class, 'studentCreatEslatma'])->name('meneger.create_eslatma');
 
+        Route::post('/meneger/student/paymart', [TashrifController::class, 'UserPaymarts'])->name('meneger.paymarts');
         
         Route::get('/meneger/student/leseen/table', [TashrifController::class, 'darsJadvali'])->name('meneger.dars_jadval');
     /* End Tashriflar */

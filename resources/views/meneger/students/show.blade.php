@@ -227,17 +227,35 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="" method="post">
-            <label for="" class="my-2">Naqt summa</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">Plastik summa</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">Chegirma uchun guruh</label>
-            <select name="" required class="form-select">
-              <option value="">Tanlang</option>
+          <form action="{{ route('meneger.paymarts') }}" method="post">
+            @csrf 
+            <input type="hidden" name="user_id" value="{{ $User['id'] }}">
+            <input type="hidden" name="paymart" value = "{{ $Paymart }}">
+            <label for="summaNaqt" class="my-2">Naqt summa</label>
+            <input type="text" name="summaNaqt" required class="form-control amount">
+            <label for="summaPlastik" class="my-2">Plastik summa</label>
+            <input type="text" name="summaPlastik" required class="form-control amount">
+            @if($Paymart==1)
+            <label for="guruh_id" class="my-2">To'lov uchun guruhni tanlang</label>
+            <select name="guruh_id" required class="form-select">
+              <option value="">Tanlang...</option>
+              @foreach($UserPayGroupOne as $item)
+                <option value="{{ $item['id'] }}">{{ $item['guruh_name'] }}</option>
+              @endforeach
             </select>
-            <label for="" class="my-2">To'lov haqida</label>
-            <input type="text" required class="form-control">
+            @elseif($Paymart==2)
+            <input type="hidden" name="guruh_id" value="NULL">
+            @elseif($Paymart==3)
+            <label for="guruh_id" class="my-2">Chegirma uchun guruhni tanlang</label>
+            <select name="guruh_id" required class="form-select">
+              <option value="NULL">Tanlang</option>
+              @foreach($ChegirmaliGuruh as $item)
+                <option value="{{ $item['grops_id'] }}">{{ $item['guruh_name'] }} (To'lov: {{ number_format($item['tulovsumma'], 0, '.', ' ') }}, Chegirma: {{ number_format($item['chegirma'], 0, '.', ' ') }})</option>
+              @endforeach
+            </select>
+            @endif
+            <label for="comment" class="my-2">To'lov haqida</label>
+            <textarea type="text" name="comment" required class="form-control"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
@@ -269,8 +287,8 @@
               <td>Plastik</td>
             </tr>
             <tr>
-              <td>150 000</td>
-              <td>50 000</td>
+              <td>{{ number_format($Kassa['kassa_naqt'], 0, '.', ' ') }}</td>
+              <td>{{ number_format($Kassa['kassa_plastik'], 0, '.', ' ') }}</td>
             </tr>
           </table>
           <form action="" method="post">
@@ -281,7 +299,7 @@
               <option value="">Tanlang</option>
             </select>
             <label for="" class="my-2">Qaytarish haqida</label>
-            <input type="text" required class="form-control">
+            <textarea type="text" required class="form-control"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
@@ -306,13 +324,16 @@
         <div class="modal-body">
           <form action="" method="post">
             <label for="" class="my-2">Chegirma summasi</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">Chegirma uchun guruh</label>
+            <input type="text" required class="form-control amount">
+            <label for="" class="my-2">Chegirma uchun guruhni tanlang</label>
             <select name="" required class="form-select">
               <option value="">Tanlang</option>
+              @foreach($ChegirmaAdmin as $item)
+              <option value="{{ $item['grops_id'] }}">{{ $item['guruh_name'] }} (Maksimal chegirma: {{ number_format($item['admin_chegirma'], 0, '.', ' ') }})</option>
+              @endforeach
             </select>
             <label for="" class="my-2">Chegirma haqida</label>
-            <input type="text" required class="form-control">
+            <textarea type="text" required class="form-control"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>

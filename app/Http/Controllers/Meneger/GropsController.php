@@ -219,7 +219,8 @@ class GropsController extends Controller{
             $GU[$key]['User'] = $item;
             $GU[$key]['UserName'] = User::find($item->user_id)->name;
         }
-        $GUD['guruh_price'] = MarkazPaymart::find($Grops->tulov_id)->summa;
+        //dd($Grops);
+        //$GUD['guruh_price'] = MarkazPaymart::find($Grops->tulov_id)->summa;
         $guruh = array();
         $guruh['id'] = $id;
         $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
