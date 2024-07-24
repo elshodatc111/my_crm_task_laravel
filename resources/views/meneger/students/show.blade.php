@@ -121,44 +121,6 @@
             </tr>
           </thead>
           <tbody>
-            <!--
-          <tr>
-              <td>1</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>To'lov</td>
-              <td>Guruh nomi(Tanlanmasa bo'sh)</td>
-              <td>350 000</td>
-              <td>Plastik</td>
-              <td>To'lov haqida komment</td>
-              <td>650 000 + 350 000 = 1 000 000</td>
-              <td>1 000 000</td>
-              <td>elshodatc1116</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>To'lov</td>
-              <td>Guruh nomi(Chegirmali guruhi mavjud bo'lsa)</td>
-              <td>350 000</td>
-              <td>Payme</td>
-              <td>Payme orqali to'lov</td>
-              <td>300 000 + 350 000 = 650 000</td>
-              <td>650 000</td>
-              <td>elshodatc1116</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Chegirma</td>
-              <td>-</td>
-              <td>200 000</td>
-              <td>-</td>
-              <td>Chegirma sababi</td>
-              <td>100 000 + 200 000 = 300 000</td>
-              <td>300 000</td>
-              <td>elshodatc1116</td>
-            </tr>
--->
             @forelse($UserHistory as $item)
               <tr>
                 <td>{{ $loop->index+1 }}</td>
