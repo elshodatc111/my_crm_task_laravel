@@ -280,6 +280,9 @@ class TashrifController extends Controller
         ]);
         $User->balans = $User->balans + $request->guruh_price - $request->jarima;
         $User->save();
+        $UserBalans = UserBalans::where('user_id',$request->user_id)->first();
+        $UserBalans->jarima = $UserBalans->jarima + preg_replace('/\D/','',$request->jarima);
+        $UserBalans->save();
         return redirect()->back()->with('success', "Talaba yangi guruhga o'chirildi.");
     }
     public function allPasswordUpdate(Request $request){
@@ -476,7 +479,63 @@ class TashrifController extends Controller
         
         return redirect()->back()->with('success', "To'lov qabul qilindi.");
     }
+    protected function QaytarHistory($User_id,$Summa,$TulovType,$Comment,$Xisob,$Balans){
+        UserHistory::create([
+            'markaz_id' => auth()->user()->markaz_id,
+            'user_id' => $User_id,
+            'status' => 'Qaytarildi',
+            'guruh' => '',
+            'summa' => preg_replace('/\D/','',$Summa),
+            'tulov_type' => $TulovType,
+            'comment' => $Comment,
+            'xisoblash' => $Xisob,
+            'balans' => number_format($Balans, 0, '.', ' '),
+            'meneger' => auth()->user()->email,
+        ]);
+    }
+    public function UserRepertPaymarts(Request $request){
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'paymart' => 'required',
+            'kassa_naqt' => 'required',
+            'kassa_plastik' => 'required',
+            'summa' => 'required',
+            'type' => 'required',
+            'comment' => 'required',
+        ]);
+        $QAYTARILADI = preg_replace('/\D/','',$request->summa);
+        $TULOVTYPE = $request->type;
+        if($TULOVTYPE=='Naqt' AND $QAYTARILADI>$request->kassa_naqt){
+            return redirect()->back()->with('success', "Kassada mablag' yetarli emas.");
+        }
+        if($TULOVTYPE=='Plastik' AND $QAYTARILADI>$request->kassa_plastik){
+            return redirect()->back()->with('success', "Kassada mablag' yetarli emas.");
+        }
+        
+        $Kassa = Kassa::where('markaz_id',auth()->user()->markaz_id)->first();
+        $MarkazHodimStatistka = MarkazHodimStatistka::find(auth()->user()->id);
+        $MarkazHodimStatistka->qaytarildi = $MarkazHodimStatistka->qaytarildi + preg_replace('/\D/','',$request->summa);
+        if($TULOVTYPE=='Naqt'){
+            $Kassa->kassa_naqt = $Kassa->kassa_naqt - preg_replace('/\D/','',$request->summa);
+        }else{
+            $Kassa->kassa_plastik = $Kassa->kassa_plastik - preg_replace('/\D/','',$request->summa);
+        }
+        $MarkazHodimStatistka->save();
+        $Kassa->save();
 
+        $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summa), 'Qaytarildi'," ", $request->comment);
+
+        $User = User::find($request->user_id);
+        $Balans = $User->balans-preg_replace('/\D/','',$request->summa);
+        $Xisob = $User->balans." - ".preg_replace('/\D/','',$request->summa)." = ".$Balans;
+        $this->QaytarHistory($request->user_id,$request->summa,$request->type,$request->comment,$Xisob,$Balans);
+        $User->balans = $User->balans - preg_replace('/\D/','',$request->summa);
+        $User->save();
+        $UserBalans = UserBalans::where('user_id',$request->user_id)->first();
+        $UserBalans->qaytarildi = $UserBalans->qaytarildi + preg_replace('/\D/','',$request->summa);
+        $UserBalans->save();
+        return redirect()->back()->with('success', "To'lov qaytarildi.");
+    }
 
     
 }

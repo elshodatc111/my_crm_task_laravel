@@ -219,8 +219,6 @@ class GropsController extends Controller{
             $GU[$key]['User'] = $item;
             $GU[$key]['UserName'] = User::find($item->user_id)->name;
         }
-        //dd($Grops);
-        //$GUD['guruh_price'] = MarkazPaymart::find($Grops->tulov_id)->summa;
         $guruh = array();
         $guruh['id'] = $id;
         $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
@@ -251,7 +249,6 @@ class GropsController extends Controller{
             $guruh['newGroupID'] = null;
         }
         $guruh['users_active'] = UserGroup::where('user_groups.grops_id',$id)->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
-        //dd($guruh['usersDelete']['users']);
         return view('meneger.groups.group_show',compact('guruh'));
     }
     public function createNextGroups($id){

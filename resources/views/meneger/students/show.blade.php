@@ -170,30 +170,6 @@
               <td>100 000</td>
               <td>elshodatc1116</td>
             </tr>
-            <tr>
-              <td>5</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Chegirma</td>
-              <td>Guruh nomi</td>
-              <td>50 000</td>
-              <td>-</td>
-              <td>Guruhga 350 000 som to'lov uchun</td>
-              <td>150 000 + 50 000 = 200 000</td>
-              <td>200 000</td>
-              <td>elshodatc1116</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>To'lov</td>
-              <td>Guruh nomi(Tanlanmasa bo'sh)</td>
-              <td>350 000</td>
-              <td>Naqt</td>
-              <td>To'lov haqida komment</td>
-              <td>-200 000 + 350 000 = 150 000</td>
-              <td>150 000</td>
-              <td>elshodatc1116</td>
-            </tr>
 -->
             @forelse($UserHistory as $item)
               <tr>
@@ -291,15 +267,22 @@
               <td>{{ number_format($Kassa['kassa_plastik'], 0, '.', ' ') }}</td>
             </tr>
           </table>
-          <form action="" method="post">
-            <label for="" class="my-2">Qaytariladigan summa</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">To'lov turi</label>
-            <select name="" required class="form-select">
-              <option value="">Tanlang</option>
+          <form action="{{ route('meneger.paymarts_reperts') }}" method="post" class="p-0">
+            @csrf 
+            <input type="hidden" name="user_id" value="{{ $User['id'] }}">
+            <input type="hidden" name="paymart" value = "{{ $Paymart }}">
+            <input type="hidden" name="kassa_naqt" value="{{ $Kassa['kassa_naqt'] }}">
+            <input type="hidden" name="kassa_plastik" value="{{ $Kassa['kassa_plastik'] }}">
+            <label for="summa" class="my-2">Qaytariladigan summa</label>
+            <input type="text" name="summa" required class="form-control amount">
+            <label for="type" class="my-2">To'lov turi</label>
+            <select name="type" required class="form-select">
+              <option value="">Tanlang...</option>
+              <option value="Naqt">Naqt</option>
+              <option value="Plastik">Plastik</option>
             </select>
-            <label for="" class="my-2">Qaytarish haqida</label>
-            <textarea type="text" required class="form-control"></textarea>
+            <label for="comment" class="my-2">Qaytarish haqida</label>
+            <textarea type="text" name="comment" required class="form-control"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
