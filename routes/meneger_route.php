@@ -6,6 +6,7 @@ use App\Http\Controllers\Meneger\SettingController;
 use App\Http\Controllers\Meneger\HodimController;
 use App\Http\Controllers\Meneger\TashrifController;
 use App\Http\Controllers\Meneger\GropsController;
+use App\Http\Controllers\Meneger\MoliyaController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -79,5 +80,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/groups/next/create/story/end', [GropsController::class, 'createNextStoryEnd'])->name('meneger_groups_next_create_story_end');
         Route::get('/meneger/groups/next/create/{id}', [GropsController::class, 'createNextGroups'])->name('meneger_groups_next_create');
     /* End Guruhlar */
+
+    /* Start Molya */
+        Route::get('/meneger/moliya/home', [MoliyaController::class, 'moliyaHome'])->name('meneger_moliya_home');
+        Route::post('/meneger/moliya/kassa/chiqim', [MoliyaController::class, 'kassadanChiqim'])->name('meneger_moliya_kassadan_chiqim');
+        Route::post('/meneger/moliya/kassa/chiqim/delete', [MoliyaController::class, 'kassadanChiqimDelete'])->name('meneger_moliya_kassadan_chiqim_delete');
+        Route::post('/meneger/moliya/kassa/chiqim/check', [MoliyaController::class, 'kassadanChiqimCheck'])->name('meneger_moliya_kassadan_chiqim_check');
+    /* End Molya */
 
 }); 
