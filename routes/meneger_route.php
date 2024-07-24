@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/meneger/student/paymart', [TashrifController::class, 'UserPaymarts'])->name('meneger.paymarts');
         Route::post('/meneger/student/repet/paymart', [TashrifController::class, 'UserRepertPaymarts'])->name('meneger.paymarts_reperts');
+        Route::post('/meneger/student/chegirma/paymart', [TashrifController::class, 'UserChegirmaPaymarts'])->name('meneger.paymarts_chegirma');
         
         Route::get('/meneger/student/leseen/table', [TashrifController::class, 'darsJadvali'])->name('meneger.dars_jadval');
     /* End Tashriflar */

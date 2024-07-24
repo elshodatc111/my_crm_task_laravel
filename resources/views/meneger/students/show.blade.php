@@ -158,18 +158,6 @@
               <td>300 000</td>
               <td>elshodatc1116</td>
             </tr>
-            <tr>
-              <td>4</td>
-              <td>2024.07.12 15:15:29</td>
-              <td>Qaytarildi</td>
-              <td>-</td>
-              <td>100 000</td>
-              <td>-</td>
-              <td>Qaytarish sababi</td>
-              <td>200 000 + 100 000 = 100 000</td>
-              <td>100 000</td>
-              <td>elshodatc1116</td>
-            </tr>
 -->
             @forelse($UserHistory as $item)
               <tr>
@@ -305,18 +293,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="" method="post">
-            <label for="" class="my-2">Chegirma summasi</label>
-            <input type="text" required class="form-control amount">
-            <label for="" class="my-2">Chegirma uchun guruhni tanlang</label>
-            <select name="" required class="form-select">
+          <form action="{{ route('meneger.paymarts_chegirma') }}" method="post">
+            @csrf 
+            <input type="hidden" name="user_id" value="{{ $User['id'] }}">
+            <input type="hidden" name="paymart" value = "{{ $Paymart }}">
+            <label for="summa" class="my-2">Chegirma summasi</label>
+            <input type="text" name="summa" required class="form-control amount">
+            <label for="guruh_id" class="my-2">Chegirma uchun guruhni tanlang</label>
+            <select name="guruh_id" required class="form-select">
               <option value="">Tanlang</option>
               @foreach($ChegirmaAdmin as $item)
               <option value="{{ $item['grops_id'] }}">{{ $item['guruh_name'] }} (Maksimal chegirma: {{ number_format($item['admin_chegirma'], 0, '.', ' ') }})</option>
               @endforeach
             </select>
-            <label for="" class="my-2">Chegirma haqida</label>
-            <textarea type="text" required class="form-control"></textarea>
+            <label for="comment" class="my-2">Chegirma haqida</label>
+            <textarea type="text" name="comment" required class="form-control"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-danger w-100 mt-2" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
@@ -435,14 +426,16 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach($ArxivGuruhlar as $item)
                 <tr>
-                  <td>1</td>
-                  <td>350 000</td>
-                  <td>Naqt</td>
-                  <td>Naqt</td>
-                  <td>2024.07.12 15:15:29</td>
-                  <td>elshodatc1116</td>
+                  <td>{{ $loop->index+1 }}</td>
+                  <td>{{ number_format($item['summa'], 0, '.', ' ') }}</td>
+                  <td>{{ $item['type'] }}</td>
+                  <td>{{ $item['comment'] }}</td>
+                  <td>{{ $item['created_at'] }}</td>
+                  <td>{{ $item['meneger'] }}</td>
                 </tr>
+                @endforeach
               </tbody>
             </table>
           </div>

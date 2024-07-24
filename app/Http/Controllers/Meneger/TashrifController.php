@@ -159,7 +159,10 @@ class TashrifController extends Controller
         }
         $Paymart = Markaz::find(auth()->user()->markaz_id)->paymart;
         $UserGuruh = $this->UserAllGroups($id);
-        $UserPayGroupOne = UserGroup::where('user_groups.user_id',$id)->where('user_groups.status','true')->join('grops','grops.id','user_groups.grops_id')->get();
+        $UserPayGroupOne = UserGroup::where('user_groups.user_id',$id)
+            ->where('user_groups.status','true')
+            ->join('grops','grops.id','user_groups.grops_id')
+            ->get();
         $ChegirmaliGuruh = array();
         $ChegirmaAdmin = array();
         foreach ($UserPayGroupOne as $key => $value) {
@@ -190,6 +193,16 @@ class TashrifController extends Controller
             }
         }
         $Kassa = Kassa::where('markaz_id',auth()->user()->markaz_id)->first();
+
+        $ArxivGuruhlar = array();
+        $Arxiv = UserPaymart::where('user_id',$id)->orderby('created_at','desc')->get();
+        foreach ($Arxiv as $key => $value) {
+            $ArxivGuruhlar[$key]['summa'] = $value->summa;
+            $ArxivGuruhlar[$key]['type'] = $value->tulov_type;
+            $ArxivGuruhlar[$key]['comment'] = $value->comment;
+            $ArxivGuruhlar[$key]['created_at'] = $value->created_at;
+            $ArxivGuruhlar[$key]['meneger'] = $value->meneger;
+        }
         
         return view('meneger.students.show',compact(
             'User',
@@ -201,7 +214,8 @@ class TashrifController extends Controller
             'UserPayGroupOne',
             'ChegirmaliGuruh',
             'Kassa',
-            'ChegirmaAdmin'
+            'ChegirmaAdmin',
+            'ArxivGuruhlar'
         ));
     }
     public function userAddGroup(Request $request){
@@ -368,7 +382,6 @@ class TashrifController extends Controller
     public function darsJadvali(){
         return view('meneger.table.lessen_table');
     }
-
     protected function paymarts($user_id, $summa, $tulov_type, $guruh, $comment){
         UserPaymart::create([
             'markaz_id' => auth()->user()->markaz_id,
@@ -434,7 +447,7 @@ class TashrifController extends Controller
             $User->balans = $User->balans + preg_replace('/\D/','',$request->summaNaqt);
         }
         if(preg_replace('/\D/','',$request->summaPlastik) != 0){
-            $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summaPlastik), 'Naqt', $request->guruh_id, $request->comment);
+            $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summaPlastik), 'Plastik', $request->guruh_id, $request->comment);
             $UserBalans->plastik = $UserBalans->plastik + preg_replace('/\D/','',$request->summaPlastik);
             $this->payHistory(
                 $request->user_id,
@@ -511,7 +524,6 @@ class TashrifController extends Controller
         if($TULOVTYPE=='Plastik' AND $QAYTARILADI>$request->kassa_plastik){
             return redirect()->back()->with('success', "Kassada mablag' yetarli emas.");
         }
-        
         $Kassa = Kassa::where('markaz_id',auth()->user()->markaz_id)->first();
         $MarkazHodimStatistka = MarkazHodimStatistka::find(auth()->user()->id);
         $MarkazHodimStatistka->qaytarildi = $MarkazHodimStatistka->qaytarildi + preg_replace('/\D/','',$request->summa);
@@ -522,9 +534,7 @@ class TashrifController extends Controller
         }
         $MarkazHodimStatistka->save();
         $Kassa->save();
-
         $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summa), 'Qaytarildi'," ", $request->comment);
-
         $User = User::find($request->user_id);
         $Balans = $User->balans-preg_replace('/\D/','',$request->summa);
         $Xisob = $User->balans." - ".preg_replace('/\D/','',$request->summa)." = ".$Balans;
@@ -535,6 +545,41 @@ class TashrifController extends Controller
         $UserBalans->qaytarildi = $UserBalans->qaytarildi + preg_replace('/\D/','',$request->summa);
         $UserBalans->save();
         return redirect()->back()->with('success', "To'lov qaytarildi.");
+    }
+    public function UserChegirmaPaymarts(Request $request){
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'paymart' => 'required',
+            'summa' => 'required',
+            'guruh_id' => 'required',
+            'comment' => 'required',
+        ]);
+        if($request->guruh_id != 'NULL'){
+            $GURUHNAME = Grops::find($request->guruh_id)->guruh_name;
+        }else{
+            $GURUHNAME = "";
+        }
+        $User = User::find($request->user_id);
+        $UserBalans = UserBalans::where('user_id',$request->user_id)->first();
+        $this->paymarts($request->user_id, preg_replace('/\D/','',$request->summa), 'Chegirma', $request->guruh_id, $request->comment);
+        $UserBalans->chegirma = $UserBalans->chegirma + preg_replace('/\D/','',$request->summa);
+        $this->payHistory(
+            $request->user_id,
+            "Chegirma",
+            $GURUHNAME ,
+            preg_replace('/\D/','',$request->summa),
+            ' ',
+            $request->comment,
+            number_format($User->balans, 0, '.', ' ')." + ".number_format(preg_replace('/\D/','',$request->summa), 0, '.', ' ')." = ".number_format($User->balans+preg_replace('/\D/','',$request->summa), 0, '.', ' '),
+            $User->balans + preg_replace('/\D/','',$request->summa)
+        );
+        $User->balans = $User->balans + preg_replace('/\D/','',$request->summa);
+        $MarkazHodimStatistka = MarkazHodimStatistka::find(auth()->user()->id);
+        $MarkazHodimStatistka->chegirma = $MarkazHodimStatistka->chegirma + preg_replace('/\D/','',$request->summa);
+        $User->save();
+        $UserBalans->save();
+        $MarkazHodimStatistka->save();
+        return redirect()->back()->with('success', "Talabaga chegirma berildi.");
     }
 
     
