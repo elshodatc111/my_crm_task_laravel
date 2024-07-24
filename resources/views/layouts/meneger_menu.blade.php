@@ -31,7 +31,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="balans.html">
+        <a class="nav-link collapsed" href="{{ route('meneger_balans_home') }}">
           <i class="bi bi-coin"></i>
           <span>Balans</span>
         </a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Meneger\HodimController;
 use App\Http\Controllers\Meneger\TashrifController;
 use App\Http\Controllers\Meneger\GropsController;
 use App\Http\Controllers\Meneger\MoliyaController;
+use App\Http\Controllers\Meneger\BalansController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -88,4 +89,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/moliya/kassa/chiqim/check', [MoliyaController::class, 'kassadanChiqimCheck'])->name('meneger_moliya_kassadan_chiqim_check');
     /* End Molya */
 
+    
+    /* Start Balans */
+        Route::get('/meneger/balans/home', [BalansController::class, 'balansHome'])->name('meneger_balans_home');
+    /* End Balans */
 }); 
