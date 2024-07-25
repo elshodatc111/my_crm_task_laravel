@@ -14,6 +14,19 @@
                 </ol>
             </nav>
         </div>
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-1"></i>
+                    {{Session::get('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif (Session::has('error'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-inbox me-1"></i>
+                    {{Session::get('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
