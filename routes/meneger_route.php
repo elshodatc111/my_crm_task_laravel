@@ -8,6 +8,7 @@ use App\Http\Controllers\Meneger\TashrifController;
 use App\Http\Controllers\Meneger\GropsController;
 use App\Http\Controllers\Meneger\MoliyaController;
 use App\Http\Controllers\Meneger\BalansController;
+use App\Http\Controllers\Meneger\ProfelController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -93,4 +94,9 @@ Route::middleware('auth')->group(function () {
     /* Start Balans */
         Route::get('/meneger/balans/home', [BalansController::class, 'balansHome'])->name('meneger_balans_home');
     /* End Balans */
+
+    /* Start Profel */
+        Route::get('/meneger/profel/home', [ProfelController::class, 'profel'])->name('meneger_profel');
+        Route::post('/meneger/profel/update/password', [ProfelController::class, 'profelUpdatePassword'])->name('meneger_profel_update_password');
+    /* End Profel */
 }); 

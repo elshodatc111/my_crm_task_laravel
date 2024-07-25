@@ -32,6 +32,39 @@
         </div>
     @endif
     <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title w-100 text-center">Mavjud balans</h5>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Naqt
+                                    <span class="badge bg-success rounded-pill">450 000</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Plastik
+                                    <span class="badge bg-success rounded-pill">35 054 151</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Payme
+                                    <span class="badge bg-success rounded-pill">35 054 151</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
@@ -85,47 +118,168 @@
         </div>
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title w-100 text-center">Mavjud balans</h5>
-                    <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Naqt
-                        <span class="badge bg-success rounded-pill">450 000</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Plastik
-                        <span class="badge bg-success rounded-pill">35 054 151</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Payme
-                        <span class="badge bg-success rounded-pill">35 054 151</span>
-                    </li>
-                    </ul>
+                <div class="card-body pt-3">
+                    <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#ishHaqiKassaga">Ish haqi uchun kassaga chiqim</button>
+                    <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#ishHaqiBalansga">Kassadan ish haqini qaytarish</button>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title w-100 text-center text-white mb-0">...</h5>
-                    <button class="btn btn-primary my-1 w-100">Ish haqi uchun kassaga chiqim</button>
-                    <button class="btn btn-primary my-1 w-100">Kassadan ish haqini qaytarish</button>
-                    <button class="btn btn-primary my-1 w-100">Balansdan kassaga qaytarish</button>
+                <div class="card-body pt-3">
+                    <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#balansdanXarajat">Balansdan xarajatlar uchun</button>
+                    <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#kassagaQaytarish">Balansdan kassaga qaytarish</button>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card">
+                <div class="card-body pt-3">
+                    <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#balansdanChiqim">Balansdan chiqim</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title w-100 text-center text-white mb-0">...</h5>
-                    <button class="btn btn-primary my-1 w-100">Balansdan xarajatlar uchun</button>
-                    <button class="btn btn-primary my-1 w-100">Balansdan exson uchun chiqim</button>
-                    <button class="btn btn-primary my-1 w-100">Tasischiga chiqim</button>
+                    <h2 class="card-title w-100 text-center">Hodisalar tarixi (oxirgi 7 kun)</h2>
+                    <div class="table-responsive">
+                        <table class="table text-center table-bordered" style="font-size: 12px;">
+                            <thead>
+                                <tr class="align-items-center">
+                                    <th>#</th>
+                                    <th>Hodisa turi</th>
+                                    <th>Summa</th>
+                                    <th>To'lov turi</th>
+                                    <th>Hodisa haqida</th>
+                                    <th>Meneger</th>
+                                    <th>Hodisa vaqti</th>
+                                    <th>Administrator</th>
+                                    <th>Tasdiqlandi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
- 
+    
+    <div class="modal fade" id="ishHaqiKassaga" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Ish haqi uchun kassaga qaytarish</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="p-0 m-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="modal fade" id="ishHaqiBalansga" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Kassadagi ish haqini balansga qaytarish</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="p-0 m-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="modal fade" id="balansdanXarajat" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Balansdan xarajatlar</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="p-0 m-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="modal fade" id="kassagaQaytarish" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Balansdan kassaga qaytarish</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="p-0 m-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="modal fade" id="balansdanChiqim" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Balansdan chiqim qilish</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" class="p-0 m-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>
     
 </section>
 
