@@ -41,7 +41,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Naqt
-                                    <span class="badge bg-success rounded-pill">450 000</span>
+                                    <span class="badge bg-success rounded-pill">{{ number_format($MarkazBalans['balans_naqt'], 0, '.', ' ') }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -49,7 +49,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Plastik
-                                    <span class="badge bg-success rounded-pill">35 054 151</span>
+                                    <span class="badge bg-success rounded-pill">{{ number_format($MarkazBalans['balans_plastik'], 0, '.', ' ') }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -57,7 +57,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Payme
-                                    <span class="badge bg-success rounded-pill">35 054 151</span>
+                                    <span class="badge bg-success rounded-pill">{{ number_format($MarkazBalans['balans_payme'], 0, '.', ' ') }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -65,52 +65,69 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title w-100 text-center">Kassada mavjud summa</h5>
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Naqt
-                            <span class="badge bg-danger rounded-pill">450 000</span>
+                            <span class="badge bg-danger rounded-pill">{{ number_format($Kassa['kassa_naqt'], 0, '.', ' ') }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Plastik
-                            <span class="badge bg-danger rounded-pill">35 054 151</span>
+                            <span class="badge bg-danger rounded-pill">{{ number_format($Kassa['kassa_plastik'], 0, '.', ' ') }}</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title w-100 text-center">Tasdiqlanish kutilmoqda</h5>
+                    <h5 class="card-title w-100 text-center">Tasdiqlanmagan chiqimlar</h5>
                     <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Naqt
-                        <span class="badge bg-secondary rounded-pill">450 000</span>
+                        <span class="badge bg-secondary rounded-pill">{{ number_format($Kassa['kassa_naqt_chiqim_pedding'], 0, '.', ' ') }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Plastik
-                        <span class="badge bg-secondary rounded-pill">35 054 151</span>
+                        <span class="badge bg-secondary rounded-pill">{{ number_format($Kassa['kassa_plastik_chiqim_pedding'], 0, '.', ' ') }}</span>
                     </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title w-100 text-center">Tasdiqlanmagan xarajatlar</h5>
+                    <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Naqt
+                        <span class="badge bg-secondary rounded-pill">{{ number_format($Kassa['kassa_naqt_xarajat_pedding'], 0, '.', ' ') }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Plastik
+                        <span class="badge bg-secondary rounded-pill">{{ number_format($Kassa['kassa_plastik_xarajat_pedding'], 0, '.', ' ') }}</span>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title w-100 text-center">Kassada mavjud ish haqi</h5>
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Naqt
-                            <span class="badge bg-primary rounded-pill">450 000</span>
+                            <span class="badge bg-primary rounded-pill">{{ number_format($Kassa['kassa_naqt_ish_haqi_pedding'], 0, '.', ' ') }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Plastik
-                            <span class="badge bg-primary rounded-pill">35 054 151</span>
+                            <span class="badge bg-primary rounded-pill">{{ number_format($Kassa['kassa_plastik_ish_haqi_pedding'], 0, '.', ' ') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -159,14 +176,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($KassaKirimChiqim as $item)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td>{{ $item['hodisa'] }}</td>
+                                    <td>{{ $item['summa'] }}</td>
+                                    <td>{{ $item['type'] }}</td>
+                                    <td>{{ $item['comment'] }}</td>
+                                    <td>{{ $item['meneger'] }}</td>
+                                    <td>{{ $item['created_at'] }}</td>
+                                    <td>{{ $item['administrator'] }}</td>
+                                    <td>{{ $item['updated_at'] }}</td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=9 class="text-center">Oxirgi 7 kunda operatsiyalar amalga oshirilmagan</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -182,13 +208,25 @@
                     <h5 class="modal-title w-100 text-center">Ish haqi uchun kassaga qaytarish</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" class="p-0 m-0">
+                    <form action="{{ route('meneger_profel_ish_haqi') }}" method="post" class="p-0 m-0">
+                        @csrf
+                        <input type="hidden" name="typing" value="balansdanKassaga">
+                        <label for="summa" class="my-1">Ish haqi uchun summa</label>
+                        <input type="text" name="summa" required class="form-control amount" >
+                        <label for="type" class="my-1">To'lov turi</label>
+                        <select name="type" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="Naqt">Naqt</option>
+                            <option value="Plastik">Plastik</option>
+                        </select>
+                        <label for="comment" class="my-1">Izoh</label>
+                        <textarea name="comment" required class="form-control mb-2"></textarea>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
                     </form>    
@@ -203,13 +241,25 @@
                     <h5 class="modal-title w-100 text-center">Kassadagi ish haqini balansga qaytarish</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" class="p-0 m-0">
+                    <form action="{{ route('meneger_profel_ish_haqi') }}" method="post" class="p-0 m-0">
+                        @csrf
+                        <input type="hidden" name="typing" value="kassadanBalansga">
+                        <label for="summa" class="my-1">Kassadagi ish haqi uchun summa</label>
+                        <input type="text" name="summa" required class="form-control amount">
+                        <label for="type" class="my-1">To'lov turi</label>
+                        <select name="type" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="Naqt">Naqt</option>
+                            <option value="Plastik">Plastik</option>
+                        </select>
+                        <label for="comment" class="my-1">Izoh</label>
+                        <textarea name="comment" required class="form-control mb-2"></textarea>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
                     </form>    

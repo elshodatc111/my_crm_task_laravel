@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
     
     /* Start Balans */
         Route::get('/meneger/balans/home', [BalansController::class, 'balansHome'])->name('meneger_balans_home');
+        Route::post('/meneger/balans/ish/haqi', [ProfelController::class, 'balansIshHaqi'])->name('meneger_profel_ish_haqi');
     /* End Balans */
 
     /* Start Profel */
