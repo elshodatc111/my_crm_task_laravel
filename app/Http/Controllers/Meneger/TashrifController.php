@@ -297,7 +297,7 @@ class TashrifController extends Controller
         $UserBalans = UserBalans::where('user_id',$request->user_id)->first();
         $UserBalans->jarima = $UserBalans->jarima + preg_replace('/\D/','',$request->jarima);
         $UserBalans->save();
-        return redirect()->back()->with('success', "Talaba yangi guruhga o'chirildi.");
+        return redirect()->back()->with('success', "Talaba guruhdan o'chirildi.");
     }
     public function allPasswordUpdate(Request $request){
         $User = User::find($request->user_id);
