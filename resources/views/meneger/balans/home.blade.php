@@ -27,7 +27,7 @@
     @elseif (Session::has('error'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-1"></i>
-                {{Session::get('success') }}
+                {{Session::get('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -210,6 +210,8 @@
                 <div class="modal-body">
                     <form action="{{ route('meneger_profel_ish_haqi') }}" method="post" class="p-0 m-0">
                         @csrf
+                        <input type="hidden" name="naqt" value="{{ $MarkazBalans['balans_naqt'] }}">
+                        <input type="hidden" name="plastik" value="{{ $MarkazBalans['balans_plastik'] }}">
                         <input type="hidden" name="typing" value="balansdanKassaga">
                         <label for="summa" class="my-1">Ish haqi uchun summa</label>
                         <input type="text" name="summa" required class="form-control amount" >
@@ -243,6 +245,8 @@
                 <div class="modal-body">
                     <form action="{{ route('meneger_profel_ish_haqi') }}" method="post" class="p-0 m-0">
                         @csrf
+                        <input type="hidden" name="naqt" value="{{ $Kassa['kassa_naqt_ish_haqi_pedding'] }}">
+                        <input type="hidden" name="plastik" value="{{ $Kassa['kassa_plastik_ish_haqi_pedding'] }}">
                         <input type="hidden" name="typing" value="kassadanBalansga">
                         <label for="summa" class="my-1">Kassadagi ish haqi uchun summa</label>
                         <input type="text" name="summa" required class="form-control amount">

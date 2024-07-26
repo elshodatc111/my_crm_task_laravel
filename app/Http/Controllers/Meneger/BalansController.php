@@ -23,7 +23,30 @@ class BalansController extends Controller
         return view('meneger.balans.home',compact('Kassa','MarkazBalans','KassaKirimChiqim'));
     }
     public function balansIshHaqi(Request $request){
+        $validate = $request->validate([
+            'naqt' => 'required',
+            'plastik' => 'required',
+            'typing' => 'required',
+            'summa' => 'required',
+            'type' => 'required',
+            'comment' => 'required',
+        ]);
         dd($request);
+        if($request->typing == 'kassadanBalansga'){
+            if($request->Naqt == 'Naqt' AND $request->naqt<$request->summa){
+                return redirect()->back()->with('error', "Kassadagi naqt ish haqi yetarli mablag' mavjud emas.");
+            }
+            if($request->Naqt == 'Plastik' AND $request->plastik<$request->summa){
+                return redirect()->back()->with('error', "Kassadagi naqt ish haqi yetarli mablag' mavjud emas.");
+            }
+        }else{
+            if($request->Naqt == 'Naqt' AND $request->naqt<$request->summa){
+                return redirect()->back()->with('error', "Kassadagi naqt ish haqi yetarli mablag' mavjud emas.");
+            }
+            if($request->Naqt == 'Plastik' AND $request->plastik<$request->summa){
+                return redirect()->back()->with('error', "Kassadagi naqt ish haqi yetarli mablag' mavjud emas.");
+            }
+        }
     }
 
 
