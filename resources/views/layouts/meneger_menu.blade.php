@@ -25,7 +25,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="statick.html">
+        <a class="nav-link collapsed" href="{{ route('chart_days') }}">
           <i class="bi bi-pie-chart"></i>
           <span>Statistika</span>
         </a>

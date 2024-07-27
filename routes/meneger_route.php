@@ -8,6 +8,7 @@ use App\Http\Controllers\Meneger\TashrifController;
 use App\Http\Controllers\Meneger\GropsController;
 use App\Http\Controllers\Meneger\MoliyaController;
 use App\Http\Controllers\Meneger\BalansController;
+use App\Http\Controllers\Meneger\ChartController;
 use App\Http\Controllers\Meneger\ProfelController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
@@ -49,7 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/meneger/techer/update', [HodimController::class, 'techerUpdateStore'])->name('meneger.techer_update_store');
         Route::post('/meneger/techer/paymart', [HodimController::class, 'paymartTecher'])->name('meneger.techer_paymart');
     /*  End Hodimlar */
-
+ 
     /* Start Tashriflar */
         Route::get('/meneger/student/all', [TashrifController::class, 'allTashrif'])->name('meneger.all_tashrif');
         Route::get('/meneger/student/search', [TashrifController::class, 'TashrifSearch'])->name('meneger.all_search');
@@ -104,4 +105,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/profel/home', [ProfelController::class, 'profel'])->name('meneger_profel');
         Route::post('/meneger/profel/update/password', [ProfelController::class, 'profelUpdatePassword'])->name('meneger_profel_update_password');
     /* End Profel */
+
+    /* Start Chart */
+        Route::get('/chart/days', [ChartController::class, 'days'])->name('chart_days');
+        Route::get('/chart/days/table', [ChartController::class, 'dayTable'])->name('chart_days_table');
+        Route::get('/chart/month', [ChartController::class, 'month'])->name('chart_monch');
+        Route::get('/chart/month/table', [ChartController::class, 'monthTable'])->name('chart_monch_table');
+    /* End Chart */
 }); 

@@ -37,7 +37,7 @@ class TashrifController extends Controller
                  ->when($query, function($queryBuilder) use ($query) {
                      $queryBuilder->where(function($subQuery) use ($query) {
                          $subQuery->where('name', 'LIKE', "%{$query}%")
-                                  ->orWhere('email', 'LIKE', "%{$query}%");
+                                  ->orWhere('phone1', 'LIKE', "%{$query}%");
                      });
                  })->paginate(10);
 
