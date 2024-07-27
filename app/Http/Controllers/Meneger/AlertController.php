@@ -82,10 +82,14 @@ class AlertController extends Controller{
     }
 
     public function formArxiv(){
-        return view('meneger.alert.form_arxiv');
+        $Form = Form::where('markaz_id',auth()->user()->markaz_id)->where('status','!=','true')->get();
+        return view('meneger.alert.form_arxiv',compact('Form'));
     }
     public function formLink(){
         return view('meneger.alert.form_url');
+    }
+    public function formShow($id){
+        dd($id);
     }
 }
  

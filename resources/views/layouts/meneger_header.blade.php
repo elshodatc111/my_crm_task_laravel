@@ -31,7 +31,7 @@
         <li class="nav-item">
           <a class="nav-link nav-icon" href="{{ route('form') }}" title="Form">
             <i class="bi bi-card-checklist"></i>
-            <span class="badge bg-warning badge-number">3</span>
+            <span class="badge bg-warning badge-number">@include('layouts.alert.form')</span>
           </a>
         </li>
         <li class="nav-item dropdown pe-3">

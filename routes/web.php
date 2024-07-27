@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/advertising/form/techer/show/{id}', [AlertController::class, 'formTecherShow'])->name('form_techer_show');
     Route::get('/advertising/arxiv', [AlertController::class, 'formArxiv'])->name('form_arxiv');
     Route::get('/advertising/url', [AlertController::class, 'formLink'])->name('form_url');
+    Route::get('/advertising/murohat/show/{id}', [AlertController::class, 'formShow'])->name('form_murojat_show');
 
 });
 
