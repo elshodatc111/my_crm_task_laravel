@@ -43,7 +43,7 @@
             <a href="{{ route('form_arxiv') }}" class="btn btn-secondary w-100">Arxiv</a>
         </div>
         <div class="col-lg-3 col-6 pt-2">
-            <a href="{{ route('form_url') }}" class="btn btn-primary w-100">Url Manzil</a>
+            <a href="{{ route('form_url') }}" class="btn btn-primary w-100">Form Manzil</a>
         </div>
     </div>
 

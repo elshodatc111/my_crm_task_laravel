@@ -27,12 +27,11 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/advertising', [AlertController::class, 'form'])->name('form');
-    Route::get('/advertising/form/user/show/{id}', [AlertController::class, 'formShow'])->name('form_show');
     Route::get('/advertising/techer', [AlertController::class, 'formTecher'])->name('form_techer');
-    Route::get('/advertising/form/techer/show/{id}', [AlertController::class, 'formTecherShow'])->name('form_techer_show');
     Route::get('/advertising/arxiv', [AlertController::class, 'formArxiv'])->name('form_arxiv');
     Route::get('/advertising/url', [AlertController::class, 'formLink'])->name('form_url');
-    Route::get('/advertising/murohat/show/{id}', [AlertController::class, 'formShow'])->name('form_murojat_show');
+    Route::post('/advertising/Murojat', [AlertController::class, 'formMurojatShow'])->name('form_murojat_typing');
+    Route::get('/advertising/murojat/show/{id}', [AlertController::class, 'formShow'])->name('form_murojat_show');
 
 });
 

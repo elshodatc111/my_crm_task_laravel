@@ -13,6 +13,7 @@ class Form extends Model
         'type',
         'smm',
         'name',
+        'tkun',
         'phone1',
         'phone2',
         'addres',

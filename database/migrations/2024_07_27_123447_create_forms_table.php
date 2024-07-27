@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('smm');
             $table->string('name');
+            $table->string('tkun');
             $table->string('phone1');
             $table->string('phone2');
             $table->string('addres');
