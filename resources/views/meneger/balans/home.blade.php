@@ -25,7 +25,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @elseif (Session::has('error'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-1"></i>
                 {{Session::get('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -278,16 +278,32 @@
                     <h5 class="modal-title w-100 text-center">Balansdan xarajatlar</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" class="p-0 m-0">
+                    <form action="{{ route('meneger_profel_chiqimlar') }}" method="post" class="p-0 m-0">
+                        @csrf
+                        <input type="hidden" name="naqt" value="{{ $MarkazBalans['balans_naqt'] }}">
+                        <input type="hidden" name="plastik" value="{{ $MarkazBalans['balans_plastik'] }}">
+                        <input type="hidden" name="payme" value="{{ $MarkazBalans['balans_payme'] }}">
+                        <input type="hidden" name="typing" value="balansdanXarajat">
+                        <label for="summa" class="my-1">Xarajat summa</label>
+                        <input type="text" name="summa" required class="form-control amount" >
+                        <label for="type" class="my-1">To'lov turi</label>
+                        <select name="type" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="Naqt">Naqt</option>
+                            <option value="Plastik">Plastik</option>
+                            <option value="Payme">Payme</option>
+                        </select>
+                        <label for="comment" class="my-1">Xarajat haqida</label>
+                        <textarea name="comment" required class="form-control mb-2"></textarea>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
-                    </form>    
+                    </form>     
                 </div>
             </div>
         </div>
@@ -299,13 +315,28 @@
                     <h5 class="modal-title w-100 text-center">Balansdan kassaga qaytarish</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" class="p-0 m-0">
+                    <form action="{{ route('meneger_profel_chiqimlar') }}" method="post" class="p-0 m-0">
+                        @csrf
+                        <input type="hidden" name="naqt" value="{{ $MarkazBalans['balans_naqt'] }}">
+                        <input type="hidden" name="plastik" value="{{ $MarkazBalans['balans_plastik'] }}">
+                        <input type="hidden" name="payme" value="{{ $MarkazBalans['balans_payme'] }}">
+                        <input type="hidden" name="typing" value="balansdanKassaga">
+                        <label for="summa" class="my-1">Balansga qaytariladigan summa</label>
+                        <input type="text" name="summa" required class="form-control amount" >
+                        <label for="type" class="my-1">To'lov turi</label>
+                        <select name="type" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="Naqt">Naqt</option>
+                            <option value="Plastik">Plastik</option>
+                        </select>
+                        <label for="comment" class="my-1">Balansga qaytariladigan summa haqida</label>
+                        <textarea name="comment" required class="form-control mb-2"></textarea>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
                     </form>    
@@ -320,13 +351,29 @@
                     <h5 class="modal-title w-100 text-center">Balansdan chiqim qilish</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" class="p-0 m-0">
+                    <form action="{{ route('meneger_profel_chiqimlar') }}" method="post" class="p-0 m-0">
+                        @csrf
+                        <input type="hidden" name="naqt" value="{{ $MarkazBalans['balans_naqt'] }}">
+                        <input type="hidden" name="plastik" value="{{ $MarkazBalans['balans_plastik'] }}">
+                        <input type="hidden" name="payme" value="{{ $MarkazBalans['balans_payme'] }}">
+                        <input type="hidden" name="typing" value="balansdanChiqim">
+                        <label for="summa" class="my-1">Balansga chiqim summa</label>
+                        <input type="text" name="summa" required class="form-control amount" >
+                        <label for="type" class="my-1">To'lov turi</label>
+                        <select name="type" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="Naqt">Naqt</option>
+                            <option value="Plastik">Plastik</option>
+                            <option value="Payme">Payme</option>
+                        </select>
+                        <label for="comment" class="my-1">Chiqim haqida</label>
+                        <textarea name="comment" required class="form-control mb-2"></textarea>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Saqlash</button>
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
                     </form>    

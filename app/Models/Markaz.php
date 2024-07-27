@@ -38,4 +38,5 @@ class Markaz extends Model
     public function groups(){return $this->hasMany(Grops::class);}
     public function groupuser(){return $this->hasMany(UserGroup::class);}
     public function kirimchiqim(){return $this->hasMany(KassaKirimChiqim::class);}
+    public function ishhaqi(){return $this->hasMany(MarkazIshHaqi::class);}
 }
