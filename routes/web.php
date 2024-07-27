@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 /* Start Form Show */
     Route::get('/form/user/{markaz_id}/{smm}', [AlertController::class, 'formShowUser'])->name('form_show_user');
     Route::get('/form/techer/{markaz_id}/{smm}', [AlertController::class, 'formShowTecher'])->name('form_show_techer');
+    Route::post('/form/form/post', [AlertController::class, 'formPost'])->name('form_post');
 /* End Form Show */
 
 
@@ -21,8 +22,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/note', [AlertController::class, 'eslatma'])->name('eslatma');
     Route::post('/note', [AlertController::class, 'eslatmaDelete'])->name('eslatma_delete');
     Route::get('/birthday', [AlertController::class, 'tkun'])->name('tkun');
-    Route::get('/advertising', [AlertController::class, 'form'])->name('form');
     Route::get('/appeals', [AlertController::class, 'murojat'])->name('murojat');
+
+
+    
+    Route::get('/advertising', [AlertController::class, 'form'])->name('form');
+    Route::get('/advertising/form/user/show/{id}', [AlertController::class, 'formShow'])->name('form_show');
+    Route::get('/advertising/techer', [AlertController::class, 'formTecher'])->name('form_techer');
+    Route::get('/advertising/form/techer/show/{id}', [AlertController::class, 'formTecherShow'])->name('form_techer_show');
+    Route::get('/advertising/arxiv', [AlertController::class, 'formArxiv'])->name('form_arxiv');
+    Route::get('/advertising/url', [AlertController::class, 'formLink'])->name('form_url');
 
 });
 

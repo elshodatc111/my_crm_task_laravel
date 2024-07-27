@@ -49,7 +49,7 @@ class SettingController extends Controller{
     }
     // Paymart Setting
     public function paymart(){
-        $MarkazPaymart = MarkazPaymart::where('markaz_id',auth()->user()->markaz_id)->get();
+        $MarkazPaymart = MarkazPaymart::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
         return view('meneger.setting.paymart',compact('MarkazPaymart'));
     }
     public function paymartCreate(Request $request){
@@ -70,7 +70,9 @@ class SettingController extends Controller{
         return redirect()->back()->with('success', 'Yangi to`lov qo`shildi.');
     }
     public function paymartDelete(Request $request){
-        $MarkazPaymart = MarkazPaymart::find($request->id)->delete();
+        $MarkazPaymart = MarkazPaymart::find($request->id);
+        $MarkazPaymart->status = 'false';
+        $MarkazPaymart->save();
         return redirect()->back()->with('success', 'To`lov summasi o`chirildi.');
     }
     // Message Setting

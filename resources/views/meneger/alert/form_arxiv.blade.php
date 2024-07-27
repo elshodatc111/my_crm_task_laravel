@@ -7,11 +7,11 @@
 <main id="main" class="main">
 
 <div class="pagetitle">
-  <h1>Balans</h1>
+  <h1>Form</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('meneger.home') }}">Bosh sahifa</a></li>
-      <li class="breadcrumb-item active">Balans</li>
+      <li class="breadcrumb-item active">Arxiv</li>
     </ol>
   </nav>
 </div>
@@ -32,7 +32,20 @@
         </div>
     @endif
 
-    
+    <div class="row">
+        <div class="col-lg-3 col-6 pt-2">
+            <a href="{{ route('form') }}" class="btn btn-secondary w-100">Form Murojat</a>
+        </div>
+        <div class="col-lg-3 col-6 pt-2">
+            <a href="{{ route('form_techer') }}" class="btn btn-secondary w-100">Form Statistika</a>
+        </div>
+        <div class="col-lg-3 col-6 pt-2">
+            <a href="{{ route('form_arxiv') }}" class="btn btn-primary w-100">Arxiv</a>
+        </div>
+        <div class="col-lg-3 col-6 pt-2">
+            <a href="{{ route('form_url') }}" class="btn btn-secondary w-100">Url Manzil</a>
+        </div>
+    </div>
     
 </section>
 
