@@ -25,9 +25,9 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @elseif (Session::has('error'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <i class="bi bi-check-circle me-1"></i>
-      {{Session::get('success') }}
+      {{Session::get('error') }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @endif
@@ -143,25 +143,34 @@
               <b>Kassada mavjud</b>
             </div>
             <div class="col-6">
-              <b>Naqt: </b>150 000
+              <b>Naqt: </b>{{ number_format($Kassa['kassa_naqt_ish_haqi_pedding'], 0, '.', ' ') }}
             </div>
             <div class="col-6">
-              <b>Naqt: </b>150 000
+              <b>Naqt: </b>{{ number_format($Kassa['kassa_plastik_ish_haqi_pedding'], 0, '.', ' ') }}
             </div>
           </div>
-          <form action="" method="post">
-            <label for="" class="my-2">Ish haqi so'mmasi</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">To'lov turi</label>
-            <select name="" id="" required class="form-select">
+          <form action="{{ route('meneger.techer_paymart') }}" method="post">
+            @csrf 
+            <input type="hidden" name="user_id" value="{{ $User['id'] }}">
+            <input type="hidden" name="Naqt" value="{{ $Kassa['kassa_naqt_ish_haqi_pedding'] }}">
+            <input type="hidden" name="Plastik" value="{{ $Kassa['kassa_plastik_ish_haqi_pedding'] }}">
+            <label for="summa" class="my-2">Ish haqi so'mmasi</label>
+            <input type="text" name="summa" required class="form-control amount">
+            <label for="type" class="my-2">To'lov turi</label>
+            <select name="type" required class="form-select">
               <option value="">Tanlang</option>
+              <option value="Naqt">Naqt</option>
+              <option value="Plastik">Plastik</option>
             </select>
             <label for="" class="my-2">Guruhni tanlang</label>
-            <select name="" id="" required class="form-select">
+            <select name="guruh_id" required class="form-select">
               <option value="">Tanlang</option>
+              @foreach($TecherGrops as $item)
+                <option value="{{ $item['guruh_id'] }}" title="Hisoblandi: {{ number_format($item['techer_hisob'], 0, '.', ' ') }}, To'landi: {{ number_format($item['techer_tulandi'], 0, '.', ' ') }}, Qoldiq: {{ number_format($item['qoldiq'], 0, '.', ' ') }}">{{ $item['guruh_name'] }}</option>
+              @endforeach
             </select>
-            <label for="" class="my-2">To'lov haqida</label>
-            <input type="text" required class="form-control mb-2">
+            <label for="comment" class="my-2">To'lov haqida</label>
+            <textarea type="text" name="comment" required class="form-control mb-2"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -178,60 +187,42 @@
 
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title w-100 text-center">O'qituvchi guruhlari</h5>
+      <h5 class="card-title w-100 text-center">O'qituvchi guruhlari (Guruh yakunlangandan so'ng 45 kundan so'ng o'chiriladi.)</h5>
       <div class="table-responsive">
         <table class="table text-center table-bordered" style="font-size: 12px;">
           <thead>
             <tr class="align-items-center">
               <th>#</th>
               <th>Guruh</th>
-              <th>Guruh holari</th>
-              <th>Talabalar</th>
-              <th>Bonus</th>
+              <th>Guruh holati</th>
+              <th>Guruh talabalari</th>
+              <th>Bonus talabalar</th>
               <th>Davomat</th>
               <th>Guruhga to'lovlar</th>
-              <th>Ish haqi (%)</th>
-              <th>Ish haqi (Bonus)</th>
+              <th>Hisoblandi</th>
               <th>To'langan</th>
+              <th>Qoldiq</th>
             </tr>
           </thead>
           <tbody>
+            @forelse($TecherGrops as $item)
             <tr>
-              <td>1</td>
-              <td>Guruh nomi</td>
-              <td>Aktiv</td>
-              <td>10</td>
-              <td>3</td>
-              <td>10</td>
-              <td>160 000</td>
-              <td>16 000</td>
-              <td>15 000</td>
-              <td>0</td>
+              <td>{{ $loop->index+1 }}</td>
+              <td><a href="{{ route('meneger_groups_show', $item['guruh_id']) }}">{{ $item['guruh_name'] }}</a></td>
+              <td>{{ $item['guruh_status'] }}</td>
+              <td>{{ $item['user_groups'] }}</td>
+              <td>{{ $item['user_bonus'] }}</td>
+              <td>{{ $item['user_davomat'] }}</td>
+              <td>{{ number_format($item['user_paymart'], 0, '.', ' ') }}</td>
+              <td>{{ number_format($item['techer_hisob'], 0, '.', ' ') }}</td>
+              <td>{{ number_format($item['techer_tulandi'], 0, '.', ' ') }}</td>
+              <td>{{ number_format($item['qoldiq'], 0, '.', ' ') }}</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Guruh nomi</td>
-              <td>Yangi</td>
-              <td>10</td>
-              <td>3</td>
-              <td>10</td>
-              <td>160 000</td>
-              <td>16 000</td>
-              <td>15 000</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>Guruh nomi</td>
-              <td>Yakunlangan</td>
-              <td>10</td>
-              <td>3</td>
-              <td>10</td>
-              <td>160 000</td>
-              <td>16 000</td>
-              <td>15 000</td>
-              <td>0</td>
-            </tr>
+            @empty
+              <tr>
+                <td colspan=10 class="text-center">O'qituvchi guruhlari mavjud emas.</td>
+              </tr>
+            @endforelse
             
           </tbody>
         </table>
@@ -240,7 +231,7 @@
   </div>
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title w-100 text-center">To'langan ish haqlari</h5>
+      <h5 class="card-title w-100 text-center">To'langan ish haqlari(oxirgi 45 kun)</h5>
       <div class="table-responsive">
         <table class="table text-center table-bordered" style="font-size: 12px;">
           <thead>
@@ -255,33 +246,21 @@
             </tr>
           </thead>
           <tbody>
+            @forelse($MarkazIshHaqi as $item)
             <tr>
-              <td>1</td>
-              <td>25 000</td>
-              <td>Naqt</td>
-              <td>Naqt</td>
-              <td>Yanvar oyi uchun</td>
-              <td>2024.02.01 09:15:25</td>
-              <td>elshodatc1116</td>
+              <td>{{ $loop->index+1 }}</td>
+              <td><a href="{{ route('meneger_groups_show', $item['guruh']) }}">{{ $item['guruh_name'] }}</a></td>
+              <td>{{ number_format($item['summa'], 0, '.', ' ') }}</td>
+              <td>{{ $item['type'] }}</td>
+              <td>{{ $item['comment'] }}</td>
+              <td>{{ $item['created_at'] }}</td>
+              <td>{{ $item['meneger'] }}</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>25 000</td>
-              <td>Naqt</td>
-              <td>Naqt</td>
-              <td>Yanvar oyi uchun</td>
-              <td>2024.02.01 09:15:25</td>
-              <td>elshodatc1116</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>25 000</td>
-              <td>Naqt</td>
-              <td>Naqt</td>
-              <td>Yanvar oyi uchun</td>
-              <td>2024.02.01 09:15:25</td>
-              <td>elshodatc1116</td>
-            </tr>
+            @empty
+              <tr>
+                <td colspan=7 class="text-center">O'qituvchi uchun to'langan ish haqi mavjud emas.</td>
+              </tr>
+            @endforelse
           </tbody>
         </table>
       </div>

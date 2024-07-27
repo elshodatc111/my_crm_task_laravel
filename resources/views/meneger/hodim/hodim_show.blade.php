@@ -25,9 +25,9 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @elseif (Session::has('error'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <i class="bi bi-check-circle me-1"></i>
-      {{Session::get('success') }}
+      {{Session::get('error') }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @endif
@@ -197,21 +197,27 @@
               <b>Kassada mavjud</b>
             </div>
             <div class="col-6">
-              <b>Naqt: </b>150 000
+              <b>Naqt: </b>{{ number_format($Kassa['kassa_naqt_ish_haqi_pedding'], 0, '.', ' ') }}
             </div>
             <div class="col-6">
-              <b>Naqt: </b>150 000
+              <b>Naqt: </b>{{ number_format($Kassa['kassa_plastik_ish_haqi_pedding'], 0, '.', ' ') }}
             </div>
           </div>
-          <form action="" method="post">
-            <label for="" class="my-2">Ish haqi so'mmasi</label>
-            <input type="text" required class="form-control">
-            <label for="" class="my-2">To'lov turi</label>
-            <select name="" id="" required class="form-select">
+          <form action="{{ route('meneger.hodim_paymart') }}" method="post">
+            @csrf 
+            <input type="hidden" name="user_id" value="{{ $User->id }}">
+            <input type="hidden" name="Naqt" value="{{ $Kassa['kassa_naqt_ish_haqi_pedding'] }}">
+            <input type="hidden" name="Plastik" value="{{ $Kassa['kassa_plastik_ish_haqi_pedding'] }}">
+            <label for="summa" class="my-2">Ish haqi so'mmasi</label>
+            <input type="text" name="summa" required class="form-control amount">
+            <label for="type" class="my-2">To'lov turi</label>
+            <select name="type" required class="form-select">
               <option value="">Tanlang</option>
+              <option value="Naqt">Naqt</option>
+              <option value="Plastik">Plastik</option>
             </select>
-            <label for="" class="my-2">To'lov haqida</label>
-            <input type="text" required class="form-control mb-2">
+            <label for="comment" class="my-2">To'lov haqida</label>
+            <textarea type="text" name="comment" required class="form-control mb-2"></textarea>
             <div class="row">
               <div class="col-6">
                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
@@ -242,30 +248,20 @@
             </tr>
           </thead>
           <tbody>
+            @forelse($MarkazIshHaqi as $item)
             <tr>
-              <td>1</td>
-              <td>25 000</td>
-              <td>Naqt</td>
-              <td>Yanvar oyi uchun</td>
-              <td>2024.02.01 09:15:25</td>
-              <td>elshodatc1116</td>
+              <td>{{ $loop->index+1 }}</td>
+              <td>{{ number_format($item['summa'], 0, '.', ' ') }}</td>
+              <td>{{ $item['type'] }}</td>
+              <td>{{ $item['comment'] }}</td>
+              <td>{{ $item['created_at'] }}</td>
+              <td>{{ $item['meneger'] }}</td>
             </tr>
+            @empty
             <tr>
-              <td>2</td>
-              <td>25 000</td>
-              <td>Naqt</td>
-              <td>Yanvar oyi uchun</td>
-              <td>2024.02.01 09:15:25</td>
-              <td>elshodatc1116</td>
+              <td colspan=6 class="text-center">Hodim uchun ish haqi to'lovlari mavjud emas.</td>
             </tr>
-            <tr>
-              <td>3</td>
-              <td>25 000</td>
-              <td>Naqt</td>
-              <td>Yanvar oyi uchun</td>
-              <td>2024.02.01 09:15:25</td>
-              <td>elshodatc1116</td>
-            </tr>
+            @endforelse
           </tbody>
         </table>
       </div>

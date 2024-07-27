@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();            
             $table->integer('markaz_id')->constrained();
             $table->integer('user_id')->constrained();
+            $table->string('typing');
             $table->string('summa');
             $table->string('type');
             $table->string('guruh');
+            $table->string('guruh_name');
             $table->string('comment');
             $table->string('meneger');
             $table->timestamps();

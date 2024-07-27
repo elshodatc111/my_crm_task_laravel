@@ -11,9 +11,11 @@ class MarkazIshHaqi extends Model
     protected $fillable = [
         'markaz_id',
         'user_id',
+        'typing',
         'summa',
         'type',
         'guruh',
+        'guruh_name',
         'comment',
         'meneger',
     ];
