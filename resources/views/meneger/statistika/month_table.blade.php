@@ -135,5 +135,5 @@
         XLSX.writeFile(wb, 'jadval.xlsx');
       });
     });
-  </script>
+</script>
 @endsection
