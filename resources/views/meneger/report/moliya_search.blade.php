@@ -345,5 +345,14 @@
 
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $("#downloadExcel").click(function() {
+        var wb = XLSX.utils.table_to_book(document.getElementById('myTable'), { sheet: "Jadval" });
+        XLSX.writeFile(wb, 'jadval.xlsx');
+      });
+    });
+</script>
 @endsection

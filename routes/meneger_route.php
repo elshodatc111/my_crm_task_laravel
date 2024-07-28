@@ -122,5 +122,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/report/moliya', [HisobotController::class, 'moliya'])->name('report_moliya');
         Route::post('/report/moliya', [HisobotController::class, 'moliyaSearch'])->name('report_moliya_search');
         Route::get('/report/activ', [HisobotController::class, 'active'])->name('report_active_user');
+        Route::post('/report/activ', [HisobotController::class, 'activeSearch'])->name('report_active_user_search');
     /* End Chart */
 }); 

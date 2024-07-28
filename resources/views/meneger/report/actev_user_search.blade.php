@@ -67,6 +67,59 @@
                 </form>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h2 class="w-100 text-center card-title">Aktiv talabalar ({{ $data }})</h2>
+                <div class="w-100" style="text-align:right">
+                    <button id="downloadExcel" class="btn btn-secondary" title="print excel"><i class="bi bi-printer"></i></button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" id="myTable" style="font-size:14px;border:1px solid #A5C8FD">
+                        <head>
+                            <tr>
+                                <th>#</th>
+                                <th>User ID</th>
+                                <th>FIO</th>
+                                <th>Telefon raqami</th>
+                                <th>Qo'shimcha Telefon raqami</th>
+                                <th>Yashash manzili</th>
+                                <th>Tug'ilgan kuni</th>
+                                <th>Balansi</th>
+                                <th>Talaba haqida</th>
+                                <th>Login</th>
+                                <th>Guruh ID</th>
+                                <th>Guruh</th>
+                                <th>Ro'yhatdan otdi</th>
+                            </tr>
+                        </head>
+                        <body>
+                            @forelse($Search as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item['user']['id'] }}</td>
+                                <td>{{ $item['user']['name'] }}</td>
+                                <td>{{ $item['user']['phone1'] }}</td>
+                                <td>{{ $item['user']['phone2'] }}</td>
+                                <td>{{ $item['user']['addres'] }}</td>
+                                <td>{{ $item['user']['tkun'] }}</td>
+                                <td>{{ $item['user']['balans'] }}</td>
+                                <td>{{ $item['user']['about'] }}</td>
+                                <td>{{ $item['user']['email'] }}</td>
+                                <td>{{ $item['guruh']['id'] }}</td>
+                                <td>{{ $item['guruh']['guruh_name'] }}</td>
+                                <td>{{ $item['user']['created_at'] }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td class="text-center" colspan=11>Aktiv talabalar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </body>
+                    </table>
+                </div>
+            </div>
+        </div>
   
     </section>
 
@@ -83,5 +136,14 @@
 
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $("#downloadExcel").click(function() {
+        var wb = XLSX.utils.table_to_book(document.getElementById('myTable'), { sheet: "Jadval" });
+        XLSX.writeFile(wb, 'jadval.xlsx');
+      });
+    });
+</script>
 @endsection

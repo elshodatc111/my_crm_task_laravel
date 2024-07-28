@@ -13,6 +13,7 @@ use App\Models\MarkazCours;
 use App\Models\MarkazIshHaqi;
 use App\Models\KassaKirimChiqim;
 use App\Models\UserPaymart;
+use Carbon\Carbon;
 
 class HisobotController extends Controller
 {
@@ -258,7 +259,50 @@ class HisobotController extends Controller
         }
         return view('meneger.report.moliya_search',compact('type','Search'));
     }
+    protected function Monch(){
+        $months = collect();
+        for ($i = 0; $i < 12; $i++) {
+            $date = Carbon::now()->subMonths($i);
+            $months->push([
+                'Y-m' => $date->format('Y-m'),
+                'Y-M' => $date->format('M-Y'),
+            ]);
+        }
+        $months = $months->reverse()->values();
+        return $months;
+    }
     public function active(){
-        return view('meneger.report.actev_user');
+        $Monch = $this->Monch();
+        return view('meneger.report.actev_user',compact('Monch'));
+    }
+    public function activeSearch(Request $request){
+        $Monch = $this->Monch();
+        $validate = $request->validate([
+            'data' => 'required'
+        ]);
+        $data = $request->data;
+        $start = $data."01";
+        $end = $data."31";
+        $Search = array();
+        $Guruh_id =array();
+        $Grops = Grops::where('markaz_id',auth()->user()->markaz_id)->where('guruh_start','<=',$end)->where('guruh_end','>=',$start)->get();
+        foreach ($Grops as $key => $value) {
+            array_push($Guruh_id,$value->id);
+        }
+        $UserID = array();
+        $k = 0;
+        foreach ($Guruh_id as  $value) {
+            $UserGroup = UserGroup::where('grops_id',$value)->where('status','true')->get();
+            foreach($UserGroup as $key => $item){
+                $UserID[$k]['user_id'] = $item->user_id;
+                $UserID[$k]['guruh_id'] = $value;
+                $k = $k+1;
+            }
+        }
+        foreach($UserID as $key => $item){
+            $Search[$key]['user'] = User::find($item['user_id']);
+            $Search[$key]['guruh'] = Grops::find($item['guruh_id']);
+        }
+        return view('meneger.report.actev_user_search',compact('Monch','data','Search'));
     }
 }
