@@ -11,6 +11,8 @@ use App\Models\MarkazRoom;
 use App\Models\UserGroup;
 use App\Models\MarkazCours;
 use App\Models\MarkazIshHaqi;
+use App\Models\KassaKirimChiqim;
+use App\Models\UserPaymart;
 
 class HisobotController extends Controller
 {
@@ -112,6 +114,149 @@ class HisobotController extends Controller
     }
     public function moliya(){
         return view('meneger.report.moliya');
+    }
+    public function moliyaSearch(Request $request){
+        $validate = $request->validate([
+            'type' => 'required'
+        ]);
+        $type = $request->type;
+        $Search = array();
+        if($type=='allPaymarty'){
+            $UserPaymart = UserPaymart::where('markaz_id',auth()->user()->markaz_id)->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'user_id'=>$value->user_id,
+                    'name'=>User::find($value->user_id)->name,
+                    'summa'=>$value->summa,
+                    'tulov_type'=>$value->tulov_type,
+                    'guruh'=>$value->guruh=='NULL'?" ":$value->guruh,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'created_at'=>$value->created_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='kassadanChiqim'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Kassadan Chiqim')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='KassadanXarajat'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Kassadan Xarajat')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='KassagaQaytarIshHaqi'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Balandan ish haqi kassaga qaytarildi.')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='KassadanBalansgaIshHaqi'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Kassadan ish haqi balansga qaytarildi.')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='KassagaQaytar'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Balansdan kassaga qaytarildi.')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='BalansdanXarajat'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Balansdan xarajat.')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        if($type=='BalansdanChiqim'){
+            $UserPaymart = KassaKirimChiqim::where('markaz_id',auth()->user()->markaz_id)->where('hodisa','Balansdan Chiqim.')->where('status','true')->get();
+            foreach ($UserPaymart as $key => $value) {
+                $newPay = ([
+                    'hodisa'=>$value->hodisa,
+                    'summa'=>$value->summa,
+                    'type'=>$value->type,
+                    'status'=>$value->status,
+                    'comment'=>$value->comment,
+                    'meneger'=>$value->meneger,
+                    'administrator'=>$value->administrator,
+                    'created_at'=>$value->created_at,
+                    'updated_at'=>$value->updated_at,
+                ]);
+                array_push($Search,$newPay);
+            }
+        }
+        return view('meneger.report.moliya_search',compact('type','Search'));
     }
     public function active(){
         return view('meneger.report.actev_user');

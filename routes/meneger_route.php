@@ -120,6 +120,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/report/hodim', [HisobotController::class, 'hodimlar'])->name('report_hodim');
         Route::post('/report/hodim', [HisobotController::class, 'hodimlarSearch'])->name('report_hodim_search');
         Route::get('/report/moliya', [HisobotController::class, 'moliya'])->name('report_moliya');
+        Route::post('/report/moliya', [HisobotController::class, 'moliyaSearch'])->name('report_moliya_search');
         Route::get('/report/activ', [HisobotController::class, 'active'])->name('report_active_user');
     /* End Chart */
 }); 

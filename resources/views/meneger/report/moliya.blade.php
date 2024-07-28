@@ -49,23 +49,24 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title w-100 text-center">Moliya</h2>
-                <form action="" method="post">
+                <form action="{{ route('report_moliya_search') }}" method="post">
+                    @csrf 
                     <div class="row">
                         <div class="col-6">
-                            <select name="" required class="form-select">
+                            <select name="type" required class="form-select">
                                 <option value="">Tanlang</option>
-                                <option value="">Barcha to'lovlar</option>
-                                <option value="">Kassadan tasdiqlangan chiqimlar</option>
-                                <option value="">Kassadan tasdiqlangan xarajatlar</option>
-                                <option value="">Kassaga qaytarilgan ish haqi</option>
-                                <option value="">Kassadan balansga qaytarilgan ish haqi</option>
-                                <option value="">Balansdan kassaga qaytarilganlar</option>
-                                <option value="">Balansdan xarajatlar</option>
-                                <option value="">Balansdan chiqimlar</option>
+                                <option value="allPaymarty">Barcha to'lovlar</option>
+                                <option value="kassadanChiqim">Kassadan tasdiqlangan chiqimlar</option>
+                                <option value="KassadanXarajat">Kassadan tasdiqlangan xarajatlar</option>
+                                <option value="KassagaQaytarIshHaqi">Kassaga qaytarilgan ish haqi</option>
+                                <option value="KassadanBalansgaIshHaqi">Kassadan balansga qaytarilgan ish haqi</option>
+                                <option value="KassagaQaytar">Balansdan kassaga qaytarilganlar</option>
+                                <option value="BalansdanXarajat">Balansdan xarajatlar</option>
+                                <option value="BalansdanChiqim">Balansdan chiqimlar</option>
                             </select>
                         </div>
                         <div class="col-6">
-                            <button class="btn btn-primary w-100">Filter</button>
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
                         </div>
                     </div>
                 </form>
