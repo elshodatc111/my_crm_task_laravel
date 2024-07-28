@@ -10,8 +10,8 @@
             <h1>Statistka</h1>
             <nav>
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('meneger.home') }}">Bosh sahifa</a></li>
-                <li class="breadcrumb-item active">Statistka</li>
+                    <li class="breadcrumb-item"><a href="{{ route('meneger.home') }}">Bosh sahifa</a></li>
+                    <li class="breadcrumb-item active">Statistka</li>
                 </ol>
             </nav>
         </div>
@@ -19,16 +19,16 @@
         <section class="section dashboard">
             <div class="row mb-2">
                 <div class="col-lg-3 mt-lg-0 mt-2">
-                <a href="{{ route('chart_days') }}" class="btn btn-primary w-100">Kunlik Statistika</a>
+                    <a href="{{ route('chart_days') }}" class="btn btn-primary w-100">Kunlik Statistika</a>
                 </div>
                 <div class="col-lg-3 mt-lg-0 mt-2">
-                <a href="{{ route('chart_days_table') }}" class="btn btn-secondary w-100">Kunlik Jadval</a>
+                    <a href="{{ route('chart_days_table') }}" class="btn btn-secondary w-100">Kunlik Jadval</a>
                 </div>
                 <div class="col-lg-3 mt-lg-0 mt-2">
-                <a href="{{ route('chart_monch') }}" class="btn btn-secondary w-100">Oylik Statistika</a>
+                    <a href="{{ route('chart_monch') }}" class="btn btn-secondary w-100">Oylik Statistika</a>
                 </div>
                 <div class="col-lg-3 mt-lg-0 mt-2">
-                <a href="{{ route('chart_monch_table') }}" class="btn btn-secondary w-100">Oylik Jadval</a>
+                    <a href="{{ route('chart_monch_table') }}" class="btn btn-secondary w-100">Oylik Jadval</a>
                 </div>
             </div>
 
@@ -55,25 +55,49 @@
                         new ApexCharts(document.querySelector("#daysPaymart"), {
                             series: [{
                                 name: "Naqt to'lovlar",
-                                data: [44, 55, 57, 56, 61, 58]
+                                data: [
+                                    @foreach($first_table as $item)
+                                        {{ $item['naqt'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Plastik to'lovlar",
-                                data: [76, 85, 101, 98, 87, 105]
+                                data: [
+                                    @foreach($first_table as $item)
+                                        {{ $item['plastik'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Payme to'lovlar",
-                                data: [35, 41, 36, 26, 45, 48]
+                                data: [
+                                    @foreach($first_table as $item)
+                                        {{ $item['payme'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Qaytarilgan to'lovlar",
-                                data: [76, 85, 101, 98, 87, 105]
+                                data: [
+                                    @foreach($first_table as $item)
+                                        {{ $item['qaytar'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Chegirmalar",
-                                data: [35, 41, 36, 26, 45, 48]
+                                data: [
+                                    @foreach($first_table as $item)
+                                        {{ $item['chegirma'] }},
+                                    @endforeach
+                                ]
                             }],
                             chart: {type: 'bar',height: 400},
                             plotOptions: {bar: {horizontal: false,columnWidth: '55%',endingShape: 'rounded'},},
                             dataLabels: {enabled: false},
                             stroke: {show: true,width: 2,colors: ['transparent']},
-                            xaxis: {categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],},
+                            xaxis: {categories: [
+                                @foreach($first_table as $item)
+                                    "{{ $item['data'] }}",
+                                @endforeach
+                            ],},
                             yaxis: {title: {text: "Kunlik to'lovlar"}},
                             fill: {opacity: 1},
                             tooltip: {y: {formatter: function(val) {return val + " so'm"}}}
@@ -82,7 +106,6 @@
                     </script>
                 </div>
             </div>
-
 
             <div class="card">
                 <div class="card-body">
@@ -93,25 +116,50 @@
                         new ApexCharts(document.querySelector("#kunlikMoliya"), {
                             series: [{
                                 name: "Kassadan Chiqim",
-                                data: [44, 55, 57, 56, 61, 58]
+                                data: [
+                                    @foreach($secont_table as $item)
+                                        {{ $item['kassaChiqim'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Balansdan chiqim",
-                                data: [76, 85, 101, 98, 87, 105]
+                                data: [
+                                    @foreach($secont_table as $item)
+                                        {{ $item['balansChiqim'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Kassadan Xarajat",
-                                data: [35, 41, 36, 26, 45, 48]
+                                data: [
+                                    @foreach($secont_table as $item)
+                                        {{ $item['kassaXarajat'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Balansdan Xarajat",
-                                data: [76, 85, 101, 98, 87, 105]
+                                data: [
+                                    @foreach($secont_table as $item)
+                                        {{ $item['balansXarajat'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "To'langan ish haqi",
-                                data: [35, 41, 36, 26, 45, 48]
+                                data: [
+                                    @foreach($secont_table as $item)
+                                        {{ $item['ishHaqi'] }},
+                                    @endforeach
+                                ]
                             }],
                             chart: {type: 'bar',height: 400},
                             plotOptions: {bar: {horizontal: false,columnWidth: '55%',endingShape: 'rounded'},},
                             dataLabels: {enabled: false},
                             stroke: {show: true,width: 2,colors: ['transparent']},
-                            xaxis: {categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],},
+                            xaxis: {categories: [
+                                    @foreach($secont_table as $item)
+                                        "{{ $item['data'] }}",
+                                    @endforeach
+                                ],
+                            },
                             yaxis: {title: {text: "Kunlik Moliya"}},
                             fill: {opacity: 1},
                             tooltip: {y: {formatter: function(val) {return val + " so'm"}}}
@@ -120,7 +168,6 @@
                     </script>
                 </div>
             </div>
-
 
             <div class="card">
                 <div class="card-body">
@@ -131,19 +178,35 @@
                         new ApexCharts(document.querySelector("#daysVised"), {
                             series: [{
                                 name: "Yangi tashrif",
-                                data: [44, 55, 57, 56, 61, 58]
+                                data: [
+                                    @foreach($there_table as $item)
+                                        {{ $item['users'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "Guruhga biriktirildi",
-                                data: [76, 85, 101, 98, 87, 105]
+                                data: [
+                                    @foreach($there_table as $item)
+                                        {{ $item['guruh'] }},
+                                    @endforeach
+                                ]
                             }, {
                                 name: "To'lov qildi",
-                                data: [35, 41, 36, 26, 45, 48]
+                                data: [
+                                    @foreach($there_table as $item)
+                                        {{ $item['tulov'] }},
+                                    @endforeach
+                                ]
                             }],
                             chart: {type: 'bar',height: 400},
                             plotOptions: {bar: {horizontal: false,columnWidth: '55%',endingShape: 'rounded'},},
                             dataLabels: {enabled: false},
                             stroke: {show: true, width: 2 ,colors: ['transparent']},
-                            xaxis: {categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],},
+                            xaxis: {categories: [
+                                    @foreach($there_table as $item)
+                                        "{{ $item['data'] }}",
+                                    @endforeach
+                                ],},
                             yaxis: {title: {text: "Kunlik tashriflar"}},
                             fill: {opacity: 1},
                             tooltip: {y: {formatter: function(val) {return val + " ta"}}}
@@ -152,8 +215,6 @@
                     </script>
                 </div>
             </div>
-
-
 
         </section>
 
