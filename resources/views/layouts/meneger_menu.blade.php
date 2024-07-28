@@ -37,7 +37,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="report.html">
+        <a class="nav-link collapsed" href="{{ route('report_student') }}">
           <i class="bi bi-files-alt"></i>
           <span>Hisobot</span>
         </a>

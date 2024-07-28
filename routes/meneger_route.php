@@ -10,6 +10,7 @@ use App\Http\Controllers\Meneger\MoliyaController;
 use App\Http\Controllers\Meneger\BalansController;
 use App\Http\Controllers\Meneger\ChartController;
 use App\Http\Controllers\Meneger\ProfelController;
+use App\Http\Controllers\Meneger\HisobotController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -111,5 +112,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/chart/days/table', [ChartController::class, 'dayTable'])->name('chart_days_table');
         Route::get('/chart/month', [ChartController::class, 'month'])->name('chart_monch');
         Route::get('/chart/month/table', [ChartController::class, 'monthTable'])->name('chart_monch_table');
+    /* End Chart */
+
+    /* Start Chart */
+        Route::get('/report/student', [HisobotController::class, 'student'])->name('report_student');
+        Route::post('/report/student', [HisobotController::class, 'studentSearch'])->name('report_student_search');
+        Route::get('/report/hodim', [HisobotController::class, 'hodimlar'])->name('report_hodim');
+        Route::get('/report/moliya', [HisobotController::class, 'moliya'])->name('report_moliya');
+        Route::get('/report/activ', [HisobotController::class, 'active'])->name('report_active_user');
     /* End Chart */
 }); 
