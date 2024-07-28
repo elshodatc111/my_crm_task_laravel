@@ -13,6 +13,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('dars_jadval') }}">
+          <i class="bi bi-list-check"></i>
+          <span>Dars jadvali</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('meneger_moliya_home') }}">
           <i class="bi bi-collection"></i>
           <span>Moliya</span>
@@ -26,7 +32,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('chart_days') }}">
-          <i class="bi bi-pie-chart"></i>
+          <i class="bi bi-graph-up"></i>
           <span>Statistika</span>
         </a>
       </li>

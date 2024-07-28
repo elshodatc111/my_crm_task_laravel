@@ -11,6 +11,7 @@ use App\Http\Controllers\Meneger\BalansController;
 use App\Http\Controllers\Meneger\ChartController;
 use App\Http\Controllers\Meneger\ProfelController;
 use App\Http\Controllers\Meneger\HisobotController;
+use App\Http\Controllers\Meneger\DarsJadvalController;
 Route::middleware('auth')->group(function () {
     Route::get('/meneger', [MenegerController::class, 'index'])->name('meneger.home');
     /*  Start Setting  */
@@ -124,4 +125,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/report/activ', [HisobotController::class, 'active'])->name('report_active_user');
         Route::post('/report/activ', [HisobotController::class, 'activeSearch'])->name('report_active_user_search');
     /* End Chart */
+
+    /* Start Dars Jadvali */
+        Route::get('/dars/jadval', [DarsJadvalController::class, 'darsJadval'])->name('dars_jadval');
+    /* End Dars Jadvali */
 }); 
