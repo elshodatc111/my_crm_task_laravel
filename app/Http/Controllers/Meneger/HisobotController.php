@@ -10,6 +10,7 @@ use App\Models\MarkazPaymart;
 use App\Models\MarkazRoom;
 use App\Models\UserGroup;
 use App\Models\MarkazCours;
+use App\Models\MarkazIshHaqi;
 
 class HisobotController extends Controller
 {
@@ -65,11 +66,49 @@ class HisobotController extends Controller
                 array_push($Search,$Massiv);
             }
         }
-        //dd($Search);
         return view('meneger.report.student_search',compact('type','Search'));
     }
     public function hodimlar(){
         return view('meneger.report.hodimlar');
+    }
+    public function hodimlarSearch(Request $request){
+        $validate = $request->validate([
+            'type' => 'required'
+        ]);
+        $type = $request->type;
+        $Search = array();
+        if($type=='allHodim'){
+            $Search = User::where('markaz_id',auth()->user()->markaz_id)->whereIn('role_id', [2, 3, 4])->get();
+        }
+        if($type=='allTecher'){
+            $Search = User::where('markaz_id',auth()->user()->markaz_id)->where('role_id', 5)->get();
+        }
+        if($type=='allHodimTulov'){
+            foreach(MarkazIshHaqi::where('markaz_id',auth()->user()->markaz_id)->where('typing', 'Hodim')->get() as $item){
+                array_push($Search, [
+                    'name' => User::find($item->user_id)->name,
+                    'summa' => $item->summa,
+                    'type' => $item->type,
+                    'comment' => $item->comment,
+                    'meneger' => $item->meneger,
+                    'created_at' => $item->created_at,
+                ]);
+            }
+        }
+        if($type=='allTecherTulov'){
+            foreach(MarkazIshHaqi::where('markaz_id',auth()->user()->markaz_id)->where('typing', 'Techer')->get() as $item){
+                array_push($Search, [
+                    'name' => User::find($item->user_id)->name,
+                    'summa' => $item->summa,
+                    'type' => $item->type,
+                    'guruh_name' => $item->guruh_name,
+                    'comment' => $item->comment,
+                    'meneger' => $item->meneger,
+                    'created_at' => $item->created_at,
+                ]);
+            }
+        }
+        return view('meneger.report.hodimlar_search',compact('type','Search'));
     }
     public function moliya(){
         return view('meneger.report.moliya');

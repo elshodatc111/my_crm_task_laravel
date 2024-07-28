@@ -49,15 +49,16 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title w-100 text-center">Hodimlar</h2>
-                <form action="" method="post">
+                <form action="{{ route('report_hodim_search') }}" method="post">
+                    @csrf 
                     <div class="row">
                         <div class="col-6">
-                            <select name="" required class="form-select">
+                            <select name="type" required class="form-select">
                                 <option value="">Tanlang</option>
-                                <option value="">Barcha hodimlar</option>
-                                <option value="">Hodimlarga to'langan ish haqi</option>
-                                <option value="">O'qituvchilar</option>
-                                <option value="">O'qituvchilarga  to'langan ish haqi</option>
+                                <option value="allHodim">Barcha hodimlar</option>
+                                <option value="allHodimTulov">Hodimlarga to'langan ish haqi</option>
+                                <option value="allTecher">Barcha O'qituvchilar</option>
+                                <option value="allTecherTulov">O'qituvchilarga  to'langan ish haqi</option>
                             </select>
                         </div>
                         <div class="col-6">
