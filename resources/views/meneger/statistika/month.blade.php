@@ -58,25 +58,49 @@
                             new ApexCharts(document.querySelector("#tulovlar"), {
                                 series: [{
                                     name: "Naqt to'lovlar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($first_table as $item)
+                                            {{ $item['naqt'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Plastik to'lovlar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($first_table as $item)
+                                            {{ $item['plastik'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Payme to'lovlar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($first_table as $item)
+                                            {{ $item['payme'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Qaytarilgan to'lovlar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($first_table as $item)
+                                            {{ $item['qaytar'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Chegirmalar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($first_table as $item)
+                                            {{ $item['chegirma'] }},
+                                        @endforeach
+                                    ]
                                 }],
                                 chart: {height: 400,type: 'line',zoom: {enabled: false}},
                                 dataLabels: {enabled: false},
                                 stroke: {curve: 'straight'},
                                 grid: {row: {colors: ['#FFA500', 'transparent'],opacity: 0.5},},
-                                xaxis: {categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],}
+                                xaxis: {categories: [
+                                    @foreach($first_table as $item)
+                                        "{{ $item['data'] }}",
+                                    @endforeach
+                                ],}
                             }).render();
                         });
                     </script>
@@ -92,28 +116,48 @@
                             new ApexCharts(document.querySelector("#moliya"), {
                                 series: [{
                                     name: "To'lovlar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($secont_table as $item)
+                                            {{ $item['tulovlar'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Xarajatlar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($secont_table as $item)
+                                            {{ $item['xarajatlar'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Ish haqi",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($secont_table as $item)
+                                            {{ $item['ishHaqi'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Daromad",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($secont_table as $item)
+                                            {{ $item['daromad'] }},
+                                        @endforeach
+                                    ]
                                 }],
                                 chart: {height: 400,type: 'line',zoom: {enabled: false}},
                                 dataLabels: {enabled: false},
                                 stroke: {curve: 'straight'},
                                 grid: {row: {colors: ['#00ff00 ', 'transparent'],opacity: 0.5},},
-                                xaxis: {categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],}
+                                xaxis: {categories: [
+                                    @foreach($first_table as $item)
+                                        "{{ $item['data'] }}",
+                                    @endforeach
+                                ],}
                             }).render();
                         });
                     </script>
                 </div>
             </div>
-
+ 
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title w-100 text-center">Oylik Tashriflar</h2>
@@ -123,19 +167,35 @@
                             new ApexCharts(document.querySelector("#tashrif"), {
                                 series: [{
                                     name: "Tashriflar",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($there_table as $item)
+                                            {{ $item['users'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "Guruhga biriktirildi",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($there_table as $item)
+                                            {{ $item['guruh'] }},
+                                        @endforeach
+                                    ]
                                 },{
                                     name: "To'lov qildi",
-                                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                    data: [
+                                        @foreach($there_table as $item)
+                                            {{ $item['tulov'] }},
+                                        @endforeach
+                                    ]
                                 }],
                                 chart: {height: 400,type: 'line',zoom: {enabled: false}},
                                 dataLabels: {enabled: false},
                                 stroke: {curve: 'straight'},
                                 grid: {row: {colors: ['#ff0000 ', 'transparent'],opacity: 0.5},},
-                                xaxis: {categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],}
+                                xaxis: {categories: [
+                                    @foreach($first_table as $item)
+                                        "{{ $item['data'] }}",
+                                    @endforeach
+                                ],}
                             }).render();
                         });
                     </script>

@@ -30,7 +30,7 @@
                 <div class="col-lg-3 mt-lg-0 mt-2">
                 <a href="{{ route('chart_monch_table') }}" class="btn btn-primary w-100">Oylik Jadval</a>
                 </div>
-            </div>
+            </div> 
 
             @if (Session::has('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -50,157 +50,58 @@
                 <div class="card-body">
                     <h2 class="card-title w-100 text-center">Oylik statistika</h2>
                     <div class="table-responsive">
-                        <table class="table table-bordered text-center" id="myTable" style="font-size:14px;">
+                        <table class="table table-bordered text-center" id="myTable" style="font-size:14px;border:1px solid #A5C8FD">
                             <thead>
                                 <tr>
-                                    <th rowspan=2 class="bg-primary text-white">Oylar</th>
-                                    <th colspan=6 class="bg-info text-white">To'lovlar</th>
-                                    <th colspan=3 class="bg-danger text-white">Xarajatlar</th>
-                                    <th colspan=3 class="bg-warning">Ish haqi</th>
-                                    <th rowspan=2 class="bg-success text-white">Daromad</th>
-                                    <th colspan=3 style="background:#EB8F88">Tashriflar</th>
-                                    <th rowspan=2 class="bg-secondary text-white">Aktiv talabalar</th>
+                                    <th rowspan=2 colspan=1 class="bg-primary text-white" style="border:1px solid #4991FD;">Oylar</th>
+                                    <th colspan=6 class="bg-info text-white" style="border:1px solid #4991FD;">To'lovlar</th>
+                                    <th colspan=3 class="bg-danger text-white" style="border:1px solid #4991FD;">Xarajatlar</th>
+                                    <th colspan=3 class="bg-warning" style="border:1px solid #4991FD;">Ish haqi</th>
+                                    <th rowspan=2 class="bg-success text-white" style="border:1px solid #4991FD;">Daromad</th>
+                                    <th colspan=3 style="background:#EB8F88" style="border:1px solid #4991FD;">Tashriflar</th>
+                                    <th rowspan=2 class="bg-secondary text-white" style="border:1px solid #4991FD;">Aktiv talabalar</th>
                                 </tr>
                                 <tr>
-                                    <td class="bg-info text-white">Naqt</td>
-                                    <td class="bg-info text-white">Plastik</td>
-                                    <td class="bg-info text-white">Payme</td>
-                                    <td class="bg-info text-white">Chegirma</td>
-                                    <td class="bg-info text-white">Qaytarildi</td>
-                                    <td class="bg-info text-white">Jami</td>
-                                    <td class="bg-danger text-white">Kassadan</td>
-                                    <td class="bg-danger text-white">Balansdan</td>
-                                    <td class="bg-danger text-white">Jami</td>
-                                    <td class="bg-warning">Hodimlar</td>
-                                    <td class="bg-warning">O'qituvchilar</td>
-                                    <td class="bg-warning">Jami</td>
-                                    <td style="background:#EB8F88">Jami</td>
-                                    <td style="background:#EB8F88">Guruh</td>
-                                    <td style="background:#EB8F88">Tulov</td>
+                                    <td class="bg-info text-white" style="border:1px solid #4991FD;">Naqt</td>
+                                    <td class="bg-info text-white" style="border:1px solid #4991FD;">Plastik</td>
+                                    <td class="bg-info text-white" style="border:1px solid #4991FD;">Payme</td>
+                                    <td class="bg-info text-white" style="border:1px solid #4991FD;">Qaytarildi</td>
+                                    <td class="bg-info text-white" style="border:1px solid #4991FD;">Chegirma</td>
+                                    <td class="bg-info text-white" style="border:1px solid #4991FD;">(Naqt + Plastik + Payme - Qaytarildi)</td>
+                                    <td class="bg-danger text-white" style="border:1px solid #4991FD;">Kassadan</td>
+                                    <td class="bg-danger text-white" style="border:1px solid #4991FD;">Balansdan</td>
+                                    <td class="bg-danger text-white" style="border:1px solid #4991FD;">Kassa + Balans</td>
+                                    <td class="bg-warning" style="border:1px solid #4991FD;">Hodimlar</td>
+                                    <td class="bg-warning" style="border:1px solid #4991FD;">O'qituvchilar</td>
+                                    <td class="bg-warning" style="border:1px solid #4991FD;">Hodim + O'qituvchi</td>
+                                    <td style="background:#EB8F88;border:1px solid #4991FD;">Tashriflar</td>
+                                    <td style="background:#EB8F88;border:1px solid #4991FD;">Guruhga qo'shildi</td>
+                                    <td style="background:#EB8F88;border:1px solid #4991FD;">To'lov qildi</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>Iyun</th>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <th>Iyun</th>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <th>Iyun</th>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <th>Iyun</th>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <th>Iyun</th>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <th>Iyun</th>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                
+                                @foreach($first_table as $key => $item)
+                                    <tr>
+                                        <th style="background:#A5C8FD;border:1px solid #4991FD">{{ $item['data'] }}</th>
+                                        <td style="background:#C4E9F0;border:1px solid #4BD5F0">{{ number_format($item['naqt'], 0, '.', ' ') }}</td>
+                                        <td style="background:#C4E9F0;border:1px solid #4BD5F0">{{ number_format($item['plastik'], 0, '.', ' ') }}</td>
+                                        <td style="background:#C4E9F0;border:1px solid #4BD5F0">{{ number_format($item['payme'], 0, '.', ' ') }}</td>
+                                        <td style="background:#C4E9F0;border:1px solid #4BD5F0">{{ number_format($item['qaytar'], 0, '.', ' ') }}</td>
+                                        <td style="background:#C4E9F0;border:1px solid #4BD5F0">{{ number_format($item['chegirma'], 0, '.', ' ') }}</td>
+                                        <td style="background:#C4E9F0;border:1px solid #4BD5F0">{{ number_format($item['naqt']+$item['plastik']+$item['payme']-$item['qaytar'], 0, '.', ' ') }}</td>
+                                        <td style="background:#DCAEB3;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['KassadanXarajat'], 0, '.', ' ') }}</td>
+                                        <td style="background:#DCAEB3;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['balansXarajat'], 0, '.', ' ') }}</td>
+                                        <td style="background:#DCAEB3;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['xarajatlar'], 0, '.', ' ') }}</td>
+                                        <td style="background:#FFECB2;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['hodimishHaqi'], 0, '.', ' ') }}</td>
+                                        <td style="background:#FFECB2;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['techerishHaqi'], 0, '.', ' ') }}</td>
+                                        <td style="background:#FFECB2;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['ishHaqi'], 0, '.', ' ') }}</td>
+                                        <td style="background:#DBDBDB;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['daromad'], 0, '.', ' ') }}</td>
+                                        <td style="background:#EBA19C;border:1px solid #4BD5F0">{{ number_format($there_table[$key]['users'], 0, '.', ' ') }}</td>
+                                        <td style="background:#EBA19C;border:1px solid #4BD5F0">{{ number_format($there_table[$key]['guruh'], 0, '.', ' ') }}</td>
+                                        <td style="background:#EBA19C;border:1px solid #4BD5F0">{{ number_format($there_table[$key]['tulov'], 0, '.', ' ') }}</td>
+                                        <td style="background:#C8C8C8;border:1px solid #4BD5F0">{{ number_format($secont_table[$key]['active'], 0, '.', ' ') }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
