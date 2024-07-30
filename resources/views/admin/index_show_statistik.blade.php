@@ -36,74 +36,33 @@
     </div>
   </div>
 
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-1"></i>
-        Yangi talalaba qo'shildi.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title w-100 text-center">Tashriflar</h5>
+          <h5 class="card-title w-100 text-center">Aktiv talabalar</h5>
           <div class="table-responsive">
             <table class="table text-center table-bordered" style="font-size: 12px;">
               <thead>
                 <tr class="align-items-center">
                   <th>#</th>
-                  <th>Talaba</th>
-                  <th>Telefon raqam</th>
-                  <th>Address</th>
-                  <th>Guruhlar</th>
-                  <th>Ro'yhatdan o'tdi</th>
+                  <th>O'quv markaz</th>
+                  @foreach($Months as $item)
+                  <th>{{ $item['M-Y'] }}</th>
+                  @endforeach
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td style="text-align:left;">
-                    <a href="index_show.html"><b>Elshod Musurmonov</b></a>
-                  </td>
-                  <td>99 890 88 55</td>
-                  <td>Qarshi shaxar</td>
-                  <td>3</td>
-                  <td>10.07.2024 15:24:45</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td style="text-align:left;">
-                    <a href="index_show.html"><b>Elshod Musurmonov</b></a>
-                  </td>
-                  <td>99 890 88 55</td>
-                  <td>Qarshi shaxar</td>
-                  <td>3</td>
-                  <td>10.07.2024 15:24:45</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td style="text-align:left;">
-                    <a href="index_show.html"><b>Elshod Musurmonov</b></a>
-                  </td>
-                  <td>99 890 88 55</td>
-                  <td>Qarshi shaxar</td>
-                  <td>3</td>
-                  <td>10.07.2024 15:24:45</td>
-                </tr>
+                @foreach($Markaz as $item)
+                  <tr>
+                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $item[0]['markaz'] }}</td>
+                    @foreach($item as $item2)
+                      <td>{{ $item2['user'] }}</td>
+                    @endforeach
+                  </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination  pagination-sm justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
 </section>

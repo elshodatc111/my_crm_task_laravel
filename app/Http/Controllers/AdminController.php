@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Kassa;
 use App\Models\DamOlish;
 use App\Models\Role;
+use App\Models\UserGroup;
+use App\Models\UserPaymart;
 use App\Models\MarkazSmsPaket;
 use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
@@ -16,6 +18,7 @@ use App\Models\MarkazBalans;
 use App\Models\MarkazSmsSetting;
 use App\Models\MarkazHodimStatistka;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Grops;
 use DateTime;
 use App\Models\MarkazAddres;
 use App\Models\MarkazSmm;
@@ -311,9 +314,6 @@ class AdminController extends Controller{
         return redirect()->back()->with('success', 'Yangi sms paketi saqlandi.');
     }
 
-    public function show_statistik($id){
-        return view('admin.index_show_statistik',compact('id'));
-    }
     // Administrator
     public function adminPerson(){
         $User = User::where('role_id',1)->get();
@@ -460,5 +460,44 @@ class AdminController extends Controller{
     public function smmDelete(Request $request){
         MarkazSmm::find($request->id)->delete();
         return redirect()->back()->with('success', 'SMM o`chirildi.');
+    }
+    //Aktiv talabalar
+    protected function Months(){
+        $months = collect();
+        for ($i = 0; $i < 12; $i++) {
+            $date = Carbon::now()->subMonths($i);
+            $months->push([
+                'Y-m' => $date->format('Y-m'),
+                'M-Y' => $date->format('M-Y'),
+            ]);
+        }
+        $months = $months->reverse()->values();
+        return $months;
+    }
+    public function show_statistik($id){
+
+        $Months = $this->Months();
+        $Markaz = array();
+
+        foreach (Markaz::get() as $keyw => $items) {
+            $Active = array();
+            foreach ($Months as $key => $value) {
+                $Start = $value['Y-m']."-01";
+                $End = $value['Y-m']."-31";
+                $Grops = Grops::where('guruh_end','>=',$Start)->where('guruh_start','<=',$End)->get();
+                $Users = array();
+                foreach ($Grops as $key2 => $value2) {
+                    foreach (UserGroup::where('grops_id',$value2->id)->where('markaz_id',$items->id)->where('status','true')->get() as $key3 => $value3) {
+                        array_push($Users,$value3['user_id']);
+                    }
+                }
+                $user3 = array_unique($Users);
+                $Active[$key]['user'] = count($user3);
+                $Active[$key]['markaz'] = $items->name;
+            }
+            $Markaz[$keyw] = $Active;
+        }
+        //dd($Markaz);
+        return view('admin.index_show_statistik',compact('id','Markaz','Months'));
     }
 }
