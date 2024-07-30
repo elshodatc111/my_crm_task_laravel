@@ -35,65 +35,6 @@
   @endif
 
   <div class="row">
-    <div class="col-lg-8">
-      <div class="card" style="min-height:210px;">
-        <div class="card-body">
-          <h5 class="card-title w-100 text-center">Kurs videolari </h5>
-          <div class="table-responsive">
-            <table class="table text-center table-bordered" style="font-size: 12px;">
-              <thead>
-                <tr class="align-items-center">
-                  <th>#</th>
-                  <th>Dars nomi</th>
-                  <th>Video token(youtube)</th>
-                  <th>Meneger</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                @forelse($MarkazCoursVideo as $item)
-                <tr>
-                  <td>{{ $loop->index+1 }}</td>
-                  <td>{{ $item['cours_title'] }}</td>
-                  <td>{{ $item['cours_url_token'] }}</td>
-                  <td>{{ $item['meneger'] }}</td>
-                  <td>
-                    <form action="{{ route('meneger.cours_create_video_delete') }}" method="post">
-                      @csrf 
-                      <input type="hidden" name="id" value="{{ $item['id'] }}">
-                      <button class="btn btn-danger p-1"><i class="bi bi-trash" type="submit"></i></button>
-                    </form>
-                  </td>
-                </tr>
-                @empty
-                <tr>
-                  <td class="text-center" colspan=5>Darslar mavjud emas</td>
-                </tr>
-                @endforelse
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="card" style="min-height:210px;">
-        <div class="card-body">
-          <h5 class="card-title w-100 text-center">Yangi video dars qo'shish</h5>
-          <form action="{{ route('meneger.cours_create_video') }}" method="post">
-            @csrf
-            <input type="hidden" name="cours_id" value="{{ $id }}">
-            <label for="">Darsning nomi</label>
-            <input type="text" name="cours_title" class="form-control my-2" required>
-            <label for="">Video token(Youtube)</label>
-            <input type="text" name="cours_url_token" class="form-control my-2" required>
-            <label for="">Dars tartib raqami</label>
-            <input type="number" name="cours_number" class="form-control my-2" required>
-            <button type="submit" class="btn btn-primary w-100">Darsni saqlash</button>
-          </form>
-        </div>
-      </div>
-    </div>
 
     <div class="col-lg-8">
       <div class="card" style="min-height:210px;">

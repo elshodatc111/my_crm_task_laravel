@@ -26,8 +26,8 @@ class SendMessage implements ShouldQueue
     }
 
     public function handle(): void{
-        $eskiz_email = "MENEJER-77@MAIL.RU";
-        $eskiz_password = 'oncq32Eg8mL0zEdrktW7vNB2amdNzwJtg2oKwJHS';
+        $eskiz_email = env('SMS_EMAIL');
+        $eskiz_password = env('SMS_PASSWORD');
         $eskiz = new Eskiz($eskiz_email,$eskiz_password);
         $eskiz->requestAuthLogin();
         $from='4546';

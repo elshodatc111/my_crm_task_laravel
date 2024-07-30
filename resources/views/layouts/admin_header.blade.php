@@ -2,8 +2,8 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="{{ route('admin.index') }}" class="logo d-flex align-items-center">
         <span class=" w-100 text-center">
-          <img src="https://atko.tech/mycrm/assets/img/logo/logo.png" class="d-none d-lg-block w-50">
-          <img src="https://atko.tech/mycrm/assets/img/logo/logo_icon.png" class="d-lg-none d-block">
+          <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/logo.png" class="d-none d-lg-block w-50">
+          <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/logo_icon.png" class="d-lg-none d-block">
         </span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -12,7 +12,7 @@
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="https://atko.tech/mycrm/assets/img/logo/user.png" alt="Profile" class="rounded-circle">
+            <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/user.png" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->role->name }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
