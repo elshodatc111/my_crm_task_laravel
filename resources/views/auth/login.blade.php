@@ -10,7 +10,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
               <div class="d-flex justify-content-center py-4">
                 <a class="logo d-flex align-items-center w-auto">
-                  <img src="assets/img/logo/logo.png" style="width: 100px;">
+                  <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/logo.png" style="width: 100px;">
                 </a>
               </div>
               <div class="card mb-3">

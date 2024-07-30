@@ -14,10 +14,12 @@ use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
 use App\Models\MarkazBalans;
 use App\Models\MarkazSmsSetting;
+use App\Models\MarkazHodimStatistka;
 use Illuminate\Support\Facades\Hash;
 use DateTime;
 use App\Models\MarkazAddres;
 use App\Models\MarkazSmm;
+use App\Jobs\SendMessage;
 
 class AdminController extends Controller{
 
@@ -107,7 +109,7 @@ class AdminController extends Controller{
         $Markaz->image = $fileName;
         $Markaz->save();
         return redirect()->back()->with('success', 'Logo yangilandi.');
-    }
+    } 
     // Ogohlantirish
     public function postogoh(Request $request){
         $validated = $request->validate([
@@ -163,7 +165,8 @@ class AdminController extends Controller{
         $response['balans'] = MarkazBalans::where('markaz_id',$id)->first();
         $MarkazAddres = MarkazAddres::where('markaz_id',$id)->get();
         $MarkazSmm = MarkazSmm::where('markaz_id',$id)->get();
-        return view('admin.index_show_setting',compact('id','response','MarkazSmm','MarkazAddres'));
+        $User = User::where('markaz_id',$id)->where('role_id', 2)->get();
+        return view('admin.index_show_setting',compact('id','response','MarkazSmm','MarkazAddres','User'));
     }
     public function show_update(Request $request, $id){
         $validate = $request->validate([
@@ -185,6 +188,43 @@ class AdminController extends Controller{
         $Markaz->paymart = $request->paymart;
         $Markaz->save(); 
         return redirect()->back()->with('success', 'Markaz malumotlari yangilandi.');
+    }
+    public function createDrektor(Request $request){
+        $validate = $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $User = User::create([
+            'markaz_id' => $request->id,
+            'role_id' => 2,
+            'name' => $request->name,
+            'addres' => "Kiritilmagan",
+            'tkun' => "2000-01-01",
+            'about' => "Drektor",
+            'phone1' => "",
+            'phone2' => "",
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        MarkazHodimStatistka::create([
+            'markaz_id'=>$request->id,
+            'user_id'=>$User->id,
+            'naqt'=>0,
+            'plastik'=>0,
+            'chegirma'=>0,
+            'qaytarildi'=>0,
+            'tashrif'=>0,
+        ]);
+        $Markaz_ID = $request->id;
+        $Phone = str_replace(" ","",$request->phone1);
+        $Url = "https://atko.uz";
+        $Text = "Hurmatli ".$request->name." siz ".Markaz::find($request->id)->name." o'quv markaziga ishga olindingiz. Sizning login: ".$request->email." parol: ".$request->password." websayt: ".$Url;
+
+        SendMessage::dispatch($Markaz_ID, $Phone, $Text);
+        
+        return redirect()->back()->with('success', 'Yangi drektor qo`shildi.');
     }
     public function show_update_lock(Request $request){
         $Markaz = Markaz::find($request->id);

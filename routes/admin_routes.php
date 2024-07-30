@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/show/setting/generator', [AdminController::class, 'generator'])->name('admin.generator');
     Route::post('/admin/show/setting/kassa/update', [AdminController::class, 'kassaUpdate'])->name('admin.kassaUpdate');
     Route::post('/admin/show/setting/balans/update', [AdminController::class, 'balansUpdate'])->name('admin.balansUpdate');
+    
+    Route::post('/admin/show/setting/create/drektor', [AdminController::class, 'createDrektor'])->name('admin.create_drektor');
 
     Route::post('/admin/show/setting/manzil/create', [AdminController::class, 'manzilCreate'])->name('admin.manzilCreate');
     Route::post('/admin/show/setting/manzil/delete', [AdminController::class, 'manzilDelete'])->name('admin.manzilDelete');

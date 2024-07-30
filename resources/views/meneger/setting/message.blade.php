@@ -93,7 +93,7 @@
                 <tr>
                   <td>{{ $loop->index+1 }}</td>
                   <td>{{ $item['paket_soni'] }}</td>
-                  <td>{{ number_format($item['tulov'], 0, ',', ' ') }}</td>
+                  <td>{{ $item['tulov'] }}</td>
                   <td>{{ $item['created_at'] }}</td>
                   <td>{{ $item['description'] }}</td>
                 </tr>

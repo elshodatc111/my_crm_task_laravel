@@ -263,6 +263,59 @@
             </div>
           </div>
         </div>
+
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title w-100 text-center">Markaz drektor qo'shish</div>
+              <form action="{{ route('admin.create_drektor') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $id }}">
+                <label for="name" class="my-2">Drektor FIO</label>
+                <input type="text" name="name" required  class="form-control">
+                <label for="email" class="my-2">Drektor LOGIN</label>
+                <input type="text" name="email" required  class="form-control">
+                <label for="password" class="my-2">Drektor PAROL</label>
+                <input type="password" name="password" required  class="form-control">
+                <button class="btn btn-primary w-100 my-2">Yangi drektorni saqlash</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title w-100 text-center">Markaz drektorlari</div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>FIO</th>
+                    <th>Login</th>
+                    <th>Holati</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @forelse($User as $item)
+                  <tr>
+                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['email'] }}</td>
+                    <td>{{ $item['status'] }}</td>
+                  </tr>
+                  @empty
+                  <tr>
+                    <td colspan=4 class="text-center">Drektorlar mavjud emas.</td>
+                  </tr>
+                  @endforelse
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
 
 </section>
