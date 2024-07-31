@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Grops;
+use App\Models\UserGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -83,6 +85,42 @@ class UserController extends Controller
             'data' => [],
         ],200);
     }
-
+    // Groups
+    public function groups(){
+        $Grops = UserGroup::where('user_id',auth()->user()->id)->where('status','true')->get();
+        $MyCroups = array();
+        foreach ($Grops as $key => $value) {
+            $Grops = Grops::find($value->grops_id);
+            $Start = $Grops->guruh_start;
+            $End = $Grops->guruh_end;
+            if($Start<=date('Y-m-d') AND $End>=date('Y-m-d')){
+                $image_link = 'aktiv link image';
+            }elseif($Start<=date('Y-m-d')){
+                $image_link = 'Yangi link image';
+            }else{
+                $image_link = 'yakunlangan link image';
+            }
+            $MyCroups[$key]['guruh_id'] = $value->grops_id;
+            $MyCroups[$key]['image'] = $image_link;
+            $MyCroups[$key]['guruh_name'] = $Grops->guruh_name;
+        }
+        return response()->json([
+            'status' => true,
+            'message' => 'User all groups',
+            'data' => $MyCroups,
+        ],200);
+    }
+    public function groupsShow($id){
+        $Grops = Grops::find($id);
+        $response = array();
+        $response['group'] = $Grops;
+        
+        return response()->json([
+            'status' => true,
+            'message' => 'Groups Show',
+            'data' => $response,
+        ],200);
+        return $id;
+    }
     
 }
