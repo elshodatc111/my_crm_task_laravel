@@ -17,6 +17,20 @@
         </div>
 
         <section class="section dashboard">
+            <div class="row mb-2">
+                <div class="col-lg-3 mt-lg-0 mt-3">
+                <a href="{{ route('meneger.all_tashrif') }}" class="btn btn-secondary w-100">Tashriflar</a>
+                </div>
+                <div class="col-lg-3 mt-lg-0 mt-3">
+                <a href="{{ route('meneger.all_debet') }}" class="btn btn-secondary w-100">Qarzdorlar</a>
+                </div>
+                <div class="col-lg-3 mt-lg-0 mt-3">
+                <a href="{{ route('dars_jadval') }}" class="btn btn-primary w-100">Dars jadvali</a>
+                </div>
+                <div class="col-lg-3 mt-lg-0 mt-3">
+                <a href="{{ route('meneger.all_create') }}" class="btn btn-secondary w-100">Yangi tashrif</a>
+                </div>
+            </div>
             @foreach($Room as $item)
             <div class="card">
                 <div class="card-body">

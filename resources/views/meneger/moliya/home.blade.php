@@ -101,9 +101,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#qaytarilgan">Qaytarilgan to'lovlar (Oxirgi 7 kun)</button></div>
-        <div class="col-lg-4"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanChiqim">Kassadan chiqima</button></div>
-        <div class="col-lg-4"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanXarajat">Xarajatlar chiqim</button></div>
+        <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#qaytarilgan">Qaytarilgan to'lovlar (Oxirgi 7 kun)</button></div>
+        <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanChiqim">Kassadan chiqima</button></div>
+        <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanXarajat">Xarajatlar chiqim</button></div>
         <div class="col-12">
             <div class="card mt-3">
                 <div class="card-body">

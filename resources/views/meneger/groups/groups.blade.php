@@ -19,13 +19,13 @@
         <section class="section dashboard">
 
             <div class="row mb-2">
-                <div class="col-4">
+                <div class="col-lg-4 my-lg-0 mt-2">
                     <a href="{{ route('meneger_groups') }}" class="btn btn-primary w-100">Guruhlar</a>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 my-lg-0 mt-2">
                     <a href="{{ route('meneger_groups_end') }}" class="btn btn-secondary w-100">Yakunlangan guruhlar</a>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 my-lg-0 mt-2">
                     <a href="{{ route('meneger_groups_create') }}" class="btn btn-secondary w-100">Yangi guruh</a>
                 </div>
             </div>

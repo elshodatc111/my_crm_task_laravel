@@ -52,65 +52,69 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title w-100 text-center">Talabalar uchun</h2>
-                    <table class="table table-bordered text-center" style="font-size:14px;">
-                        <tr>
-                            <th>Ijtimoiy tarmoqlar</th>
-                            <th>Reklama uchun url link</th>
-                        </tr>
-                        <tr>
-                            <th>Telegram</th>
-                            <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Telegram" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Telegram" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Instagram</th>
-                            <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Instagram" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Instagram" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Facebook</th>
-                            <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Facebook" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Facebook" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Youtube</th>
-                            <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Youtube" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Youtube" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Boshqalar</th>
-                            <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Boshqalar" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Boshqalar" }}</a></td>
-                        </tr>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center" style="font-size:14px;">
+                            <tr>
+                                <th>Ijtimoiy tarmoqlar</th>
+                                <th>Reklama uchun url link</th>
+                            </tr>
+                            <tr>
+                                <th>Telegram</th>
+                                <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Telegram" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Telegram" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Instagram</th>
+                                <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Instagram" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Instagram" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Facebook</th>
+                                <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Facebook" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Facebook" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Youtube</th>
+                                <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Youtube" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Youtube" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Boshqalar</th>
+                                <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Boshqalar" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Boshqalar" }}</a></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title w-100 text-center">O'qituvchilar uchun</h2>
-                    <table class="table table-bordered text-center" style="font-size:14px;">
-                        <tr>
-                            <th>Ijtimoiy tarmoqlar</th>
-                            <th>Reklama uchun url link</th>
-                        </tr>
-                        <tr>
-                            <th>Telegram</th>
-                            <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Telegram" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Telegram" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Instagram</th>
-                            <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Instagram" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Instagram" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Facebook</th>
-                            <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Facebook" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Facebook" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Youtube</th>
-                            <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Youtube" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Youtube" }}</a></td>
-                        </tr>
-                        <tr>
-                            <th>Boshqalar</th>
-                            <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Boshqalar" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Boshqalar" }}</a></td>
-                        </tr>
-                    </table>
+                    <div class="table-responsive">
+                        <h2 class="card-title w-100 text-center">O'qituvchilar uchun</h2>
+                        <table class="table table-bordered text-center" style="font-size:14px;">
+                            <tr>
+                                <th>Ijtimoiy tarmoqlar</th>
+                                <th>Reklama uchun url link</th>
+                            </tr>
+                            <tr>
+                                <th>Telegram</th>
+                                <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Telegram" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Telegram" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Instagram</th>
+                                <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Instagram" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Instagram" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Facebook</th>
+                                <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Facebook" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Facebook" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Youtube</th>
+                                <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Youtube" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Youtube" }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Boshqalar</th>
+                                <td><a href="{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Boshqalar" }}">{{ env('SMM_LINK_TECHER').auth()->user()->markaz_id."/Boshqalar" }}</a></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

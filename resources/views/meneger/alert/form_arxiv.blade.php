@@ -49,46 +49,48 @@
     <div class="card mt-3">
         <div class="card-body">
             <h2 class="card-title w-100 text-center">Form orqali kelib tushgan murojatlar arxivi</h2>
-            <table class="table table-bordered text-center datatable" style="font-size:14px">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Type</th>
-                        <th>FIO</th>
-                        <th>Telefon raqami</th>
-                        <th>Yashash manzili</th>
-                        <th>Murojat vaqti</th>
-                        <th>Holati</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($Form as $item)
-                    <tr>
-                        <td>{{ $loop->index+1 }}</td>
-                        <td>
-                            @if($item['type']=='User')
-                                <b class="p-0 m-0">Talaba</b>
-                            @else 
-                                <b class="p-0 m-0">O'qituvchi</b>
-                            @endif
-                        </td>
-                        <td style="text-align:left">{{ $item['name'] }}</td>
-                        <td>{{ $item['phone1'] }}</td>
-                        <td>{{ $item['addres'] }}</td>
-                        <td>{{ $item['created_at'] }}</td>
-                        <td>{{ $item['status'] }}</td>
-                        <td>
-                            <a href="{{ route('form_murojat_show',$item['id']) }}" class="btn btn-info py-1 px-1 text-white"><i class="bi bi-eye"></i></a>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan=7 class="text-center">Aktiv murojatlar mavjud emas</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center datatable" style="font-size:14px">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>FIO</th>
+                            <th>Telefon raqami</th>
+                            <th>Yashash manzili</th>
+                            <th>Murojat vaqti</th>
+                            <th>Holati</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($Form as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>
+                                @if($item['type']=='User')
+                                    <b class="p-0 m-0">Talaba</b>
+                                @else 
+                                    <b class="p-0 m-0">O'qituvchi</b>
+                                @endif
+                            </td>
+                            <td style="text-align:left">{{ $item['name'] }}</td>
+                            <td>{{ $item['phone1'] }}</td>
+                            <td>{{ $item['addres'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                            <td>{{ $item['status'] }}</td>
+                            <td>
+                                <a href="{{ route('form_murojat_show',$item['id']) }}" class="btn btn-info py-1 px-1 text-white"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan=7 class="text-center">Aktiv murojatlar mavjud emas</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>

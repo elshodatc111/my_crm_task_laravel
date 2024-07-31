@@ -13,12 +13,6 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('dars_jadval') }}">
-          <i class="bi bi-list-check"></i>
-          <span>Dars jadvali</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('meneger_moliya_home') }}">
           <i class="bi bi-collection"></i>
           <span>Moliya</span>
