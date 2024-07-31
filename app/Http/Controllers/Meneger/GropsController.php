@@ -216,8 +216,13 @@ class GropsController extends Controller{
         $GuruhUsers = UserGroup::where('grops_id',$id)->get();
         $GU = array();
         foreach($GuruhUsers as $key => $item){
+            if(!User::find($item->user_id)){
+                $name1 = "Null";
+            }else{
+                $name1 = User::find($item->user_id)->name;
+            }
             $GU[$key]['User'] = $item;
-            $GU[$key]['UserName'] = User::find($item->user_id)->name;
+            $GU[$key]['UserName'] = $name1;
         }
         $guruh = array();
         $guruh['id'] = $id;
