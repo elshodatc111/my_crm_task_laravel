@@ -163,34 +163,37 @@ class UserController extends Controller
     public function groupTest($cours_id){
         $MarkazCoursTest = MarkazCoursTest::where('cours_id',$cours_id)->inRandomOrder()->limit(15)->get();
         $Quez = array();
-        foreach ($MarkazCoursTest as $key => $value) {
-            $Quez[$key]['id'] = $value->id;
-            $Quez[$key]['savol'] = $value->test_savol;
-            $numbers = [1, 2, 3, 4];
-            $randomNumber = $numbers[array_rand($numbers)];
-            $Quez[$key]['numbers'] = $randomNumber;
-            if($randomNumber==1){
-                $Quez[$key]['javob1'] = $value->test_javob_true;
-                $Quez[$key]['javob2'] = $value->test_javon_false1;
-                $Quez[$key]['javob3'] = $value->test_javon_false2;
-                $Quez[$key]['javob4'] = $value->test_javon_false3;
-            }elseif($randomNumber==2){
-                $Quez[$key]['javob1'] = $value->test_javon_false1;
-                $Quez[$key]['javob2'] = $value->test_javob_true;
-                $Quez[$key]['javob3'] = $value->test_javon_false2;
-                $Quez[$key]['javob4'] = $value->test_javon_false3;
-            }elseif($randomNumber==3){
-                $Quez[$key]['javob1'] = $value->test_javon_false2;
-                $Quez[$key]['javob2'] = $value->test_javon_false1;
-                $Quez[$key]['javob3'] = $value->test_javob_true;
-                $Quez[$key]['javob4'] = $value->test_javon_false3;
-            }else{
-                $Quez[$key]['javob1'] = $value->test_javon_false2;
-                $Quez[$key]['javob2'] = $value->test_javon_false1;
-                $Quez[$key]['javob3'] = $value->test_javon_false3;
-                $Quez[$key]['javob4'] = $value->test_javob_true;
+        $Grops = Grops::find($cours_id);
+        // if(date('Y-m-d')>=$Grops->guruh_end){  //Test o'tqazilgandan kiyin comment olib tashlanadi
+            foreach ($MarkazCoursTest as $key => $value) {
+                $Quez[$key]['id'] = $value->id;
+                $Quez[$key]['savol'] = $value->test_savol;
+                $numbers = [1, 2, 3, 4];
+                $randomNumber = $numbers[array_rand($numbers)];
+                $Quez[$key]['numbers'] = $randomNumber;
+                if($randomNumber==1){
+                    $Quez[$key]['javob1'] = $value->test_javob_true;
+                    $Quez[$key]['javob2'] = $value->test_javon_false1;
+                    $Quez[$key]['javob3'] = $value->test_javon_false2;
+                    $Quez[$key]['javob4'] = $value->test_javon_false3;
+                }elseif($randomNumber==2){
+                    $Quez[$key]['javob1'] = $value->test_javon_false1;
+                    $Quez[$key]['javob2'] = $value->test_javob_true;
+                    $Quez[$key]['javob3'] = $value->test_javon_false2;
+                    $Quez[$key]['javob4'] = $value->test_javon_false3;
+                }elseif($randomNumber==3){
+                    $Quez[$key]['javob1'] = $value->test_javon_false2;
+                    $Quez[$key]['javob2'] = $value->test_javon_false1;
+                    $Quez[$key]['javob3'] = $value->test_javob_true;
+                    $Quez[$key]['javob4'] = $value->test_javon_false3;
+                }else{
+                    $Quez[$key]['javob1'] = $value->test_javon_false2;
+                    $Quez[$key]['javob2'] = $value->test_javon_false1;
+                    $Quez[$key]['javob3'] = $value->test_javon_false3;
+                    $Quez[$key]['javob4'] = $value->test_javob_true;
+                }
             }
-        }
+        // }  //Test o'tqazilgandan kiyin comment olib tashlanadi
         return response()->json([
             'status' => true,
             'message' => 'Testlar',
@@ -225,12 +228,14 @@ class UserController extends Controller
                     'urinish'=>$urinish,
                 ]);
             }else{
-                if($request->count>$UserTest->count){
-                    $UserTest->count = $request->count;
-                    $UserTest->ball = $request->count *2;
+                if($request<3){
+                    if($request->count>$UserTest->count){
+                        $UserTest->count = $request->count;
+                        $UserTest->ball = $request->count *2;
+                        $UserTest->urinish = $UserTest->urinish + 1;
+                        $UserTest->save();
+                    }
                 }
-                $UserTest->urinish = $UserTest->urinish + 1;
-                $UserTest->save();
             }
             return response()->json([
                 'status' => false,
