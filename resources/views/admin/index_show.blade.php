@@ -55,7 +55,7 @@
       <div class="card" style="min-height:300px">
         <div class="card-body text-center">
           <h5 class="card-title w-100 text-center">Markaz logatifi</h5>
-          <img src="../../storage/assets/img/logos/{{ $response['markaz']['image'] }}" style="width:80%">
+          <img src="{{ env('MARKAZLOGOLINK') }}{{ $response['markaz']['image'] }}" style="width:80%">
           <form action="{{ route('admin.updatelogo') }}" method="post" enctype="multipart/form-data">
             @csrf 
             <input type="hidden" name="markaz_id" value="{{ $id }}">

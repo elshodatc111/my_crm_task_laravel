@@ -105,12 +105,14 @@ class AdminController extends Controller{
         $request->validate([
             'logotip' => 'required|mimes:jpg,png',
         ]);
-        $file = $request->file('logotip');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $filePath = $file->storeAs('public/assets/img/logos/', $fileName);
         $Markaz = Markaz::find($request->markaz_id);
-        $Markaz->image = $fileName;
+        $imageName = time().'.'.$request->logotip->extension();
+        $request->logotip->move(public_path('images'), $imageName);
+        $Markaz->image = 'images/'.$imageName;
         $Markaz->save();
+
+
+
         return redirect()->back()->with('success', 'Logo yangilandi.');
     } 
     // Ogohlantirish

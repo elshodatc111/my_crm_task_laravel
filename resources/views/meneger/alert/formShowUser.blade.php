@@ -6,7 +6,7 @@
     <div class="col-lg-6 col-10">
         <div class="card">
             <div class="card-body">
-                <img style="width:100%" class="mt-5" src="../../../storage/assets/img/logos/{{ $Markaz['image'] }}">
+                <img style="width:100%" class="mt-5" src="{{ env('MARKAZLOGOLINK') }}/{{ $Markaz['image'] }}">
                 <h2 class="w-100 text-center mt-5">{{ $Markaz['name'] }} o'quv markazi</h2>
                 @if (Session::has('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
