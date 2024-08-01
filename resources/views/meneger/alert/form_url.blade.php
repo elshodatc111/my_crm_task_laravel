@@ -57,7 +57,7 @@
                             <tr>
                                 <th>Ijtimoiy tarmoqlar</th>
                                 <th>Reklama uchun url link</th>
-                            </tr>
+                            </tr> 
                             <tr>
                                 <th>Telegram</th>
                                 <td><a href="{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Telegram" }}">{{ env('SMM_LINK_USER').auth()->user()->markaz_id."/Telegram" }}</a></td>
