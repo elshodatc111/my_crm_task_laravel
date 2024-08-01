@@ -22,12 +22,14 @@
             <span class="badge bg-primary badge-number">@include('layouts.alert.tkun')</span>
           </a>
         </li>
+        <!--
         <li class="nav-item">
           <a class="nav-link nav-icon" href="{{ route('murojat') }}" title="Murojatlar">
             <i class="bi bi-chat-text"></i>
             <span class="badge bg-success badge-number">3</span>
           </a>
         </li>
+        -->
         <li class="nav-item">
           <a class="nav-link nav-icon" href="{{ route('form') }}" title="Form">
             <i class="bi bi-card-checklist"></i>

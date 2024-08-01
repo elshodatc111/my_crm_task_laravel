@@ -276,47 +276,29 @@
                                 <table class="table text-center table-bordered" style="font-size: 12px;">
                                     <thead>
                                         <tr class="align-items-center">
-                                        <th>#</th>
-                                        <th>Talaba</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
-                                        <th>12.07.2024</th>
+                                        <th style='width:250px;'>Talaba</th>
+                                        @foreach($guruh['dars_data'] as $item)
+                                        <th class='align-middle' style="font-size:12px;width:100px">{{ $item['data'] }}</th>
+                                        @endforeach
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($DAVOMAT as $item)
                                         <tr>
-                                        <td>1</td>
-                                        <td>Elshod Musurmonov</td>
-                                        <td class="bg-danger text-white"><i class="bi bi-shield-x" title="Davomat olinmagan"></i></td>
-                                        <td class="bg-warning text-white"><i class="bi bi-shield-minus" title="Darsga qatnashmagan"></i></td>
-                                        <td class="bg-success text-white"><i class="bi bi-shield-plus" title="Darsga qatnashgan"></i></td>
-                                        <td class="bg-info text-white"><i class="bi bi-shield-lock" title="Davomat kutilmoqda"></i></td>
-                                        <td class="bg-danger text-white"><i class="bi bi-shield-x" title="Davomat olinmagan"></i></td>
-                                        <td class="bg-warning text-white"><i class="bi bi-shield-minus" title="Darsga qatnashmagan"></i></td>
-                                        <td class="bg-success text-white"><i class="bi bi-shield-plus" title="Darsga qatnashgan"></i></td>
-                                        <td class="bg-info text-white"><i class="bi bi-shield-lock" title="Davomat kutilmoqda"></i></td>
-                                        <td class="bg-danger text-white"><i class="bi bi-shield-x" title="Davomat olinmagan"></i></td>
-                                        <td class="bg-warning text-white"><i class="bi bi-shield-minus" title="Darsga qatnashmagan"></i></td>
-                                        <td class="bg-success text-white"><i class="bi bi-shield-plus" title="Darsga qatnashgan"></i></td>
-                                        <td class="bg-info text-white"><i class="bi bi-shield-lock" title="Davomat kutilmoqda"></i></td>
-                                        <td class="bg-danger text-white"><i class="bi bi-shield-x" title="Davomat olinmagan"></i></td>
-                                        <td class="bg-warning text-white"><i class="bi bi-shield-minus" title="Darsga qatnashmagan"></i></td>
-                                        <td class="bg-success text-white"><i class="bi bi-shield-plus" title="Darsga qatnashgan"></i></td>
-                                        <td class="bg-info text-white"><i class="bi bi-shield-lock" title="Davomat kutilmoqda"></i></td>
+                                            <td style="text-align:left;">{{ $item['user_name'] }}</td>
+                                            @foreach($item['check'] as $item2)
+                                                @if($item2=='close')
+                                                    <td class="text-danger text-center align-middle"><b style="font-size:20px;">x</b></td>
+                                                @elseif($item2=='true')
+                                                    <td class="text-success text-center align-middle"><b style="font-size:20px;">+</b></td>
+                                                @elseif($item2=='false')
+                                                    <td class="text-warning text-center align-middle"><b style="font-size:20px;">--</b></td>
+                                                @else
+                                                    <td class="text-info text-center align-middle"></td>
+                                                @endif
+                                            @endforeach
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

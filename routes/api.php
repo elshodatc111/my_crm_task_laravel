@@ -34,6 +34,7 @@ Route::group([
     Route::get('techer/profile', [TecherController::class, 'profile']);
     Route::get('techer/groups', [TecherController::class, 'groups']);
     Route::get('techer/groups/show/{id}', [TecherController::class, 'groupsShow']);
+    Route::post('techer/groups/davomat', [TecherController::class, 'davomat']);
     Route::get('techer/paymarts', [TecherController::class, 'paymarts']);
     Route::get('techer/logout', [UserController::class, 'logout']);
 });

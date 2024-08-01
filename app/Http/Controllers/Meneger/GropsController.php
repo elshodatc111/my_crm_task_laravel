@@ -17,6 +17,7 @@ use App\Models\UserHistory;
 use App\Models\MarkazLessenTime;
 use App\Models\UserGroup;
 use App\Models\UserTest;
+use App\Models\Davomat;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -266,8 +267,33 @@ class GropsController extends Controller{
             $guruh['newGroupID'] = null;
         }
         $guruh['users_active'] = UserGroup::where('user_groups.grops_id',$id)->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
+        $DAVOMAT = array();
+        foreach ($guruh['users_active'] as $key => $value) {
+            $DAVOMAT[$key]['user_name'] = $value->name;
+            foreach ($guruh['dars_data'] as $key2 => $value2) {
+                if($value2->data>date('Y-m-d')){
+                    $DAVOMAT[$key]['check'][$key2] = 'pedding';
+                }else{
+                    $Davomat = Davomat::where('guruh_id',$id)->where('data',$value2['data'])->first();
+                    if($Davomat){
+                        $user_id = $value->user_id;
+                        $guruh_id = $id;
+                        $datass = $value2['data'];
+                        $DavomatTrue = count(Davomat::where('guruh_id',$guruh_id)->where('data',$datass)->where('user_id',$user_id)->get());
+                        if($DavomatTrue>0){
+                            $DAVOMAT[$key]['check'][$key2] = 'true';
+                        }else{
+                            $DAVOMAT[$key]['check'][$key2] = 'false';
+                        }
+                    }else{
+                        $DAVOMAT[$key]['check'][$key2] = 'close';
+                    }
+                }
+            }
+        }
+        //dd($DAVOMAT);
         
-        return view('meneger.groups.group_show',compact('guruh','UserTestCount'));
+        return view('meneger.groups.group_show',compact('guruh','UserTestCount','DAVOMAT'));
     }
     public function createNextGroups($id){
         $Grops = Grops::find($id);

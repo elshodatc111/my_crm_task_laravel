@@ -16,6 +16,7 @@ use App\Models\MarkazIshHaqi;
 use App\Models\MarkazAddres;
 use App\Models\UserGroup;
 use App\Models\UserPaymart;
+use App\Models\Davomat;
 use App\Models\MarkazHodimStatistka;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -273,7 +274,14 @@ class HodimController extends Controller
         return $Tulovlar;
     }
     protected function userDavomat($guruh_id){
-        return 0;
+        //Davomat
+        $array = array();
+        $Davomat = Davomat::where('guruh_id',$guruh_id)->get();
+        foreach ($Davomat as $key => $value) {
+            array_push($array,$value->data);
+        }
+        $array2 = array_unique($array);
+        return count($array2);
     }
     public function techerShow($id){
         $sevenDaysAgo = Carbon::now()->subDays(45)->format('Y-m-d');

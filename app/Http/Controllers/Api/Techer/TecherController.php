@@ -14,6 +14,7 @@ use App\Models\Markaz;
 use App\Models\MarkazIshHaqi;
 use App\Models\UserHistory;
 use App\Models\MarkazBalans;
+use App\Models\Davomat;
 use App\Models\MarkazPaymart;
 use App\Models\UserGroup;
 use Illuminate\Support\Facades\Auth;
@@ -130,11 +131,16 @@ class TecherController extends Controller
         $AllUser = array();
         $Users = UserGroup::where('grops_id',$id)->where('status','true')->get();
         foreach ($Users as $key => $value) {
-            $AllUser[$key]['user_id'] = $value->id;
-            $AllUser[$key]['name'] = User::find($value->id)->name;
+            $AllUser[$key]['user_id'] = $value->user_id;
+            $AllUser[$key]['name'] = User::find($value->user_id)->name;
+        }
+        if(GropsTime::where('grops_id',$id)->where('data',date('Y-m-d'))->first()) {
+            $dav = 1;
+        }else{
+            $dav = 0;
         }
         $response['group'] = [
-            'guruh_id' => $Grops->id,
+            'guruh_id' => $id,
             'cours_id' => $Grops->cours_id,
             'guruh_name' => $Grops->guruh_name,
             'guruh_start' => $Grops->guruh_start,
@@ -143,15 +149,88 @@ class TecherController extends Controller
             'dars_count' => $Grops->dars_count,
             'dars_time' => $Grops->dars_time,
             'created_at' => $Grops->created_at,
+            'davomat' => $dav,
             'room' => MarkazRoom::find($Grops->room_id)->room_name,
             'data' => GropsTime::where('grops_id',$Grops->id)->select('data')->get(),
-            'user' => $AllUser
+            'user' => $AllUser,
         ];
         return response()->json([
             'status' => true,
             'message' => 'Groups Show',
             'data' => $response,
         ],200);
+    }
+    //
+    public function davomat(Request $request){
+        try{
+            $validateUser = Validator::make($request->all(),[
+                'data' => 'required',
+                'guruh_id' => 'required'
+            ]);
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Insufficient data',
+                    'errors' =>$validateUser->errors()
+                ],401);
+            }
+            if($request->data != date('Y-m-d')){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Error data',
+                ],401);
+            }
+            if(!Grops::find($request->guruh_id)){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Not fount group',
+                ],401);
+            }
+            $Users = UserGroup::where('grops_id',$request->guruh_id)->where('status','true')->get();
+            if(count($Users)==0){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Not fount user',
+                ],401);
+            }
+            $users = array();
+            foreach ($Users as $key => $value) {
+                $user_id = $value->user_id;
+                $users[$key] = "user_id_".$user_id;
+            }
+            $UserID = array();
+            $i=0;
+            foreach ($users as $key => $value) {
+                if($request[$value]){
+                    $UserID[$i] = $request[$value];
+                    $i++;
+                }
+            }
+            if(Davomat::where('guruh_id',$request->guruh_id)->where('data',date('Y-m-d'))->first() ){
+                return response()->json([
+                    'status' => false,
+                    'message' => "Davomat olingan",
+                ],401);
+            }
+            foreach ($UserID as $key => $value) {
+                Davomat::create([
+                    'markaz_id'=>auth()->user()->markaz_id,
+                    'guruh_id'=>$request->guruh_id,
+                    'user_id'=>$value,
+                    'data' => date('Y-m-d')
+                ]);
+            }
+            return response()->json([
+                'status' => false,
+                'message' => "Success",
+            ],200);
+        } catch(\Throwable $th){
+            return response()->json([
+                'status'=>false,
+                'message'=>$th->getMessage(),
+            ],500);
+        }
+        
     }
     // Paymart
     public function paymarts(){
