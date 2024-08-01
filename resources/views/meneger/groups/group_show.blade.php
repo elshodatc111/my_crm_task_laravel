@@ -358,23 +358,29 @@
                                     <tr class="align-items-center">
                                     <th>#</th>
                                     <th>Talaba</th>
-                                    <th>Tastlar soni</th>
-                                    <th>To'g'ri javoblar</th>
-                                    <th>Noto'g'ri javoblar</th>
+                                    <th>Urinishlar soni</th>
+                                    <th>To'g'ri javob</th>
                                     <th>Ball</th>
-                                    <th>Test vaqti</th>
+                                    <th>Birinchi urinish vaqti</th>
+                                    <th>Oxirgi urinish vaqti</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse($UserTestCount as $item)
                                     <tr>
-                                    <td>1</td>
-                                    <td>Elshod Musurmonov</td>
-                                    <td>To'lov</td>
-                                    <td>Guruh nomi(Tanlanmasa bo'sh)</td>
-                                    <td>350 000</td>
-                                    <td>Plastik</td>
-                                    <td>To'lov haqida komment</td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['user'] }}</td>
+                                        <td>{{ $item['urinish'] }}</td>
+                                        <td>{{ $item['count'] }}</td>
+                                        <td>{{ $item['ball'] }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
+                                        <td>{{ $item['updated_at'] }}</td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan=7 class="text-center">Test yechgan talabalar mavjud emas.</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                                 </table>
                             </div>

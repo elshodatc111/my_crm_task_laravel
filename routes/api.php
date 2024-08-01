@@ -19,6 +19,7 @@ Route::group([
     Route::get('user/groups', [UserController::class, 'groups']);
     Route::get('user/groups/show/{id}', [UserController::class, 'groupsShow']);
     Route::get('user/groups/test/{id}', [UserController::class, 'groupTest']);
+    Route::post('user/groups/test', [UserController::class, 'groupTestCreate']);
     Route::get('user/logout', [UserController::class, 'logout']);
     Route::get('user/paymarts', [UserController::class, 'paymarts']);
     Route::post('user/paymart', [UserController::class, 'paymartsCreate']);

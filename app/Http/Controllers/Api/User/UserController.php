@@ -15,6 +15,7 @@ use App\Models\UserHistory;
 use App\Models\MarkazBalans;
 use App\Models\MarkazPaymart;
 use App\Models\UserGroup;
+use App\Models\UserTest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -195,6 +196,53 @@ class UserController extends Controller
             'message' => 'Testlar',
             'data' => $Quez,
         ],200);
+    }
+    // Test Post
+    public function groupTestCreate(Request $request){
+        $validateUser = Validator::make($request->all(),[
+            'cours_id' => 'required',
+            'count' => 'required|numeric|min:0|max:15'
+        ]);
+        if($validateUser->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'Insufficient data',
+                'errors' =>$validateUser->errors()
+            ],401);
+        }
+        $Grops = Grops::find($request->cours_id);
+        if($Grops){
+            $UserTest = UserTest::where('cours_id',$request->cours_id)->where('user_id',auth()->user()->id)->first();
+            
+            if(!$UserTest){
+                $urinish = 1;
+                $test = UserTest::create([
+                    'markaz_id'=>auth()->user()->markaz_id,
+                    'cours_id'=>$request->cours_id,
+                    'user_id'=>auth()->user()->id,
+                    'count'=>$request->count,
+                    'ball'=>$request->count*2,
+                    'urinish'=>$urinish,
+                ]);
+            }else{
+                if($request->count>$UserTest->count){
+                    $UserTest->count = $request->count;
+                    $UserTest->ball = $request->count *2;
+                }
+                $UserTest->urinish = $UserTest->urinish + 1;
+                $UserTest->save();
+            }
+            return response()->json([
+                'status' => false,
+                'message' => 'success',
+            ],200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Not fount cours_id'
+            ],401);
+        }
+
     }
     // Paymart
     public function paymarts(){

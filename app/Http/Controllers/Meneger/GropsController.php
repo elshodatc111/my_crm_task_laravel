@@ -16,6 +16,7 @@ use App\Models\DamOlish;
 use App\Models\UserHistory;
 use App\Models\MarkazLessenTime;
 use App\Models\UserGroup;
+use App\Models\UserTest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -226,6 +227,17 @@ class GropsController extends Controller{
         }
         $guruh = array();
         $guruh['id'] = $id;
+        $UserTest = UserTest::where('cours_id',$id)->get();
+        $UserTestCount = array();
+        foreach ($UserTest as $key => $value) {
+            $UserTestCount[$key]['user_id'] = $value->user_id;
+            $UserTestCount[$key]['user'] = User::find($value->user_id)->name;
+            $UserTestCount[$key]['count'] = $value->count;
+            $UserTestCount[$key]['ball'] = $value->ball;
+            $UserTestCount[$key]['urinish'] = $value->urinish;
+            $UserTestCount[$key]['created_at'] = $value->created_at;
+            $UserTestCount[$key]['updated_at'] = $value->updated_at;
+        }
         $guruh['paymart'] = MarkazPaymart::find($Grops->tulov_id);
         $guruh['room_name'] = MarkazRoom::find($Grops->room_id)->room_name;
         $guruh['cours_name'] = MarkazCours::find($Grops->cours_id)->cours_name;
@@ -254,7 +266,8 @@ class GropsController extends Controller{
             $guruh['newGroupID'] = null;
         }
         $guruh['users_active'] = UserGroup::where('user_groups.grops_id',$id)->where('user_groups.status','true')->join('users','users.id','user_groups.user_id')->get();
-        return view('meneger.groups.group_show',compact('guruh'));
+        
+        return view('meneger.groups.group_show',compact('guruh','UserTestCount'));
     }
     public function createNextGroups($id){
         $Grops = Grops::find($id);
