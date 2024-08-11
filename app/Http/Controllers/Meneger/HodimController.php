@@ -86,8 +86,7 @@ class HodimController extends Controller
         ]);
         $Markaz_ID = auth()->user()->markaz_id;
         $Phone = str_replace(" ","",$request->phone1);
-        $Url = "https://atko.uz";
-        $Text = "Hurmatli ".$request->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga ishga olindingiz. Sizning login: ".$request->email." parol: 12345678 websayt: ".$Url;
+        $Text = "Hurmatli ".$request->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga ishga olindingiz. Sizning login: ".$request->email." parol: 12345678";
 
         SendMessage::dispatch($Markaz_ID, $Phone, $Text);
 
@@ -165,11 +164,12 @@ class HodimController extends Controller
         $User = User::find($request->id);
         $User->password = Hash::make('12345678');
         $User->save();
-        $Phone = str_replace($User->phone1, " ", ""); 
+        $Phone = str_replace(" ","",$User->phone1); 
+        Log::info("Phone: ".$Phone);
         $Markaz_ID = auth()->user()->markaz_id;
         $password = '12345678';
         $Url = "https://atko.uz";
-        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password." websayt: ".$Url;
+        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password;
         SendMessage::dispatch($Markaz_ID, $Phone, $Text);
         return redirect()->back()->with('success', "Hodim paroli yangilandi.");
     }
@@ -215,8 +215,7 @@ class HodimController extends Controller
         ]);
         $Markaz_ID = auth()->user()->markaz_id;
         $Phone = str_replace(" ","",$request->phone1);
-        $Url = "https://atko.uz";
-        $Text = "Hurmatli ".$request->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga o'qituvchi lovozimiga ishga olindingiz. Sizning login: ".$request->email." parol: 12345678 websayt: ".$Url;
+        $Text = "Hurmatli ".$request->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga o'qituvchi lovozimiga ishga olindingiz. Sizning login: ".$request->email." parol: 12345678";
         
         SendMessage::dispatch($Markaz_ID, $Phone, $Text);
 
@@ -316,11 +315,11 @@ class HodimController extends Controller
         $User = User::find($request->id);
         $User->password = Hash::make('12345678');
         $User->save();
-        $Phone = str_replace($User->phone1, " ", ""); 
+        $Phone = str_replace(" ","",$User->phone1); 
         $Markaz_ID = auth()->user()->markaz_id;
         $password = '12345678';
-        $Url = "https://atko.uz";
-        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password." websayt: ".$Url;
+        Log::info("Phone:".$Phone);
+        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol ".$password;
         SendMessage::dispatch($Markaz_ID, $Phone, $Text);
         return redirect()->back()->with('success', "O'qituvchi paroli yangilandi.");
     }

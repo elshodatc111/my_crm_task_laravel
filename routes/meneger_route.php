@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
         Route::POST('/meneger/setting/paymart/create', [SettingController::class, 'paymartCreate'])->name('meneger.paymart_reate');
         Route::POST('/meneger/setting/paymart/delete', [SettingController::class, 'paymartDelete'])->name('meneger.paymart_delete');
         Route::get('/meneger/setting/message', [SettingController::class, 'message'])->name('meneger.message');
+        Route::get('/meneger/setting/message/show', [SettingController::class, 'messageShow'])->name('meneger.message_show');
         Route::post('/meneger/setting/update', [SettingController::class, 'messageUpdate'])->name('meneger.message_update');
         Route::get('/meneger/setting/cours', [SettingController::class, 'cours'])->name('meneger.cours');
         Route::get('/meneger/setting/cours/show/{id}', [SettingController::class, 'coursShow'])->name('meneger.cours_show');
@@ -87,6 +88,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/groups/next/create/two', [GropsController::class, 'createNextTwoGroups'])->name('meneger_groups_next_create_two');
         Route::post('/meneger/groups/next/create/story/end', [GropsController::class, 'createNextStoryEnd'])->name('meneger_groups_next_create_story_end');
         Route::get('/meneger/groups/next/create/{id}', [GropsController::class, 'createNextGroups'])->name('meneger_groups_next_create');
+        Route::post('/meneger/groups/updates', [GropsController::class, 'groupsUpdates'])->name('meneger_groups_updates');
+        Route::post('/meneger/groups/debet/messege', [GropsController::class, 'groupsDebetMessege'])->name('meneger_groups_debet_messege');
     /* End Guruhlar */
 
     /* Start Molya */
@@ -107,7 +110,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/meneger/profel/home', [ProfelController::class, 'profel'])->name('meneger_profel');
         Route::post('/meneger/profel/update/password', [ProfelController::class, 'profelUpdatePassword'])->name('meneger_profel_update_password');
     /* End Profel */
-
+//message_show
     /* Start Chart */
         Route::get('/chart/days', [ChartController::class, 'days'])->name('chart_days');
         Route::get('/chart/days/table', [ChartController::class, 'dayTable'])->name('chart_days_table');
@@ -115,7 +118,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/chart/month/table', [ChartController::class, 'monthTable'])->name('chart_monch_table');
     /* End Chart */
 
-    /* Start Chart */
+    /* Start report */
         Route::get('/report/student', [HisobotController::class, 'student'])->name('report_student');
         Route::post('/report/student', [HisobotController::class, 'studentSearch'])->name('report_student_search');
         Route::get('/report/hodim', [HisobotController::class, 'hodimlar'])->name('report_hodim');
@@ -124,7 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/report/moliya', [HisobotController::class, 'moliyaSearch'])->name('report_moliya_search');
         Route::get('/report/activ', [HisobotController::class, 'active'])->name('report_active_user');
         Route::post('/report/activ', [HisobotController::class, 'activeSearch'])->name('report_active_user_search');
-    /* End Chart */
+    /* End report */
 
     /* Start Dars Jadvali */
         Route::get('/dars/jadval', [DarsJadvalController::class, 'darsJadval'])->name('dars_jadval');

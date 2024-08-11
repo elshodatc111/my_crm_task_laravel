@@ -34,7 +34,7 @@
 
   <div class="row">
     <div class="col-lg-6">
-      <div class="card" style="min-height:220px">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title w-100 text-center">SMS statistikasi</h5>
           <div class="row">
@@ -46,12 +46,15 @@
               <h5 class="w-100 text-center">SMS uchun to'lovlar</h5>
               <h3 class="w-100 text-center">{{ $return['markaz']['mavjud_sms'] }}</h3>
             </div>
+            <div class="col-12 text-center pt-3">
+              <a  href="{{ route('meneger.message_show') }}" class="btn btn-primary mb-3 w-100 ">Yuborilgan smslar</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-lg-6">
-      <div class="card" style="min-height:220px">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title w-100 text-center">SMS Sozlamalar</h5>
           <form action="{{ route('meneger.message_update') }}" method="post">

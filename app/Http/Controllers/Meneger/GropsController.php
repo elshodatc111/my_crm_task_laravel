@@ -17,6 +17,7 @@ use App\Models\UserHistory;
 use App\Models\MarkazLessenTime;
 use App\Models\UserGroup;
 use App\Models\UserTest;
+use App\Jobs\SendMessage;
 use App\Models\Davomat;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -291,9 +292,12 @@ class GropsController extends Controller{
                 }
             }
         }
+        $Markaz = Markaz::find(auth()->user()->markaz_id);
         //dd($DAVOMAT);
-        
-        return view('meneger.groups.group_show',compact('guruh','UserTestCount','DAVOMAT'));
+        $Kurslar = MarkazCours::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
+        $Techers = User::where('role_id',5)->where('status','true')->where('markaz_id',auth()->user()->markaz_id)->get();
+        $Tulovlar = MarkazPaymart::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
+        return view('meneger.groups.group_show',compact('guruh','UserTestCount','DAVOMAT','Markaz','Kurslar','Techers','Tulovlar'));
     }
     public function createNextGroups($id){
         $Grops = Grops::find($id);
@@ -326,9 +330,6 @@ class GropsController extends Controller{
         $givenDate = Grops::find($request->id)->guruh_end;
         $date = Carbon::parse($givenDate);
         $nextDay = $date->addDay()->toDateString();
-
-        
-        
         $validate = $request->validate([
             'id' => 'required',
             'guruh_name' => 'required',
@@ -447,5 +448,54 @@ class GropsController extends Controller{
         $Grops1->next_id = $Guruxs->id;
         $Grops1->save();
         return redirect()->route('meneger_groups_show',$Guruxs->id)->with('success', "Yangi guruh ochildi");
+    }
+    public function groupsUpdates(Request $request){
+        $validate = $request->validate([
+            'id' => 'required',
+            'guruh_name' => 'required',
+            'techer_id' => 'required',
+            'techer_foiz' => 'required',
+            'techer_paymart' => 'required',
+            'techer_bonus' => 'required',
+            'cours_id' => 'required',
+            'tulov_id' => 'required',
+        ]);
+        $Grops = Grops::find($request->id);
+        $Grops->guruh_name = $request->guruh_name;
+        $Grops->techer_id = $request->techer_id;
+        $Grops->techer_foiz = $request->techer_foiz;
+        $Grops->techer_paymart = preg_replace('/\D/','',$request->techer_paymart);
+        $Grops->techer_bonus = preg_replace('/\D/','',$request->techer_bonus);
+        $Grops->cours_id = $request->cours_id;
+        $Grops->tulov_id = $request->tulov_id;
+        $Grops->save();
+        return redirect()->back()->with('success', "Guruh malumotlari yangilandi.");
+    }
+    public function groupsDebetMessege(Request $request){
+        $validate = $request->validate([
+            'id' => 'required',
+        ]);
+        $UserGroup = UserGroup::where('grops_id',$request->id)->where('status','true')->get();
+        $Users = array();
+        $count = 0;
+        foreach ($UserGroup as $key => $value) {
+            if(User::find($value->user_id)->balans<0){
+                $Users[$key]['name'] = User::find($value->user_id)->name;
+                $Users[$key]['balans'] = User::find($value->user_id)->balans;
+                $Users[$key]['phone'] = str_replace(" ","",User::find($value->user_id)->phone1);
+                
+                $count = $count + 1;
+            }
+        }
+        $Markaz = Markaz::find(auth()->user()->markaz_id);
+        $Markaz_ID = $Markaz->id;
+        if($count>0){
+            foreach ($Users as $key => $value) {
+                $Text = $value['name']." siz ".$Markaz['name']." o'quv markazidan ".$value['balans']." so'm qarzdorligingiz mavjud. Qarzdorlikni so'ndirishni so'raymiz.";
+                $Phone = $value['phone'];
+                SendMessage::dispatch($Markaz_ID, $Phone, $Text);
+            }
+        }
+        return redirect()->back()->with('success', $count." ta qarzdor talabaga sms xabar yuborildi.");
     }
 }

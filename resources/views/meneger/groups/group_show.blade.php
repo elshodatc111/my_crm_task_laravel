@@ -104,15 +104,17 @@
                     <div class="col-lg-4">
                         <button class="btn btn-primary my-1 w-100"  data-bs-toggle="modal" data-bs-target="#addGroups">Guruhdan talaba o'chirish</button>
                     </div>
+                    @if(auth()->user()->role_id != 4)
                     <div class="col-lg-4">
                         <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal" data-bs-target="#repetPaymart">Guruh ma`lumotini yangilash</button>
                     </div>
+                    @endif
                     <div class="col-lg-4">
                         <button class="btn btn-primary my-1 w-100" data-bs-toggle="modal"  data-bs-target="#endGroups">Talabalar davomati</button>
                     </div>
-                    <div class="col-lg-12 text-center">
+                    <div class="col-lg-4 text-center">
                         @if($guruh['next_id']=='false')
-                            <a class="btn btn-primary my-1 w-50" href="{{ route('meneger_groups_next_create',$guruh['id'] ) }}">Guruhni davom ettirish</a>
+                            <a class="btn btn-primary my-1 w-100" href="{{ route('meneger_groups_next_create',$guruh['id'] ) }}">Guruhni davom ettirish</a>
                         @endif
                     </div>
                 </div>
@@ -172,7 +174,9 @@
                             <h5 class="modal-title w-100 text-center">Qarzdorlarga SMS yuborish</h5>
                         </div>
                         <div class="modal-body m-0 p-1" style="padding:3px">
-                            <form action="" method="post" class="m-0 p-0">
+                            <form action="{{ route('meneger_groups_debet_messege') }}" method="post" class="m-0 p-0">
+                                @csrf 
+                                <input type="hidden" name="id" value="{{ $guruh['id'] }}">
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="button" class="btn btn-danger w-100 m-0" data-bs-dismiss="modal" aria-label="Close">Bekor qilish</button>
@@ -194,30 +198,48 @@
                             <h5 class="modal-title">Guruhni taxrirlash</h5>
                         </div>
                         <div class="modal-body">
-                            <form action="" method="post">
-                                <label for="" class="my-2">Guruh nomi</label>
-                                <input type="text" required class="form-control">
+                            <form action="{{ route('meneger_groups_updates') }}" method="post">
+                                @csrf 
+                                <input type="hidden" name="id" value="{{ $guruh['id'] }}">
+                                <label for="guruh_name" class="my-2">Guruh nomi</label>
+                                <input type="text" name="guruh_name" value="{{ $guruh['guruh_name'] }}" required class="form-control">
                                 <label for="" class="my-2">O'qituvchi</label>
-                                <select name="" required class="form-select">
+                                <select name="techer_id" required class="form-select">
                                     <option value="">Tanlang...</option>
+                                    @foreach($Techers as $item)
+                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                    @endforeach
                                 </select>
-                                <label for="" class="my-2">O'qituvchiga to'lov turi</label>
-                                <select name="" required class="form-select">
-                                    <option value="">Tanlang...</option>
-                                </select>
-                                <label for="" class="my-2">To'lov foizi</label>
-                                <input type="text" required class="form-control">
+                                @if($Markaz->paymart == 1)
+                                <label for="techer_foiz" class="my-2">To'lov foizi</label>
+                                <input type="number" name="techer_foiz" value="{{ $guruh['techer_foiz'] }}" max=100 min=0 required class="form-control">
+                                <input type="hidden" name="techer_paymart" value="0" required class="form-control">
+                                <input type="hidden" name="techer_bonus" value="0" required class="form-control">
+                                @elseif($Markaz->paymart == 2)
+                                <input type="hidden" name="techer_foiz" value="0" required class="form-control">
                                 <label for="" class="my-2">O'qituvchiga to'lov</label>
-                                <input type="text" required class="form-control">
-                                <label for="" class="my-2">O'qituvchiga bonus</label>
-                                <input type="text" required class="form-control">
-                                <label for="" class="my-2">Guruh uchun kurs</label>
-                                <select name="" required class="form-select">
+                                <input type="text" value="{{ $guruh['techer_paymart'] }}" required class="form-control amount">
+                                <input type="hidden" name="techer_bonus" value="0" required class="form-control">
+                                @else
+                                <input type="hidden" name="techer_foiz" value="0" required class="form-control">
+                                <label for="techer_paymart" class="my-2">O'qituvchiga to'lov</label>
+                                <input type="text" name="techer_paymart" value="{{ $guruh['techer_paymart'] }}" required class="form-control amount">
+                                <label for="techer_bonus" class="my-2">O'qituvchiga bonus</label>
+                                <input type="text" name="techer_bonus" value="{{ $guruh['techer_bonus'] }}" required class="form-control amount">
+                                @endif
+                                <label for="cours_id" class="my-2">Guruh uchun kurs</label>
+                                <select name="cours_id" required class="form-select">
                                     <option value="">Tanlang...</option>
+                                    @foreach($Kurslar as $item)
+                                    <option value="{{ $item['id'] }}">{{ $item['cours_name'] }}</option>
+                                    @endforeach
                                 </select>
-                                <label for="" class="my-2">Guruh narxi</label>
-                                <select name="" required class="form-select">
+                                <label for="tulov_id" class="my-2">Guruh narxi</label>
+                                <select name="tulov_id" required class="form-select">
                                     <option value="">Tanlang...</option>
+                                    @foreach($Tulovlar as $item)
+                                    <option value="{{ $item['id'] }}">{{ $item['summa'] }} so'm</option>
+                                    @endforeach
                                 </select>
                                 <div class="w-100 text-center mt-2">
                                     <button class="btn btn-primary w-50">O'zgarishlarni saqlash</button>

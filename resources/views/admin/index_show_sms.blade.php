@@ -11,7 +11,7 @@
   <h1>Tashriflar</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">Bosh sahifa</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Bosh sahifa</a></li>
       <li class="breadcrumb-item active">Tashriflar</li>
     </ol>
   </nav>

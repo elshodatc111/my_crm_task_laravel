@@ -72,7 +72,7 @@
                   <td>{{ number_format($item['admin_chegirma'], 0, ',', ' ') }}</td>
                   <td>{{ number_format($item['chegirma_time'], 0, ',', ' ') }}</td>
                   <td>{{ $item['meneger'] }}</td>
-                  <td>
+                  <td> 
                     <form action="{{ route('meneger.paymart_delete') }}" method="post">
                       @csrf 
                       <input type="hidden" name="id" value="{{ $item['id'] }}">
@@ -92,7 +92,7 @@
       </div>
     </div>
     <div class="col-lg-4">
-      <div class="card" style="min-height:430px">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title w-100 text-center">Yangi to'lov qo'shish</h5>
           @if ($errors->any())
@@ -108,13 +108,21 @@
             @csrf 
             <label for="">Yangi to'lov summasi</label>
             <input type="text" name="summa" class="form-control  amount my-2" value="{{ old('summa') }}" required>
+            @if($Markaz['paymart']==3)
             <label for="">To'lov uchun chegirma</label>
             <input type="text" name="chegirma" class="form-control amount  my-2" value="{{ old('chegirma') }}" required>
+            @else
+            <input type="hidden" name="chegirma" class="form-control amount  my-2" value="0" required>
+            @endif
             <label for="">Admin uchun chegirma</label>
             <input type="text" name="admin_chegirma" class="form-control amount  my-2" value="{{ old('admin_chegirma') }}" required>
+            @if($Markaz['paymart']==3)
             <label for="">Chegirma muddati (kun)</label>
             <input type="number" name="chegirma_time" class="form-control my-2" value="{{ old('chegirma_time') }}" required>
-            <button class="btn btn-primary w-100">Chegirmani saqlash</button>
+            @else
+            <input type="hidden" name="chegirma_time" class="form-control amount  my-2" value="0" required>
+            @endif
+            <button class="btn btn-primary w-100">To'lovni saqlash</button>
           </form>
         </div>
       </div>

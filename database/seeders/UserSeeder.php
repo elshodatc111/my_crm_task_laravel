@@ -65,16 +65,5 @@ class UserSeeder extends Seeder
             'email' => 'techer@gmail.com',
             'password' => Hash::make('12345678')
         ]);
-        User::create([
-            'markaz_id' => 1,
-            'role_id' => 6,
-            'name' => 'Elshod Musurmonov',
-            'phone1' => "90 883 0450",
-            'phone2' => "90 883 0450",
-            'addres' => "Qarshi shaxar",
-            'tkun' => '2024-01-01',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('12345678')
-        ]);
     }
 }

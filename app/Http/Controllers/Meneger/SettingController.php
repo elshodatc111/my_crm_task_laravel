@@ -12,6 +12,7 @@ use App\Models\MarkazSmsSetting;
 use App\Models\MarkazSmsPaket;
 use App\Models\MarkazCours;
 use App\Models\MarkazCoursVideo;
+use App\Models\MarkazSendMessage;
 use App\Models\MarkazCoursTest;
 
 
@@ -50,7 +51,8 @@ class SettingController extends Controller{
     // Paymart Setting
     public function paymart(){
         $MarkazPaymart = MarkazPaymart::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
-        return view('meneger.setting.paymart',compact('MarkazPaymart'));
+        $Markaz = Markaz::find(auth()->user()->markaz_id);
+        return view('meneger.setting.paymart',compact('MarkazPaymart','Markaz'));
     }
     public function paymartCreate(Request $request){
         $validate = $request->validate([
@@ -106,10 +108,22 @@ class SettingController extends Controller{
         $MarkazSmsSetting->save();
         return redirect()->back()->with('success', 'To`lov sozlamalari saqlandi.');
     }
-
+    public function messageShow(){
+        $messege = MarkazSendMessage::where('markaz_id',auth()->user()->markaz_id)->orderby('id','desc')->get();
+        //dd($messege);
+        return view('meneger.setting.message_show',compact('messege'));
+    }
     public function cours(){
         $respons = array();
-        $respons['cours'] = MarkazCours::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
+        $cours = MarkazCours::where('markaz_id',auth()->user()->markaz_id)->where('status','true')->get();
+        //dd($cours);
+        foreach ($cours as $key => $value) {
+            $respons[$key]['id'] = $value->id;
+            $respons[$key]['cours_name'] = $value->cours_name;
+            $respons[$key]['meneger'] = $value->meneger;
+            $respons[$key]['count'] = count(MarkazCoursTest::where('cours_id',$value->id)->get());
+        }
+        //dd($respons);
         return view('meneger.setting.cours',compact('respons')); 
     }
     public function courscreate(Request $request){

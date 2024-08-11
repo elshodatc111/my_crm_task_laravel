@@ -34,7 +34,7 @@
           <a href="{{ route('meneger.all_create') }}" class="btn btn-primary w-100">Yangi tashrif</a>
         </div>
       </div>
-
+ 
       
       <div class="card">
         <div class="card-body">

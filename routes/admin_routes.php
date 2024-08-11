@@ -49,5 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/data/new/delete', [AdminController::class, 'datadaysDelete'])->name('admin.datadaysDelete');
     Route::post('/admin/data/years/create', [AdminController::class, 'datadaysYearsCreate'])->name('admin.datadaysYearsCreate');
     Route::post('/admin/data/years/delete', [AdminController::class, 'datadaysYearsDelete'])->name('admin.datadaysYearsDelete');
+
+    Route::get('/admin/upload/excel', [AdminController::class, 'uploadUsers'])->name('admin.upload_users');
+    Route::post('/admin/upload/excel', [AdminController::class, 'uploadUsersPost'])->name('admin.upload_users_post');
     
 });

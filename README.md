@@ -9,3 +9,5 @@ SMS_EMAIL=login
 SMS_PASSWORD=password
 
 MARKAZLOGOLINK=https://atko.tech/MyCrmTest1/public
+
+SAYTKINK=https://atko.uz

@@ -24,8 +24,8 @@ use App\Models\MarkazAddres;
 use App\Models\MarkazSmm;
 use App\Jobs\SendMessage;
 
-class AdminController extends Controller{
 
+class AdminController extends Controller{
     public function index(){
         if(auth()->user()->role->name=='Admin'){
             return redirect()->route('meneger.home');
@@ -41,7 +41,6 @@ class AdminController extends Controller{
         $Markaz = Markaz::get();
         return view('admin.index',compact('Markaz'));
     }
-
     public function create(){
         $Markaz = Markaz::get();
         return view('admin.create_index');
@@ -93,7 +92,6 @@ class AdminController extends Controller{
         ]);
         return redirect()->route('admin.index')->with('success', 'Yangi o`quv markaz yaratildi.');
     }
-
     public function show($id){
         $response = array();
         $response['markaz'] = Markaz::find($id);
@@ -161,7 +159,6 @@ class AdminController extends Controller{
             return redirect()->back()->with('success', 'Dars vaqtlari generatsiya qilingan.');
         }
     }
-
     public function show_setting($id){
         $response = array();
         $response['markaz'] = Markaz::find($id);
@@ -315,7 +312,6 @@ class AdminController extends Controller{
         ]);
         return redirect()->back()->with('success', 'Yangi sms paketi saqlandi.');
     }
-
     // Administrator
     public function adminPerson(){
         $User = User::where('role_id',1)->get();
@@ -370,7 +366,6 @@ class AdminController extends Controller{
         $User->save();
         return redirect()->back()->with('success', 'Parol yangilandi.');
     }
-
     // Dam olish kunlari
     public function datadays(){
         $DamOlish = DamOlish::orderby('data','asc')->get();
@@ -502,4 +497,16 @@ class AdminController extends Controller{
         //dd($Markaz);
         return view('admin.index_show_statistik',compact('id','Markaz','Months'));
     }
+    // Upload Users
+    public function uploadUsers(){
+        return view('admin.upload_user');
+    }
+    public function uploadUsersPost(Request $request){
+
+        
+    }
+    
+
+
+
 }

@@ -7,9 +7,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Kassa;
 class KassaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Kassa::create([

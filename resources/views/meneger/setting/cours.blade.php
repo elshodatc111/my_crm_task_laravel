@@ -58,19 +58,17 @@
                     <tr class="align-items-center">
                       <th>#</th>
                       <th>Kursning nomi</th>
-                      <th>Darslar soni</th>
                       <th>Testlar soni</th>
                       <th>Meneger</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @forelse($respons['cours'] as $item)
+                    @forelse($respons as $item)
                     <tr>
                       <td>{{ $loop->index+1 }}</td>
                       <td>{{ $item['cours_name'] }}</td>
-                      <td>50 000</td>
-                      <td>50 000</td>
+                      <td>{{ $item['count'] }}</td>
                       <td>{{ $item['meneger'] }}</td>
                       <td>
                         <a href="{{ route('meneger.cours_show',$item['id']) }}" class="btn btn-primary p-1"><i class="bi bi-eye"></i></a>

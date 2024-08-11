@@ -80,7 +80,7 @@
             @error('email')
               <span class="text-danger" style="font-size:10px;">Siz kiritgan login band.</span>
             @enderror
-            <button type="submit" class="btn btn-primary w-100 mt-4">Yangi hodimni saqlash</button>
+            <button type="submit" class="btn btn-primary w-100 mt-4">Yangi o'qituvchini saqlash</button>
           </div>
         </div>
       </form>

@@ -11,7 +11,7 @@
   <h1>Tashriflar</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">Bosh sahifa</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Bosh sahifa</a></li>
       <li class="breadcrumb-item active">Tashriflar</li>
     </ol>
   </nav>
@@ -55,7 +55,7 @@
       <div class="card" style="min-height:300px">
         <div class="card-body text-center">
           <h5 class="card-title w-100 text-center">Markaz logatifi</h5>
-          <img src="{{ env('MARKAZLOGOLINK') }}{{ $response['markaz']['image'] }}" style="width:80%">
+          <img src="{{ env('MARKAZLOGOLINK') }}/{{ $response['markaz']['image'] }}" style="width:100%">
           <form action="{{ route('admin.updatelogo') }}" method="post" enctype="multipart/form-data">
             @csrf 
             <input type="hidden" name="markaz_id" value="{{ $id }}">

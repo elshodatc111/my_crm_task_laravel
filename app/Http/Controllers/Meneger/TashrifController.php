@@ -61,7 +61,6 @@ class TashrifController extends Controller
                                   ->orWhere('email', 'LIKE', "%{$query}%");
                      });
                  })->paginate(10);
-
         return view('meneger.students.pagination_data', compact('users'))->render();
     }
     public function allCreate(){
@@ -123,9 +122,8 @@ class TashrifController extends Controller
             'chegirma' => 0,
             'jarima' => 0,
         ]);
-        $Phone = str_replace($request->phone1," ", "");
-        $Url = "https://atko.uz";
-        $Text = "Hurmatli ".$request->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga tashrifingizdan mamnunmiz. Sizning login: ".$request->email." parol: 12345678 websayt: ".$Url;
+        $Phone = str_replace(" ", "", $User->phone1);
+        $Text = "Hurmatli ".$User->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga tashrifingizdan mamnunmiz. Sizning login: ".$User->email." parol: 12345678 ";
         if(MarkazSmsSetting::where('markaz_id',auth()->user()->markaz_id)->first()->new_user == 'true'){
             SendMessage::dispatch(auth()->user()->markaz_id, $Phone, $Text);
         }
@@ -193,7 +191,6 @@ class TashrifController extends Controller
             }
         }
         $Kassa = Kassa::where('markaz_id',auth()->user()->markaz_id)->first();
-
         $ArxivGuruhlar = array();
         $Arxiv = UserPaymart::where('user_id',$id)->orderby('created_at','desc')->get();
         foreach ($Arxiv as $key => $value) {
@@ -202,8 +199,7 @@ class TashrifController extends Controller
             $ArxivGuruhlar[$key]['comment'] = $value->comment;
             $ArxivGuruhlar[$key]['created_at'] = $value->created_at;
             $ArxivGuruhlar[$key]['meneger'] = $value->meneger;
-        }
-        
+        }   
         return view('meneger.students.show',compact(
             'User',
             'UserBalans',
@@ -315,9 +311,8 @@ class TashrifController extends Controller
             'balans' => '-',
             'meneger' => auth()->user()->email,
         ]);
-        $Phone = str_replace($User->phone1," ", "");
-        $Url = "https://atko.uz";
-        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol 12345678 websayt: ".$Url;
+        $Phone = str_replace(" ", "",$User->phone1);
+        $Text = $User->name." Sizning parolingiz yangilandi. Yangi parol 12345678";
         SendMessage::dispatch(auth()->user()->markaz_id, $Phone, $Text);
         return redirect()->back()->with('success', "Talaba paroli yangilandi.");
     }
@@ -407,7 +402,6 @@ class TashrifController extends Controller
             'meneger' => auth()->user()->email,
         ]);
     }
-
     public function UserPaymarts(Request $request){
         $validated = $request->validate([
             'user_id' => 'required',
@@ -487,9 +481,12 @@ class TashrifController extends Controller
         $User->save();
         $UserBalans->save();
         $MarkazHodimStatistka->save();
-
-        // SMS Yuborish XIZMATINI QO"SHISH KERAK
-        
+        $tulovlar = preg_replace('/\D/','',$request->summaNaqt)+preg_replace('/\D/','',$request->summaPlastik);
+        $Phone = str_replace(" ", "", $User->phone1);
+        $Text = strval("Hurmatli ".$User->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markazi kurslari uchun ".$tulovlar." so'm to'lov qabul qilindi.");
+        if(MarkazSmsSetting::where('markaz_id',auth()->user()->markaz_id)->first()->new_pay == 'true'){
+            SendMessage::dispatch(auth()->user()->markaz_id, $Phone, $Text);
+        }
         return redirect()->back()->with('success', "To'lov qabul qilindi.");
     }
     protected function QaytarHistory($User_id,$Summa,$TulovType,$Comment,$Xisob,$Balans){

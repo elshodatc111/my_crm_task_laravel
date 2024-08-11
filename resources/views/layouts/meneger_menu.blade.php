@@ -15,15 +15,18 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('meneger_moliya_home') }}">
           <i class="bi bi-collection"></i>
-          <span>Moliya</span>
+          <span>Kassa</span>
         </a>
       </li>
+      @if(auth()->user()->role_id!=4)
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('meneger.hodim') }}">
           <i class="bi bi-person-check"></i>
           <span>Hodimlar</span>
         </a>
       </li>
+      @endif
+      @if(auth()->user()->role_id==2)
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('chart_days') }}">
           <i class="bi bi-graph-up"></i>
@@ -33,7 +36,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('meneger_balans_home') }}">
           <i class="bi bi-coin"></i>
-          <span>Balans</span>
+          <span>Moliya</span>
         </a>
       </li>
       <li class="nav-item">
@@ -48,5 +51,6 @@
           <span>Sozlamalar</span>
         </a>
       </li>
+      @endif
     </ul>
   </aside>

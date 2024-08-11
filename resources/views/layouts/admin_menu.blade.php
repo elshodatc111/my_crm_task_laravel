@@ -18,5 +18,11 @@
           <span>Administratorlar</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.upload_users') }}">
+          <i class="bi bi-file-earmark-arrow-down"></i>
+          <span>Upload Users</span>
+        </a>
+      </li>
     </ul>
   </aside>

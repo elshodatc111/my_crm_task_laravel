@@ -33,7 +33,7 @@
     @endif
 
     <div class="row">
-        <div class="col-lg-3">
+        <div class={{ (auth()->user()->role_id==4)?'col-lg-4':'col-lg-3' }}>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title w-100 text-center"><i class="bi bi-card-checklist"></i> Kassada mavjud to'lovlar</h5>
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class={{ (auth()->user()->role_id==4)?'col-lg-4':'col-lg-3' }}>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title w-100 text-center"><i class="bi bi-backspace-reverse"></i> Chiqim kutilmoqda</h5>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class={{ (auth()->user()->role_id==4)?'col-lg-4':'col-lg-3' }}>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title w-100 text-center"><i class="bi bi-backspace-reverse-fill"></i> Xarajat kutilmoqda</h5>
@@ -84,6 +84,7 @@
                 </div>
             </div>
         </div>
+        @if(auth()->user()->role_id!=4)
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
@@ -101,8 +102,9 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#qaytarilgan">Qaytarilgan to'lovlar (Oxirgi 7 kun)</button></div>
-        <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanChiqim">Kassadan chiqima</button></div>
+        <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanChiqim">Kassadan chiqim</button></div>
         <div class="col-lg-4 mt-lg-0 mt-2"><button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kassadanXarajat">Xarajatlar chiqim</button></div>
         <div class="col-12">
             <div class="card mt-3">
@@ -138,11 +140,13 @@
                                                 <input type="hidden" name="id" value="{{ $item['id'] }}">
                                                 <button class="btn btn-danger p-1"><i class="bi bi-trash"></i></button>
                                             </form>
+                                            @if(auth()->user()->role_id==2)
                                             <form action="{{ route('meneger_moliya_kassadan_chiqim_check') }}" method="post" class="p-0 m-0" style="display:inline">
                                                 @csrf 
                                                 <input type="hidden" name="id" value="{{ $item['id'] }}">
                                                 <button class="btn btn-success p-1"><i class="bi bi-check"></i></button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

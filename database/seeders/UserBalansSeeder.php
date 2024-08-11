@@ -9,6 +9,7 @@ class UserBalansSeeder extends Seeder
 {
     public function run(): void
     {
+        /*
         UserBalans::create([
             'markaz_id' => 1,
             'user_id' => 6,
@@ -19,5 +20,6 @@ class UserBalansSeeder extends Seeder
             'chegirma' => 0,
             'jarima' => 0,
         ]);
+        */
     }
 }

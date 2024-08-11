@@ -24,35 +24,39 @@ class SendMessage implements ShouldQueue
         $this->phone = $phone;
         $this->text = $text;
     }
-
     public function handle(): void{
         $eskiz_email = env('SMS_EMAIL');
         $eskiz_password = env('SMS_PASSWORD');
-        $eskiz = new Eskiz($eskiz_email,$eskiz_password);
+        $SAYTKINK = env('SAYTKINK');
+        $Text = $this->text . " websayt: " . $SAYTKINK;
+        $eskiz = new Eskiz($eskiz_email, $eskiz_password);
         $eskiz->requestAuthLogin();
-        $from='4546';
+        $from = '4546';
         $mobile_phone = $this->phone;
-        $message = $this->text;
+        $message = strval($Text);
         $user_sms_id = 1;
         $callback_url = '';
         $singleSmsType = new SmsSingleSmsType(
             from: $from,
             message: $message,
             mobile_phone: $mobile_phone,
-            user_sms_id:$user_sms_id,
-            callback_url:$callback_url
+            user_sms_id: $user_sms_id,
+            callback_url: $callback_url
         );
         $result = $eskiz->requestSmsSend($singleSmsType);
-        if($result->getResponse()->isSuccess == true){
+        if ($result->getResponse()->isSuccess) {
             MarkazSendMessage::create([
-                'markaz_id'=>$this->markaz_id,
-                'phone'=>$this->phone,
-                'description'=>$this->text,
+                'markaz_id' => $this->markaz_id,
+                'phone' => $this->phone,
+                'description' => strval($Text),
             ]);
             $Markaz = Markaz::find($this->markaz_id);
             $Markaz->count_sms = $Markaz->count_sms + 1;
             $Markaz->mavjud_sms = $Markaz->mavjud_sms - 1;
             $Markaz->save();
+        } else {
+            Log::info('Yuborilmadi: ' . $result->getResponse()->message);
         }
     }
+    
 }

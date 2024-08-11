@@ -86,7 +86,9 @@
         <div class="col-lg-4 mt-3">
           <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#createPaymart">To'lov qilish</button>
           <button class="btn btn-primary w-100 mb-3" data-bs-toggle="modal" data-bs-target="#repetPaymart">To'lov qaytarish</button>
-          <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createChegirma">Chegirma kiritish</button>
+          @if(auth()->user()->role_id!=4)
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createChegirma">Chegirma kiritish</button>
+          @endif
         </div>
         <div class="col-lg-4 mt-3">
           <button class="btn btn-primary w-100 mb-3"  data-bs-toggle="modal" data-bs-target="#addGroups">Yangi guruhga qo'shish</button>
@@ -388,7 +390,7 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($ArxivGuruhlar as $item)
+                @forelse($ArxivGuruhlar as $item)
                 <tr>
                   <td>{{ $loop->index+1 }}</td>
                   <td>{{ number_format($item['summa'], 0, '.', ' ') }}</td>
@@ -397,7 +399,11 @@
                   <td>{{ $item['created_at'] }}</td>
                   <td>{{ $item['meneger'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                  <td colspan=6 class='text-center'>To'lovlar mavjud emas.</td>
+                </tr>
+                @endforelse
               </tbody>
             </table>
           </div>
