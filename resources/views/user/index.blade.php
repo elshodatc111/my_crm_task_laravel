@@ -19,7 +19,7 @@
                         <img src="https://new.kdb.uz/storage/news/April2023/yPZ5CZQQllRp6xp5kKPp.jpg" class="card-img-top" alt="Balansni to'ldirish" />
                         <div class="card-body">
                             <p class="w-100 text-center">Kurslar uchun to'lovni oson va tez amalga oshiring</p>
-                            <a href="paymart.html" class="btn btn-primary w-100">
+                            <a href="{{ route('user.paymart_show') }}" class="btn btn-primary w-100">
                                 <i class="bi bi-credit-card"></i> To'lovga o'tish
                             </a>
                             <a href="paymart2.html" class="btn btn-primary w-100">
