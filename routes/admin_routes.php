@@ -52,5 +52,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/upload/excel', [AdminController::class, 'uploadUsers'])->name('admin.upload_users');
     Route::post('/admin/upload/excel', [AdminController::class, 'uploadUsersPost'])->name('admin.upload_users_post');
+    Route::post('/admin/upload/play', [AdminController::class, 'uploadPlayPost'])->name('admin.upload_Play_post');
     
 });

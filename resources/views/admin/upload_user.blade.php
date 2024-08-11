@@ -77,10 +77,36 @@
                 <th>Xatolik</th>
                 <th>Yuklangan vaqt</th>
                 <th>Administrator</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
+              @forelse($flies as $item)
+                @if($item['status']=='false')
+                  <tr>
+                    <td>{{ $loop->index+1 }}</td>
+                    <td>{{ $item['markaz'] }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ $item['created_at'] }}</td>
+                    <td>{{ $item['meneger'] }}</td>
+                    <td>
+                      <form action="{{ route('admin.upload_Play_post') }}" method="post" class="m-0 p-0">
+                        @csrf 
+                        <input type="hidden" name="file_id" value="{{ $item['id'] }}">
+                        <button class="btn btn-primary p-0"><i class="bi bi-play-fill"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                @else 
 
+                @endif 
+              @empty
+                <tr>
+                  <td colspan=8 class="text-center">Yuklangan fayllar mavjud emas.</td>
+                </tr>
+              @endforelse
             </tbody>
           </table>
         </div>

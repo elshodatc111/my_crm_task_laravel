@@ -62,13 +62,13 @@
                         <td>{{ $item['created_at'] }}</td>
                         <td>
                             @if($item['status']=='true')
-                            <form action="{{ route('admin.adminPersonBlocks') }}" method="post">
+                            <form action="{{ route('admin.adminPersonBlocks') }}" method="post" class="m-0 p-0">
                                 @csrf 
                                 <input type="hidden" name="id" value="{{ $item['id'] }}">
                                 <button trpe="submit" class="btn btn-danger p-1" title="Bloklash"><i class="bi bi-check"></i></button>
                             </form>
                             @else
-                            <form action="{{ route('admin.adminPersonOpen') }}" method="post">
+                            <form action="{{ route('admin.adminPersonOpen') }}" method="post" class="m-0 p-0">
                                 @csrf 
                                 <input type="hidden" name="id" value="{{ $item['id'] }}">
                                 <button trpe="submit" class="btn btn-success p-1" title="Aktivlashtirish"><i class="bi bi-x"></i></button>

@@ -53,7 +53,7 @@
                       <td>{{ $item['data'] }}</td>
                       <td>{{ $item['description'] }}</td>
                       <td>
-                        <form action="{{ route('admin.datadaysDelete') }}" method="post">
+                        <form action="{{ route('admin.datadaysDelete') }}" method="post" class="p-0 m-0">
                           @csrf 
                           <input type="hidden" name="id" value="{{ $item['id'] }}">
                           <button type="submit" class="btn btn-danger p-1"><i class="bi bi-trash"></i></button>

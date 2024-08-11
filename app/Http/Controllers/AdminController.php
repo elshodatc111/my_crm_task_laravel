@@ -16,6 +16,7 @@ use App\Models\MarkazOgohlik;
 use App\Models\MarkazLessenTime;
 use App\Models\MarkazBalans;
 use App\Models\MarkazSmsSetting;
+use App\Models\File;
 use App\Models\MarkazHodimStatistka;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Grops;
@@ -23,6 +24,8 @@ use DateTime;
 use App\Models\MarkazAddres;
 use App\Models\MarkazSmm;
 use App\Jobs\SendMessage;
+
+
 
 
 class AdminController extends Controller{
@@ -499,13 +502,44 @@ class AdminController extends Controller{
     }
     // Upload Users
     public function uploadUsers(){
-        return view('admin.upload_user');
+        $File = File::orderby('id','desc')->get();
+        $flies =array();
+        foreach ($File as $key => $value) {
+            $flies[$key]['id'] = $value->id;
+            $flies[$key]['markaz'] = Markaz::find($value->markaz_id)->name;
+            $flies[$key]['file_name'] = $value->file_name;
+            $flies[$key]['count'] = $value->count;
+            $flies[$key]['succes'] = $value->succes;
+            $flies[$key]['error'] = $value->error;
+            $flies[$key]['status'] = $value->status;
+            $flies[$key]['meneger'] = $value->meneger;
+            $flies[$key]['created_at'] = $value->created_at;
+        }
+        return view('admin.upload_user',compact('flies'));
     }
     public function uploadUsersPost(Request $request){
-
-        
+        $request->validate([
+            'markaz_id' => 'required',
+            'file' => 'required|mimes:xlsx|max:1024',
+        ]);
+        $fileName = time().'.'.$request->file->extension();
+        $request->file->move(public_path('file'), $fileName);
+        File::create([
+            'markaz_id' => $request->markaz_id,
+            'file_name' => $fileName,
+            'count' => 0,
+            'succes' => 0,
+            'error' => 0,
+            'status' => "false",
+            'meneger' => auth()->user()->email,
+        ]);
+        return back()->with('success', 'Excel fayl yuklandi.');
     }
-    
+    public function uploadPlayPost(Request $request){
+        dd($request);
+
+
+    }
 
 
 
