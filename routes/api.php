@@ -3,11 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\User\PaymeController;
 use App\Http\Controllers\Api\Techer\TecherController;
-/*Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-*/
+
 
 Route::post('user/login', [UserController::class, 'login']);
 
@@ -26,6 +24,8 @@ Route::group([
 });
 
 Route::post('techer/login', [TecherController::class, 'login']);
+
+Route::post('payme', [PaymeController::class, 'index']);
 
 Route::group([
     'middleware'=>['auth:sanctum']

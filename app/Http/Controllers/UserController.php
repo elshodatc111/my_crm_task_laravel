@@ -13,6 +13,7 @@ use App\Models\MarkazCoursTest;
 use App\Models\MarkazRoom;
 use App\Models\UserGroup;
 use App\Models\UserPaymart;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller{
@@ -173,9 +174,25 @@ class UserController extends Controller{
         return view('user.paymart_show',compact('Guruhlar'));
     }
     public function paymartShowPost(Request $request){
-        dd($request);
+        $validated = $request->validate([
+            'price' => 'required',
+            'cours_id' => 'required',
+        ]);
+        $validated['user_id'] = auth()->user()->id;
+        $validated['markaz_id'] = auth()->user()->markaz_id;
+        $Order = Order::create([
+            'markaz_id'=>auth()->user()->markaz_id,
+            'user_id'=>auth()->user()->id,
+            'price' => $request->price,
+            'cours_id' => $request->cours_id,
+            'status'=> 'Kutilmoqda',
+        ]);
+        return redirect()->route('user.paymart_show_two',$Order->id);
     }
     public function paymartShowTwo($id){
-        return view('user.paymart_show_post');
+        $Order = Order::find($id);
+        $Markaz = Markaz::find($Order['markaz_id']);
+        $Grops = Grops::find($Order['cours_id']);
+        return view('user.paymart_show_post',compact('Order','Markaz','Grops'));
     }
 }

@@ -7,14 +7,15 @@
         <div class="container">
             <h2 class="text-center mb-4">To'lovni amalga oshirish</h2>
 
-            <form>
+            <form action="{{ route('user.paymart_show_post') }}" method="POST">
+                @csrf 
                 <div class="form-group">
                     <label for="paymentAmount">To'lov summasi</label>
-                    <input type="number" class="form-control" min="1000" max="10000000" required  placeholder="To'lov summasini kiriting">
+                    <input type="number" class="form-control" name="price" min="1000" max="10000000" required  placeholder="To'lov summasini kiriting">
                 </div>
                 <div class="form-group">
                     <label for="selectGroup">Guruhni tanlang</label>
-                    <select class="form-control" required id="selectGroup">
+                    <select name="cours_id" class="form-control" required id="selectGroup">
                         <option value="" selected disabled>Guruhni tanlang</option>
                         @foreach($Guruhlar as $item)
                             <option value="{{ $item['id'] }}">{{ $item['guruh_name'] }}</option>
