@@ -199,7 +199,7 @@ class TashrifController extends Controller
             $ArxivGuruhlar[$key]['comment'] = $value->comment;
             $ArxivGuruhlar[$key]['created_at'] = $value->created_at;
             $ArxivGuruhlar[$key]['meneger'] = $value->meneger;
-        }   
+        }  
         return view('meneger.students.show',compact(
             'User',
             'UserBalans',

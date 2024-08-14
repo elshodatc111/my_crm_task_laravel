@@ -9,17 +9,16 @@
                     <h2 class="text-center mb-4 card-title">To'lov</h2>
                     <p><strong>Tulov summasi:</strong> {{ $Order['price'] }} so'm</p>
                     <p><strong>Guruh:</strong> {{ $Grops['guruh_name'] }}</p>
-                    <form method="POST" action="https://test.paycom.uz">
+                    <form method="POST" action="https://checkout.paycom.uz">
                         <input type="hidden" name="merchant" value="{{ $Markaz['payme_id'] }}"/>
-                        <input type="hidden" name="amount" value="{{ $Order['price'] }}"/>
-                        <input type="hidden" name="account[{order_id}]" value="{{ $Order['order_id'] }}"/>
+                        <input type="hidden" name="amount" value="{{ $Order['price']."00" }}"/>
+                        <input type="hidden" name="account[order_id]" value="{{ $Order['order_id'] }}"/>
                         <input type="hidden" name="lang" value="uz"/>
-                        <input type="hidden" name="callback" value="{url возврата после платежа}"/>
-                        <input type="hidden" name="callback_timeout" value="15"/>
-                        <input type="hidden" name="description" value="{Описание платежа}"/>
-                        <input type="hidden" name="detail" value="{JSON объект детализации в BASE64}"/>
-                        <button type="submit" class="btn btn-success"><b>Payme orqali to'lov</b></button>
-                    </form>
+                        <input type="hidden" name="callback" value="https://atko.uz/mycours"/>
+                        <input type="hidden" name="callback_timeout" value="{20}"/>
+                        <input type="hidden" name="description" value="ATKO o'quv markaz online kurslari uchun to'lov"/>
+                        <button type="submit" style="border: 1px solid green; border-radius: 5px" class="p-1"><img src="./img/payme.png" /></button>
+                    </form> 
                 </div>
             </div>
         </div>

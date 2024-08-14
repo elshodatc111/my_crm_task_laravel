@@ -75,7 +75,7 @@
             <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['chegirma'], 0, '.', ' ') }} so'm</div>
             <div class="col-6  mt-1"><b>Jarimalar:</b></div>
             <div class="col-6" style="text-align:right;">{{ number_format($UserBalans['jarima'], 0, '.', ' ') }} so'm</div>              
-          </div>
+          </div> 
         </div>
       </div>
     </div>

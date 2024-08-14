@@ -16,6 +16,7 @@ use App\Models\MarkazBalans;
 use App\Models\MarkazPaymart;
 use App\Models\UserGroup;
 use App\Models\UserTest;
+use App\Models\UserBalans;
 use App\Models\Transaction;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,7 @@ class PaymeController extends Controller{
                     ];
                     return json_encode($response);
                 }
-                else if($Order->price*100 != $request->params['amount']){
+                else if($Order->price*100 != $request->params['amount']){//*100
                     $response = [
                         'id' => $request->id,
                         'error' => [
@@ -110,7 +111,7 @@ class PaymeController extends Controller{
                     ];
                     return json_encode($response);
                 }
-                else if($order->price*100 != $request->params['amount']){
+                else if($order->price*100 != $request->params['amount']){///*100
                     $response = [
                         'id' => $request->id,
                         'error' => [
@@ -142,7 +143,7 @@ class PaymeController extends Controller{
                     ]);
                 }
                 else if((count($transaction)==1) and 
-                ($transaction->first()->paycom_time==$request->params['time']) and
+                ($transaction->first()->paycom_time==$request->params['time']) and 
                 ($transaction->first()->paycom_transaction_id==$request->params['id'])){
                     $response = [
                         'result'=>[
@@ -267,43 +268,47 @@ class PaymeController extends Controller{
                 $order_table = Order::where('id', $order_id)->first();
                 $order_table->status = "To'lov qilindi.";
                 $order_table->update();
-
-                INFO("To'lov amalga oshirildi"); // #################################################
-                $Grops = Grops::find($request->guruh_id);
+                $Grops = Grops::find($order_table->cours_id);
                 if(!$Grops){
                     return response()->json([
                         'status' => false,
                         'message' => 'Not fount guruh_id',
                     ],401);
                 }
-                $User = User::find(auth()->user()->id);
-                UserHistory::create([
-                    'markaz_id' => auth()->user()->markaz_id,
-                    'user_id' => auth()->user()->id,
+                $User = User::find($order_table->user_id);
+                $UserHistory = UserHistory::create([
+                    'markaz_id' => $order_table->markaz_id,
+                    'user_id' => $order_table->user_id,
                     'status' => 'Payme',
                     'guruh' => $Grops->guruh_name,
-                    'summa' => number_format($request->summa, 0, '.', ' '),
+                    'summa' => $order_table->price,
                     'tulov_type' => 'Payme',
                     'comment' => "Payme orqali tulov",
-                    'xisoblash' => number_format($User->balans, 0, '.', ' ')." + ".number_format($request->summa, 0, '.', ' ')." = ".number_format($User->balans+$request->summa, 0, '.', ' '),
-                    'balans' => number_format($User->balans+$request->summa, 0, '.', ' '),
+                    'xisoblash' => number_format($User->balans, 0, '.', ' ')." + ".number_format($order_table->price, 0, '.', ' ')." = ".number_format($User->balans+$order_table->price, 0, '.', ' '),
+                    'balans' => number_format($User->balans+$order_table->price, 0, '.', ' '),
                     'meneger' => "Payme",
                 ]);
+                $UserBalans = UserBalans::where('user_id',$order_table->user_id)->first();
+                if($UserBalans->payme == 0){
+                    $UserBalans->payme = $order_table->price;
+                }else{
+                    $UserBalans->payme = $UserBalans->payme + $order_table->price;
+                }
+                $UserBalans->save();
                 UserPaymart::create([
-                    'markaz_id' => auth()->user()->markaz_id,
-                    'user_id' => auth()->user()->id,
-                    'summa' => $request->summa,
+                    'markaz_id' => $order_table->markaz_id,
+                    'user_id' => $order_table->user_id,
+                    'summa' => $order_table->price,
                     'tulov_type' => "Payme",
                     'guruh' => $Grops->id,
                     'comment' => "Payme orqali to'lov",
                     'meneger' => "Payme",
                 ]);
-                $MarkazBalans = MarkazBalans::where('markaz_id', auth()->user()->markaz_id)->first();
-                $MarkazBalans->balans_payme = $MarkazBalans->balans_payme + $request->summa;
+                $MarkazBalans = MarkazBalans::where('markaz_id', $order_table->markaz_id)->first();
+                $MarkazBalans->balans_payme = $MarkazBalans->balans_payme + $order_table->price;
                 $MarkazBalans->save();
-                $User->balans = $User->balans + $request->summa;
-                $User->save();
-
+                $User->balans = $User->balans + $order_table->price;
+                $User->save();                
                 $response = [
                     'result' =>[
                         'transaction' => "{$transaction->id}",
@@ -393,6 +398,48 @@ class PaymeController extends Controller{
                 $order_table = Order::where('id', $order_id)->first();
                 $order_table->status = "Bekor qilindi";
                 $order_table->update();
+
+                ///##################################
+                $Grops = Grops::find($order_table->cours_id);
+                if(!$Grops){
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Not fount guruh_id',
+                    ],401);
+                }
+                $User = User::find($order_table->user_id);
+                $UserHistory = UserHistory::create([
+                    'markaz_id' => $order_table->markaz_id,
+                    'user_id' => $order_table->user_id,
+                    'status' => 'Payme Bekor qilindi',
+                    'guruh' => $Grops->guruh_name,
+                    'summa' => $order_table->price,
+                    'tulov_type' => 'Payme Cancel',
+                    'comment' => "Payme orqali tulov bekor qilindi.",
+                    'xisoblash' => number_format($User->balans, 0, '.', ' ')." - ".number_format($order_table->price, 0, '.', ' ')." = ".number_format($User->balans-$order_table->price, 0, '.', ' '),
+                    'balans' => number_format($User->balans-$order_table->price, 0, '.', ' '),
+                    'meneger' => "Payme",
+                ]);
+                $UserBalans = UserBalans::where('user_id',$order_table->user_id)->first();
+                $UserBalans->payme = $UserBalans->payme - $order_table->price;
+                $UserBalans->save();
+                UserPaymart::create([
+                    'markaz_id' => $order_table->markaz_id,
+                    'user_id' => $order_table->user_id,
+                    'summa' => $order_table->price,
+                    'tulov_type' => "Payme Cancel",
+                    'guruh' => $Grops->id,
+                    'comment' => "Payme orqali to'lov bekor qilindi.",
+                    'meneger' => "Payme",
+                ]);
+                $MarkazBalans = MarkazBalans::where('markaz_id', $order_table->markaz_id)->first();
+                $MarkazBalans->balans_payme = $MarkazBalans->balans_payme - $order_table->price;
+                $MarkazBalans->save();
+                $User->balans = $User->balans - $order_table->price;
+                $User->save();  
+                /// #########################
+
+
                 $response = [
                     'result' =>[
                         "transaction" => strval($transaction->id),

@@ -48,7 +48,7 @@
           </div>
           <div class="col-lg-6">
             <label for="" class="my-2">Payme ID</label>
-            <input type="text" name="payme_id" required class="form-control">
+            <input type="text" name="payme_id" value="NULL" required class="form-control">
             <label for="" class="my-2">Dars vaqti(minut)</label>
             <input type="number" name="lessen_time" required class="form-control">
             <label for="" class="my-2">O'qituvchiga to'lov(1-foiz, 2-qism tulov, 3-qism tulov + bonus)</label>

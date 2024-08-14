@@ -14,6 +14,7 @@
                         </div>
                     </div>
                 </div>
+                @if($Markaz['payme_id']!='NULL')
                 <div class="col-12">
                     <div class="card">
                         <img src="https://new.kdb.uz/storage/news/April2023/yPZ5CZQQllRp6xp5kKPp.jpg" class="card-img-top" alt="Balansni to'ldirish" />
@@ -22,12 +23,10 @@
                             <a href="{{ route('user.paymart_show') }}" class="btn btn-primary w-100">
                                 <i class="bi bi-credit-card"></i> To'lovga o'tish
                             </a>
-                            <a href="paymart2.html" class="btn btn-primary w-100">
-                                <i class="bi bi-credit-card"></i> To'lovga o'tish
-                            </a>
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
