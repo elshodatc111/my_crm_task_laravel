@@ -160,9 +160,9 @@
             <input type="hidden" name="user_id" value="{{ $User['id'] }}">
             <input type="hidden" name="paymart" value = "{{ $Paymart }}">
             <label for="summaNaqt" class="my-2">Naqt summa</label>
-            <input type="text" name="summaNaqt" required class="form-control amount">
+            <input type="text" name="summaNaqt" value="0" required class="form-control amount">
             <label for="summaPlastik" class="my-2">Plastik summa</label>
-            <input type="text" name="summaPlastik" required class="form-control amount">
+            <input type="text" name="summaPlastik" value="0" required class="form-control amount">
             @if($Paymart==1)
             <label for="guruh_id" class="my-2">To'lov uchun guruhni tanlang</label>
             <select name="guruh_id" required class="form-select">

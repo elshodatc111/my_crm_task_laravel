@@ -218,7 +218,6 @@ class HodimController extends Controller
         $Text = "Hurmatli ".$request->name." siz ".Markaz::find(auth()->user()->markaz_id)->name." o'quv markaziga o'qituvchi lovozimiga ishga olindingiz. Sizning login: ".$request->email." parol: 12345678";
         
         SendMessage::dispatch($Markaz_ID, $Phone, $Text);
-
         return redirect()->route('meneger.techer')->with('success', "Yangi o'qituvchi qo'shildi.");
     }
     protected function userBonus($guruh_id,$data){
