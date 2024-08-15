@@ -6,12 +6,12 @@
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <img src="03.jpg" class="w-100">
-                    <h5 class="card-title w-100 text-center mt-2">O'quv markaz nomi</h5>
+                    <img src="{{ env('MARKAZLOGOLINK') }}/{{ $Markaz['image'] }}" class="w-100">
+                    <h5 class="card-title w-100 text-center mt-2">{{ $Markaz['name'] }} o'quv markaz</h5>
                 </div>
             </div>
         </div>
-
+ 
         <!-- CHARTS JOYI -->
         <div class="container chart-container">
             <div class="card">
@@ -56,7 +56,7 @@
                 labels: ['Yangi guruhlar', 'Aktiv guruhlar', 'Yakunlangan guruhlar'],
                 datasets: [{
                     label: 'Guruhlar soni',
-                    data: [70, 30, 40],
+                    data: [{{ $stat['nev'] }}, {{ $stat['activ'] }}, {{ $stat['end'] }}],
                     backgroundColor: ['blue', 'green','red'],
                     hoverOffset: 4
                 }]
