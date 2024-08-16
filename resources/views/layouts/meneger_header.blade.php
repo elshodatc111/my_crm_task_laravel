@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="{{ route('meneger.home') }}" class="logo d-flex align-items-center">
         <span class=" w-100 text-center">
-          <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/logo.png" class="d-none d-lg-block w-50">
+          <h3 class="d-none d-lg-block w-100 pt-2" style="font-weight:900">EDU MENEGER</h3>
           <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/logo_icon.png" class="d-lg-none d-block">
         </span>
       </a>

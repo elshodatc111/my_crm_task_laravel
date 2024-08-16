@@ -3,10 +3,10 @@
     <tr class="align-items-center">
         <th>#</th>
         <th>Talaba</th>
-        <th>Telefon raqam</th>
-        <th>Address</th>
+        <th>Telefon raqami</th>
+        <th>Manzili</th>
         <th>Balans</th>
-        <th>Ro'yhatdan o'tdi</th>
+        <th>Ro'yhatdan o'tgan vaqti</th>
     </tr>
     </thead>
     <tbody>

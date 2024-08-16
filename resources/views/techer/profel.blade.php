@@ -12,7 +12,7 @@
                     <p><strong>FIO:</strong> {{ auth()->user()->name }}</p>
                     <p><strong>Login:</strong> {{ auth()->user()->email }}</p>
                     <p><strong>Telefon raqam:</strong> {{ auth()->user()->phone1 }}</p>
-                    <p><strong>Qo'shimcha telefon raqam:</strong> {{ auth()->user()->phone2 }}</p>
+                    <p><strong>Telefon raqam:</strong> {{ auth()->user()->phone2 }}</p>
                     <p><strong>Yashash manzili:</strong> {{ auth()->user()->addres }}</p>
                 </div>
             </div>
@@ -20,18 +20,19 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Parolni yangilash</h5>
-                    <form>
+                    <form action="{{ route('user.updatePasword') }}" method="POST">
+                        @csrf 
                         <div class="form-group">
                             <label for="currentPassword">Joriy parol</label>
-                            <input type="password" class="form-control" id="currentPassword" placeholder="Joriy parol">
+                            <input type="password" class="form-control" name="password" placeholder="Joriy parol">
                         </div>
                         <div class="form-group">
                             <label for="newPassword">Yangi parol</label>
-                            <input type="password" class="form-control" id="newPassword" placeholder="Yangi parol">
+                            <input type="password" class="form-control" name="newPassword" placeholder="Yangi parol">
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Yangi parolni tasdiqlang</label>
-                            <input type="password" class="form-control" id="confirmPassword" placeholder="Yangi parolni tasdiqlang">
+                            <input type="password" class="form-control" name="confirmPassword" placeholder="Yangi parolni tasdiqlang">
                         </div>
                         <button type="submit" class="btn btn-primary">Yangilash</button>
                     </form>

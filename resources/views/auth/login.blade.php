@@ -8,9 +8,10 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <img src="{{ env('CDN_LINK_TECHER')}}assets/img/logo/banner.png">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="pt-4 pb-2"><img src="./images/edu_logo.png">
+                  <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Kirish</h5>
                     @if ($errors->all())
                       <p class="text-center text-danger small">Login yoki parol xato</p>

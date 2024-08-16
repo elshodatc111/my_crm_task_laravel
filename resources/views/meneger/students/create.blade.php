@@ -43,18 +43,18 @@
             @csrf 
             <div class="row">
               <div class="col-lg-6">
-                <label for="name" class="mb-1">FIO</label>
+                <label for="name" class="mb-1">F.I.SH</label>
                 <input type="text" name="name" value="{{ old('name') }}" required class="form-control">
-                <label for="phone1" class="mb-1 mt-1">Telefon raqam</label>
+                <label for="phone1" class="mb-1 mt-1">Telefon raqami</label>
                 <input type="text"  name="phone1" value="{{ old('phone1') }}" required class="form-control phone">
                 @error('phone1')
                   <span class="text-danger w-100" style="font-size:10px;">Telefon raqam oldin ro'yhatga olingan.</span>
                 @enderror
-                <label for="phone2" class="mb-1 mt-1 w-100">Qo'shimcha telefon raqam</label>
+                <label for="phone2" class="mb-1 mt-1 w-100">Qo'shimcha telefon raqami</label>
                 <input type="text" name="phone2" value="{{ old('phone2') }}" required class="form-control phone">
                 <label for="addres" class="mb-1 mt-1">Yashash manzili</label>
                 <select name="addres" required class="form-select">
-                  <option value="">Tablang...</option>
+                  <option value="">Tanlang...</option>
                   @foreach($MarkazAddres as $item)
                     <option value="{{ $item['addres'] }}">{{ $item['addres'] }}</option>
                   @endforeach

@@ -39,12 +39,12 @@
                             <thead>
                                 <tr class="align-items-center">
                                     <th>#</th>
-                                    <th>Guruh</th>
+                                    <th>Guruh nomi</th>
                                     <th>Boshlanish vaqti</th>
                                     <th>Yakunlanish vaqti</th>
                                     <th>Dars xonasi</th>
                                     <th>Dars vaqti</th>
-                                    <th>Talabalar</th>
+                                    <th>Talabalar soni</th>
                                     <th>Guruh holati</th>
                                 </tr>
                             </thead>

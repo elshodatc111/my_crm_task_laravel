@@ -16,7 +16,7 @@
                     <p><strong>Dars vaqt:</strong> {{ $Grops['guruh_name'] }}</p>
                 </div>
             </div>
-            
+             
             <div class="text-center mb-3">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">DAVOMAT</button>
             </div>
@@ -24,19 +24,19 @@
             <div class="card mb-3">
                 <div class="card-body text-center">
                     <h5 class="card-title">Dars kunlari</h5>
-                    <table class="table table-bordered" style="font-size:14px;">
-                        <tr style="font-size:10px">
-                            <td>2024-06-19</td>
+                    <table class="table table-bordered text-center" style="font-size:14px;">
+                        <tr>
+                            <th>#</th>
+                            <th>Dars kuni</th>
+                            <th>Dars vaqti</th>
                         </tr>
+                        @foreach($GropsTime as $item)
                         <tr style="font-size:10px">
-                            <td>2024-06-21</td>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $item['data'] }}</td>
+                            <td>{{ $item['time'] }}</td>
                         </tr>
-                        <tr style="font-size:10px">
-                            <td>2024-06-24</td>
-                        </tr>
-                        <tr style="font-size:10px">
-                            <td>2024-06-26</td>
-                        </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -92,7 +92,7 @@
             <div class="card info-card sales-card">
                 <div class="card-body text-center">
                     <h5 class="card-title">Test natijalari</span></h5>
-                    <table class="table table-bordered" style="font-size:14px;">
+                    <table class="table text-center table-bordered" style="font-size:14px;">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -101,13 +101,25 @@
                             <th>To'g'ri javoblar</th>
                             <th>Noto'g'ri javoblar</th>
                             <th>Ball</th>
-                            <th>Test vaqti</th>
+                            <th>Urinishlar soni</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($test as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item['user'] }}</td>
+                                <td>15</td>
+                                <td>{{ $item['count'] }}</td>
+                                <td>{{ 15-$item['count'] }}</td>
+                                <td>{{ $item['ball'] }}</td>
+                                <td>{{ $item['urinish'] }}</td>
+                            </tr>
+                        @empty
                         <tr>
                             <td colspan=7 class="text-center">Test topshirgan talabalar mavjud emas.</td>
                         </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 </div>  
@@ -126,33 +138,19 @@
                 </div>
                 <div class="modal-body">
                     <form action="" method="post">
+                        @csrf
+                        <input type="hidden" name="guruh_id" value="{{ $Grops['id'] }}">
                         <div class="div px-2 mb-2">
+                            @foreach($users as $item)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="q1" id="q1a" value="A">
-                                <label class="form-check-label" for="q1a">A. Berlin</label>
+                                <input class="form-check-input" type="checkbox" name="{{ 'id'.$item['id'] }}" id="{{ 'id'.$item['id'].'a' }}" value="{{ $item['id'] }}">
+                                <label class="form-check-label" for="{{ 'id'.$item['id'].'a' }}">{{ $item['name'] }}</label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="q1" id="q2a" value="A">
-                                <label class="form-check-label" for="q2a">A. Berlin</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="q1" id="q3a" value="A">
-                                <label class="form-check-label" for="q3a">A. Berlin</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="q1" id="q4a" value="A">
-                                <label class="form-check-label" for="q4a">A. Berlin</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="q1" id="q5a" value="A">
-                                <label class="form-check-label" for="q5a">A. Berlin</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="q1" id="q6a" value="A">
-                                <label class="form-check-label" for="q6a">A. Berlin</label>
-                            </div>
+                            @endforeach
                         </div>
-                        <button type="submit" class="btn btn-primary">Davomatni saqlash</button>
+                        @if(count($users)!=0)
+                        <button type="submit" class="btn btn-primary w-100 mt-2">Davomatni saqlash</button>
+                        @endif
                     </form>
                 </div>
             </div>

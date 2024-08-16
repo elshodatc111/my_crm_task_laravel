@@ -38,7 +38,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title w-100 text-center">Qarzdorlar</h5>
-          <input type="text" id="search" class="form-control mb-2" placeholder="Qidruv...">
+          <input type="text" id="search" class="form-control mb-2" placeholder="Qidiruv...">
           <div id="userTable">
             <div class="table-responsive">
                 @include('meneger.students.pagination_data', ['users' => $users])
