@@ -10,4 +10,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/techer/paymart', [TecherController::class, 'paymart'])->name('techer.paymart');
     Route::get('/techer/profel', [TecherController::class, 'profel'])->name('techer.profel');
     
-});
+}); 

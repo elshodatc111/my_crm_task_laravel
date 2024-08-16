@@ -2,18 +2,18 @@
 @section('title', 'Kirish')
 @extends('layouts.techer_header')
 @section('content')
-<div class="main-content">
+    <div class="main-content">
         <div class="container">
             <h2 class="text-center mb-4">Guruh haqida ma'lumot</h2>
             <div class="card mb-3">
                 <div class="card-body">
-                    <p><strong>Guruh:</strong> Guruh nomi</p>
-                    <p><strong>O'qituvchiga to'lov:</strong> 456</p>
-                    <p><strong>O'qituvchiga to'lov(%):</strong> 456</p>
-                    <p><strong>O'qituvchiga bonus:</strong> 789</p>
-                    <p><strong>Boshlanish:</strong> 101</p>
-                    <p><strong>Tugash:</strong> 102</p>
-                    <p><strong>Dars vaqt:</strong> Intermediate English</p>
+                    <h5 class="card-title">{{ $Grops['guruh_name'] }}</h5>
+                    <p><strong>O'qituvchiga to'lov:</strong> {{ $Grops['guruh_name'] }}</p>
+                    <p><strong>O'qituvchiga to'lov(%):</strong> {{ $Grops['guruh_name'] }}</p>
+                    <p><strong>O'qituvchiga bonus:</strong> {{ $Grops['guruh_name'] }}</p>
+                    <p><strong>Boshlanish:</strong> {{ $Grops['guruh_name'] }}</p>
+                    <p><strong>Tugash:</strong> {{ $Grops['guruh_name'] }}</p>
+                    <p><strong>Dars vaqt:</strong> {{ $Grops['guruh_name'] }}</p>
                 </div>
             </div>
             

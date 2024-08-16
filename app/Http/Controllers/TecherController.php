@@ -34,7 +34,8 @@ class TecherController extends Controller
         return view('techer.guruhs',compact('Grops'));
     }
     public function guruh($id){
-        return view('techer.guruh');
+        $Grops = Grops::find($id);
+        return view('techer.guruh',compact('Grops'));
     }
     public function paymart(){
         $MarkazIshHaqi = MarkazIshHaqi::where('user_id',auth()->user()->id)->where('typing','Techer')->get();
