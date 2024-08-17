@@ -3,24 +3,37 @@
 @extends('layouts.techer_header')
 @section('content')
     <div class="main-content">
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            {{Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif (Session::has('error'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            {{Session::get('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="container">
             <h2 class="text-center mb-4">Guruh haqida ma'lumot</h2>
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ $Grops['guruh_name'] }}</h5>
-                    <p><strong>O'qituvchiga to'lov:</strong> {{ $Grops['guruh_name'] }}</p>
-                    <p><strong>O'qituvchiga to'lov(%):</strong> {{ $Grops['guruh_name'] }}</p>
-                    <p><strong>O'qituvchiga bonus:</strong> {{ $Grops['guruh_name'] }}</p>
-                    <p><strong>Boshlanish:</strong> {{ $Grops['guruh_name'] }}</p>
-                    <p><strong>Tugash:</strong> {{ $Grops['guruh_name'] }}</p>
-                    <p><strong>Dars vaqt:</strong> {{ $Grops['guruh_name'] }}</p>
+                    <p><strong>O'qituvchiga to'lov:</strong> {{ $Grops['techer_paymart'] }}</p>
+                    <p><strong>O'qituvchiga to'lov(%):</strong> {{ $Grops['techer_foiz'] }}</p>
+                    <p><strong>O'qituvchiga bonus:</strong> {{ $Grops['techer_bonus'] }}</p>
+                    <p><strong>Boshlanish:</strong> {{ $Grops['guruh_start'] }}</p>
+                    <p><strong>Tugash:</strong> {{ $Grops['guruh_end'] }}</p>
+                    <p><strong>Dars vaqt:</strong> {{ $Grops['dars_time'] }}</p>
                 </div>
             </div>
-             
+             @if($davomat == 1)
             <div class="text-center mb-3">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">DAVOMAT</button>
             </div>
-
+            @endif
             <div class="card mb-3">
                 <div class="card-body text-center">
                     <h5 class="card-title">Dars kunlari</h5>
@@ -28,12 +41,22 @@
                         <tr>
                             <th>#</th>
                             <th>Dars kuni</th>
+                            <th>Status</th>
                             <th>Dars vaqti</th>
                         </tr>
                         @foreach($GropsTime as $item)
                         <tr style="font-size:10px">
                             <td>{{ $loop->index+1 }}</td>
                             <td>{{ $item['data'] }}</td>
+                            <td>
+                                @if($item['data']<date('Y-m-d'))
+                                    <b class="p-0 m-0 text-danger">Yakunlandi</b>
+                                @elseif($item['data']==date('Y-m-d'))
+                                    <b class="p-0 m-0 text-success">Dars kuni</b>
+                                @else 
+                                    <b class="p-0 m-0 text-warning">Kutilmoqda</b>
+                                @endif
+                            </td>
                             <td>{{ $item['time'] }}</td>
                         </tr>
                         @endforeach
@@ -45,44 +68,32 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Guruh davomat</span></h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered" style="font-size:14px;">
+                        <table class="table text-center" style="font-size:14px;">
                             <thead>
                                 <tr>
                                     <th  class="bg-primary text-white">#</th>
                                     <th  class="bg-primary text-white">Talabalar</th>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-06-19</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-06-21</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-06-24</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-06-26</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-06-28</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-01</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-03</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-05</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-08</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-10</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-12</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-15</td>
-                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">2024-07-17</td>
+                                    @foreach($GropsTime as $item)
+                                    <td  class="bg-primary text-white" style="font-size:10px;width:50px">{{ $item['data'] }}</td>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($users as $item)
                                 <tr>
-                                    <th>1</th>
-                                    <th style="text-align:left;">MAJIDOV ASLIDDIN</th>
-                                    <td class="bg-danger text-white text-center" title="Davomat olinmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
-                                    <td class="bg-danger text-white text-center" title="Davomat olinmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
-                                    <td class="bg-danger text-white text-center" title="Davomat olinmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
-                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
-                                    <td class="bg-danger text-white text-center" title="Davomat olinmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
-                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
-                                    <td class="bg-warning text-white text-center" title="Darsga qatnashmadi" style="cursor:pointer"><i class="bi bi-clipboard-minus"></i></td>
-                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
-                                    <td class="bg-warning text-white text-center" title="Darsga qatnashmadi" style="cursor:pointer"><i class="bi bi-clipboard-minus"></i></td>
-                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
-                                    <td class="bg-warning text-white text-center" title="Darsga qatnashmadi" style="cursor:pointer"><i class="bi bi-clipboard-minus"></i></td>
-                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
-                                    <td class="bg-danger text-white text-center" title="Davomat olinmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
+                                    <th class="text-center">{{ $loop->index+1 }}</th>
+                                    <th style="text-align:left;">{{ $item['name'] }}</th>
+                                    @foreach($Davomats[$item['id']] as $keys)
+                                        @if($keys['status']=='true')
+                                            <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
+                                        @elseif($keys['status']=='pedding')
+                                            <td class="bg-warning text-white text-center" title="Dars kutilmoqda" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
+                                        @else 
+                                            <td class="bg-danger text-white text-center" title="Darsga qatnashmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
+                                        @endif
+                                    @endforeach
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -137,7 +148,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="{{ route('techer.davomat') }}" method="post">
                         @csrf
                         <input type="hidden" name="guruh_id" value="{{ $Grops['id'] }}">
                         <div class="div px-2 mb-2">

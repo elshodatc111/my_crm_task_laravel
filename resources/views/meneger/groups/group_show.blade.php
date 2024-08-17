@@ -300,7 +300,7 @@
                                         <tr class="align-items-center">
                                         <th style='width:250px;'>Talaba</th>
                                         @foreach($guruh['dars_data'] as $item)
-                                        <th class='align-middle' style="font-size:12px;width:100px">{{ $item['data'] }}</th>
+                                            <th class='align-middle' style="font-size:10px;width:100px">{{ $item['data'] }}</th>
                                         @endforeach
                                         </tr>
                                     </thead>
@@ -310,11 +310,11 @@
                                             <td style="text-align:left;">{{ $item['user_name'] }}</td>
                                             @foreach($item['check'] as $item2)
                                                 @if($item2=='close')
-                                                    <td class="text-danger text-center align-middle"><b style="font-size:20px;">x</b></td>
+                                                    <td class="text-danger text-center align-middle"><b class="p-0 m-0" style="font-size:14px;">x</b></td>
                                                 @elseif($item2=='true')
-                                                    <td class="text-success text-center align-middle"><b style="font-size:20px;">+</b></td>
+                                                    <td class="text-success text-center align-middle"><b class="p-0 m-0" style="font-size:14px;">+</b></td>
                                                 @elseif($item2=='false')
-                                                    <td class="text-warning text-center align-middle"><b style="font-size:20px;">--</b></td>
+                                                    <td class="text-warning text-center align-middle"><b class="p-0 m-0" style="font-size:14px;">--</b></td>
                                                 @else
                                                     <td class="text-info text-center align-middle"></td>
                                                 @endif
