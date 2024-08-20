@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/advertising', [AlertController::class, 'form'])->name('form');
-    Route::get('/advertising/techer', [AlertController::class, 'formTecher'])->name('form_techer');
+    Route::get('/advertising/statistik', [AlertController::class, 'formTecher'])->name('form_techer');
     Route::get('/advertising/arxiv', [AlertController::class, 'formArxiv'])->name('form_arxiv');
     Route::get('/advertising/url', [AlertController::class, 'formLink'])->name('form_url');
     Route::post('/advertising/Murojat', [AlertController::class, 'formMurojatShow'])->name('form_murojat_typing');
